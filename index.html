@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+	<title>Namensgenerator</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" href="styles/custom.css"> -->
+</head>
+
+<body>
+	<div class="container mt-5">
+		<h1><b>Namensteiler</b></h1>
+		<p>Teile Namen in Buchstaben auf und berechne die Wahrscheinlichkeit der vorhandenen Buchstaben pro Stelle.</p>
+		<form id="nameForm">
+			<div class="form-group">
+				<label for="namesInput">Gib hier die Namen ein (jeweils ein Name pro Zeile):</label>
+				<textarea class="form-control" id="namesInput" rows="16"
+					placeholder="Fulano&#10;Hanako&#10;Hong&#10;Ivan&#10;Jan&#10;Jean&#10;John&#10;Juan&#10;Mario&#10;Matti&#10;Max&#10;Mehmet&#10;Otto&#10;Pinco&#10;Taro&#10;Zhang&#10;"></textarea>
+			</div>
+
+			<div class="form-group">
+				<label for="vowelInput">Vokale (Kommagetrennt, z.B. a,e,i,o,u,ä,ö,ü,y):</label>
+				<input id="vowelInput" class="form-control" type="text"
+					value="a,e,i,o,u,ä,ö,ü,y,à,á,â,ã,å,æ,è,é,ê,ë,ì,í,î,ï,ò,ó,ô,õ,ø,ù,ú,û,ý,ÿ,ā,ă,ą,ē,ĕ,ė,ę,ě,ĩ,ī,ĭ,į,ı,ĳ,ō,ŏ,ő,œ,ũ,ū,ŭ,ů,ű,ų,ŷ,ÿ">
+				<small class="form-text text-muted">Passe dies an, falls in deinen Namen andere Buchstaben als Vokale
+					gelten.</small>
+			</div>
+
+			<!-- Ausspracheregeln placeholder (wird per JS eingebaut) -->
+			<div id="pronunciation-rules-container" class="mb-3"></div>
+			<button type="submit" class="btn btn-secondary" id="submit-names">Namen analysieren</button>
+		</form>
+		<script src="pronunciationRules.js"></script>
+		<div id="results" class="mt-4"></div>
+
+	</div>
+
+	<script src="main.js"></script>
+	<script src="readNames.js"></script>
+	<script src="breakDownNames.js"></script>
+	<script src="displayLetters.js"></script>
+	<script src="probabilities.js"></script>
+	<script src="lengthDistribution.js"></script>
+	<script src="vowelConsonant.js"></script>
+	<script src="cvPatterns.js"></script>
+	<script src="getCommonSubstrings.js"></script>
+	<script src="extractMorphemes.js"></script>
+	<script src="displayMorphemesTable.js"></script>
+</body>
