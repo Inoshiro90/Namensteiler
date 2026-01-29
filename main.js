@@ -120,7 +120,7 @@ if (form) {
 					Object.keys(it.probabilities || {}).map((p) => [
 						p,
 						Number((it.probabilities[p] * 100).toFixed(2)),
-					])
+					]),
 				);
 			});
 			const jCv = JSON.stringify(cvObj, null, 2);
@@ -195,6 +195,7 @@ if (form) {
 						it.positions && it.positions[pat]
 							? it.positions[pat]
 							: {prefix: 0, infix: 0, suffix: 0};
+					const cvPat = (it.cvPatterns && it.cvPatterns[pat]) || '';
 					positionsList.forEach((pName) => {
 						const cnt = pos[pName] || 0;
 						if (cnt > 0 && totals[pName].vowels > 0) {
@@ -208,7 +209,7 @@ if (form) {
 											: {prefix: 0, infix: 0, suffix: 0};
 									return acc + (ppos[pName] || 0);
 								},
-								0
+								0,
 							);
 							const probOverall = Number(((cnt / totalOverall) * 100).toFixed(2));
 							const probByLength =
@@ -218,6 +219,7 @@ if (form) {
 							temp[pName].vowels[String(len)] = temp[pName].vowels[String(len)] || [];
 							temp[pName].vowels[String(len)].push({
 								pattern: pat,
+								cvPattern: cvPat,
 								count: cnt,
 								probOverall,
 								probByLength,
@@ -236,6 +238,7 @@ if (form) {
 						it.positions && it.positions[pat]
 							? it.positions[pat]
 							: {prefix: 0, infix: 0, suffix: 0};
+					const cvPat = (it.cvPatterns && it.cvPatterns[pat]) || '';
 					positionsList.forEach((pName) => {
 						const cnt = pos[pName] || 0;
 						if (cnt > 0 && totals[pName].consonants > 0) {
@@ -248,7 +251,7 @@ if (form) {
 											: {prefix: 0, infix: 0, suffix: 0};
 									return acc + (ppos[pName] || 0);
 								},
-								0
+								0,
 							);
 							const probOverall = Number(((cnt / totalOverall) * 100).toFixed(2));
 							const probByLength =
@@ -260,6 +263,7 @@ if (form) {
 								temp[pName].consonants[String(len)] || [];
 							temp[pName].consonants[String(len)].push({
 								pattern: pat,
+								cvPattern: cvPat,
 								count: cnt,
 								probOverall,
 								probByLength,
@@ -286,11 +290,12 @@ if (form) {
 							arr.map((it) => [
 								it.pattern,
 								{
+									pattern: it.cvPattern,
 									count: it.count,
 									probOverall: it.probOverall,
 									probByLength: it.probByLength,
 								},
-							])
+							]),
 						);
 					});
 				});
@@ -314,18 +319,26 @@ if (form) {
 			}
 		}
 
-		// 2b) JSON: Morpheme (Longest Common Substrings über alle Namen)
-		const morphemesJsonId = 'sec-morphemes-json';
-		createSection('Morpheme (JSON)', morphemesJsonId, false);
+		// 2b) JSON: Morpheme aus Vokal- und Konsonantkombinationen
+		const morphemesFromPatternsJsonId = 'sec-morphemes-patterns-json';
+		createSection(
+			'Morpheme aus Vokal- und Konsonantkombinationen (JSON)',
+			morphemesFromPatternsJsonId,
+			false,
+		);
 
-		const morphemesNode = document.getElementById(morphemesJsonId);
-		if (morphemesNode && typeof extractMorphemes === 'function') {
-			const morphemesResult = extractMorphemes(nameArray, {
-				minLength: 2,
-				minOccurrences: 2,
-			});
+		const morphemesFromPatternsNode = document.getElementById(morphemesFromPatternsJsonId);
+		if (
+			morphemesFromPatternsNode &&
+			typeof calculateLetterCombinations === 'function' &&
+			typeof createMorphemesFromPatterns === 'function' &&
+			typeof createMorphemesJSON === 'function'
+		) {
+			const combos = calculateLetterCombinations(nameArray);
+			const morphemesResult = createMorphemesFromPatterns(nameArray, combos);
+			const morphemesJson = createMorphemesJSON(morphemesResult);
 
-			const morphemesJson = JSON.stringify(morphemesResult, null, 2);
+			const morphemesJsonStr = JSON.stringify(morphemesJson, null, 2);
 
 			const copyBtn = document.createElement('button');
 			copyBtn.type = 'button';
@@ -334,17 +347,49 @@ if (form) {
 			copyBtn.addEventListener('click', async () => {
 				try {
 					if (navigator.clipboard) {
-						await navigator.clipboard.writeText(morphemesJson);
+						await navigator.clipboard.writeText(morphemesJsonStr);
 					}
 				} catch (e) {}
 			});
 
-			morphemesNode.appendChild(copyBtn);
+			morphemesFromPatternsNode.appendChild(copyBtn);
 
 			const pre = document.createElement('pre');
-			pre.textContent = morphemesJson;
-			morphemesNode.appendChild(pre);
+			pre.textContent = morphemesJsonStr;
+			morphemesFromPatternsNode.appendChild(pre);
 		}
+
+		// // 2c) JSON: Morpheme (Longest Common Substrings über alle Namen)
+		// const morphemesJsonId = 'sec-morphemes-json';
+		// createSection('Morpheme (LCS - Longest Common Substrings)', morphemesJsonId, false);
+
+		// const morphemesNode = document.getElementById(morphemesJsonId);
+		// if (morphemesNode && typeof extractMorphemes === 'function') {
+		// 	const morphemesResult = extractMorphemes(nameArray, {
+		// 		minLength: 2,
+		// 		minOccurrences: 2,
+		// 	});
+
+		// 	const morphemesJson = JSON.stringify(morphemesResult, null, 2);
+
+		// 	const copyBtn = document.createElement('button');
+		// 	copyBtn.type = 'button';
+		// 	copyBtn.className = 'btn btn-sm btn-secondary mb-2';
+		// 	copyBtn.textContent = 'Morpheme (JSON) kopieren';
+		// 	copyBtn.addEventListener('click', async () => {
+		// 		try {
+		// 			if (navigator.clipboard) {
+		// 				await navigator.clipboard.writeText(morphemesJson);
+		// 			}
+		// 		} catch (e) {}
+		// 	});
+
+		// 	morphemesNode.appendChild(copyBtn);
+
+		// 	const pre = document.createElement('pre');
+		// 	pre.textContent = morphemesJson;
+		// 	morphemesNode.appendChild(pre);
+		// }
 
 		// 3) Arrays: Buchstaben pro Position
 		const arraysId = 'sec-arrays';
@@ -402,7 +447,7 @@ if (form) {
 		createSection(
 			'Wahrscheinlichkeiten C/V-Muster pro Namenslänge (Tabelle)',
 			cvPatternsId,
-			false
+			false,
 		);
 		if (
 			typeof calculateCVPatternsPerLength === 'function' &&
@@ -423,17 +468,139 @@ if (form) {
 			displayLetterCombinations(combos, combosId);
 		}
 
-		// 9) Tabelle: Morpheme
-		const morphemesTableId = 'sec-morphemes-table';
-		createSection('Morpheme (Tabelle)', morphemesTableId, false);
+		// 9) Tabelle: Morpheme aus Vokal- und Konsonantkombinationen
+		const morphemesFromPatternsTableId = 'sec-morphemes-patterns-table';
+		createSection(
+			'Morpheme aus Vokal- und Konsonantkombinationen (Tabelle)',
+			morphemesFromPatternsTableId,
+			false,
+		);
 
-		if (typeof extractMorphemes === 'function') {
-			const morphemes = extractMorphemes(nameArray, {
-				minLength: 2,
-				minOccurrences: 2,
-			});
-			displayMorphemesTable(morphemes, morphemesTableId);
+		if (
+			typeof calculateLetterCombinations === 'function' &&
+			typeof createMorphemesFromPatterns === 'function' &&
+			typeof displayMorphemesFromPatterns === 'function'
+		) {
+			const combos = calculateLetterCombinations(nameArray);
+			const morphemesResult = createMorphemesFromPatterns(nameArray, combos);
+			displayMorphemesFromPatterns(morphemesResult, morphemesFromPatternsTableId);
 		}
+
+		// // 10) Tabelle: Morpheme (LCS - Longest Common Substrings)
+		// const morphemesTableId = 'sec-morphemes-table';
+		// createSection('Morpheme (LCS - Longest Common Substrings)', morphemesTableId, false);
+
+		// if (typeof extractMorphemes === 'function') {
+		// 	const morphemes = extractMorphemes(nameArray, {
+		// 		minLength: 2,
+		// 		minOccurrences: 2,
+		// 	});
+		// 	displayMorphemesTable(morphemes, morphemesTableId);
+		// }
+
+		// 11) Silben: JSON
+		const syllablesJsonId = 'sec-syllables-json';
+		createSection('Silben (JSON)', syllablesJsonId, true);
+
+		const syllablesJsonNode = document.getElementById(syllablesJsonId);
+		if (syllablesJsonNode && typeof SyllableTokenizer !== 'undefined') {
+			// Tokenizer ist in syllableTokenizer.js definiert
+			const classes = readSonorityClasses();
+			const hierarchy = buildSonorityHierarchy(classes);
+
+			const tokenizer = new SyllableTokenizer(hierarchy, classes.vowels);
+			const table = document.createElement('table');
+			table.className = 'table table-sm table-bordered';
+			const result = nameArray.map((name) => ({
+				name,
+				syllables: tokenizer.tokenize(name, DE_PROFILE),
+			}));
+			const syllablesJsonStr = JSON.stringify(result, null, 2);
+
+			const copyBtn = document.createElement('button');
+			copyBtn.type = 'button';
+			copyBtn.className = 'btn btn-sm btn-secondary mb-2';
+			copyBtn.textContent = 'Silben (JSON) kopieren';
+			copyBtn.addEventListener('click', async () => {
+				try {
+					if (navigator.clipboard) {
+						await navigator.clipboard.writeText(syllablesJsonStr);
+					}
+				} catch (e) {}
+			});
+
+			syllablesJsonNode.appendChild(copyBtn);
+
+			const pre = document.createElement('pre');
+			pre.textContent = syllablesJsonStr;
+			syllablesJsonNode.appendChild(pre);
+		}
+
+		// 12) Silben: Tabelle
+		const syllablesTableId = 'sec-syllables-table';
+		createSection('Silben (Tabelle)', syllablesTableId, true);
+
+		const syllablesTableNode = document.getElementById(syllablesTableId);
+		if (syllablesTableNode && typeof SyllableTokenizer !== 'undefined') {
+			const classes = readSonorityClasses();
+			const hierarchy = buildSonorityHierarchy(classes);
+
+			const tokenizer = new SyllableTokenizer(hierarchy, classes.vowels);
+			const table = document.createElement('table');
+			table.className = 'table table-sm table-bordered';
+
+			const thead = document.createElement('thead');
+			thead.innerHTML = '<tr><th>Name</th><th>Silben</th><th>Anzahl</th></tr>';
+			table.appendChild(thead);
+
+			const tbody = document.createElement('tbody');
+			nameArray.forEach((name) => {
+				const syllables = tokenizer.tokenize(name, DE_PROFILE);
+				const tr = document.createElement('tr');
+
+				const tdName = document.createElement('td');
+				tdName.textContent = name;
+				tr.appendChild(tdName);
+
+				const tdSyllables = document.createElement('td');
+				tdSyllables.textContent = syllables.join(' · ');
+				tr.appendChild(tdSyllables);
+
+				const tdCount = document.createElement('td');
+				tdCount.textContent = syllables.length;
+				tr.appendChild(tdCount);
+
+				tbody.appendChild(tr);
+			});
+
+			table.appendChild(tbody);
+			syllablesTableNode.appendChild(table);
+		}
+		form.addEventListener('submit', function (e) {
+			e.preventDefault();
+
+			const nameArray = readNames(document.getElementById('namesInput'));
+
+			const classes = readSonorityClasses();
+			const hierarchy = buildSonorityHierarchy(classes);
+
+			const tokenizer = new SyllableTokenizer(hierarchy, classes.vowels);
+
+			const profile = {
+				vowels: classes.vowels,
+				allowedOnsets: classes.allowedOnsets,
+				allowedCodas: classes.allowedCodas,
+			};
+
+			const result = nameArray.map((name) => ({
+				name,
+				syllables: tokenizer.tokenize(name, profile),
+			}));
+
+			document.getElementById('output').textContent = result
+				.map((r) => `${r.name} → ${r.syllables.join(' · ')}`)
+				.join('\n');
+		});
 	});
 } else {
 	console.warn('Formular #nameForm nicht gefunden.');

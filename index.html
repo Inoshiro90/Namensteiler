@@ -28,54 +28,139 @@
 				<small class="form-text text-muted">Passe dies an, falls in deinen Namen andere Buchstaben als Vokale
 					gelten.</small>
 			</div>
-
+			<!-- 
 			<div class="form-group">
 				<label for="sonorantsInput">Sonoranten (Kommagetrennt, z.B. m,n,ng,l,r,j,w):</label>
-				<input id="sonorantsInput" class="form-control" type="text"
-					value="m,n,ng,l,r,j,w">
-				<small class="form-text text-muted">Nasale, Laterale, Vibranten und Gleitlaute. Diese sind sonorer als Obstruenten und besser für Silbenkerne geeignet.</small>
+				<input id="sonorantsInput" class="form-control" type="text" value="m,n,ng,l,r,j,w">
+				<small class="form-text text-muted">Nasale, Laterale, Vibranten und Gleitlaute. Diese sind sonorer als
+					Obstruenten und besser für Silbenkerne geeignet.</small>
 			</div>
 
 			<div class="form-group">
 				<label for="obstrutentsInput">Obstruenten (Kommagetrennt, z.B. p,b,t,d,k,g,f,v,s,z,sch,ch):</label>
-				<input id="obstrutentsInput" class="form-control" type="text"
-					value="p,b,t,d,k,g,f,v,s,z,sch,ch,tsch">
-				<small class="form-text text-muted">Plosive, Frikative und Affrikaten. Diese sind weniger sonorant und weniger ideal für Silbenkerne.</small>
+				<input id="obstrutentsInput" class="form-control" type="text" value="p,b,t,d,k,g,f,v,s,z,sch,ch,tsch">
+				<small class="form-text text-muted">Plosive, Frikative und Affrikaten. Diese sind weniger sonorant und
+					weniger ideal für Silbenkerne.</small>
 			</div>
 
 			<div class="form-group">
 				<label for="affricatesInput">Affrikaten (Kommagetrennt, z.B. ts,tsch,pf,dz):</label>
-				<input id="affricatesInput" class="form-control" type="text"
-					value="ts,tsch,pf,dz">
-				<small class="form-text text-muted">Affrikaten werden als ein einzelner Konsonant behandelt (z.B. pf in "Trumpf").</small>
+				<input id="affricatesInput" class="form-control" type="text" value="ts,tsch,pf,dz">
+				<small class="form-text text-muted">Affrikaten werden als ein einzelner Konsonant behandelt (z.B. pf in
+					"Trumpf").</small>
 			</div>
 
 			<div class="form-group">
 				<label for="extrasyllabicInput">Extrasilbische Grapheme (Kommagetrennt, z.B. s,sp,st):</label>
-				<input id="extrasyllabicInput" class="form-control" type="text"
-					value="s,sp,st,str">
-				<small class="form-text text-muted">Konsonanten, die am Wort-Anfang/-Ende außerhalb der normalen Silbenstruktur stehen (z.B. 's' in "Sprachst" = XCCVCXX).</small>
+				<input id="extrasyllabicInput" class="form-control" type="text" value="s,sp,st,str">
+				<small class="form-text text-muted">Konsonanten, die am Wort-Anfang/-Ende außerhalb der normalen
+					Silbenstruktur stehen (z.B. 's' in "Sprachst" = XCCVCXX).</small>
 			</div>
 
 			<div class="form-group">
 				<label for="maxConsonantClusterInput">Maximale Konsonanten pro Silbe (z.B. CCVCC):</label>
-				<input id="maxConsonantClusterInput" class="form-control" type="text"
-					value="CCVCC">
-				<small class="form-text text-muted">Definiert die maximale Anzahl von Konsonanten vor/nach dem Vokal (C=Konsonant, V=Vokal).</small>
+				<input id="maxConsonantClusterInput" class="form-control" type="text" value="CCVCC">
+				<small class="form-text text-muted">Definiert die maximale Anzahl von Konsonanten vor/nach dem Vokal
+					(C=Konsonant, V=Vokal).</small>
 			</div>
 
 			<div class="form-group">
-				<label for="forbiddenClustersInput">Unmögliche Konsonantenkombinationen (Kommagetrennt, z.B. tm,dm,pn):</label>
-				<input id="forbiddenClustersInput" class="form-control" type="text"
-					value="tm,dm,pn,bp,kg,gk">
-				<small class="form-text text-muted">Konsonantenkombinationen, die nicht erlaubt sind und den SSP verletzen.</small>
+				<label for="forbiddenClustersInput">Unmögliche Konsonantenkombinationen (Kommagetrennt, z.B.
+					tm,dm,pn):</label>
+				<input id="forbiddenClustersInput" class="form-control" type="text" value="tm,dm,pn,bp,kg,gk">
+				<small class="form-text text-muted">Konsonantenkombinationen, die nicht erlaubt sind und den SSP
+					verletzen.</small>
 			</div>
 
 			<div class="form-group">
-				<label for="sonorityHierarchyInput">Sonoritätshierarchie (Kommagetrennt, v.u.n.o., z.B. plosive,fricative,nasal,liquid,glide,vowel):</label>
+				<label for="sonorityHierarchyInput">Sonoritätshierarchie (Kommagetrennt, v.u.n.o., z.B.
+					plosive,fricative,nasal,liquid,glide,vowel):</label>
 				<input id="sonorityHierarchyInput" class="form-control" type="text"
 					value="plosive,fricative,nasal,liquid,glide,vowel">
-				<small class="form-text text-muted">Hierarchische Reihenfolge von Konsonanten nach Sonorität (von weniger zu mehr Sonorität). Bestimmt die SSP-Validierung.</small>
+				<small class="form-text text-muted">Hierarchische Reihenfolge von Konsonanten nach Sonorität (von
+					weniger zu mehr Sonorität). Bestimmt die SSP-Validierung.</small>
+			</div> -->
+
+			<hr>
+			<div class="form-group">
+				<label for="profileSelect"><strong>Sprachprofil</strong></label>
+				<select id="profileSelect" class="form-control">
+					<option value="de">Deutsch</option>
+					<option value="en">Englisch</option>
+				</select>
+			</div>
+
+			<div class="mb-3">
+				<button type="button" class="btn btn-sm btn-outline-primary" id="saveProfileBtn">
+					Aktuelle Einstellungen als Profil speichern
+				</button>
+			</div>
+			<div class="form-group">
+				<label for="openVowels">Offene (Kommagetrennt, z.B. a,e,o,aa,ee,oo):</label>
+				<input id="openVowels" class="form-control" type="text" value="a,e,o,aa,ee,oo">
+				<small class="form-text text-muted">Mit offenen Vokalen sind diejenigen Vokale gemeint, bei denen der
+					Mund relativ weit geöffnet ist.</small>
+			</div>
+			<div class="form-group">
+				<label for="closeVowels">Geschlossene Vokale (Kommagetrennt, z.B. i,u,y,ie,ei,ai,au,eu,ou):</label>
+				<input id="closeVowels" class="form-control" type="text" value="i,u,y,ie,ei,ai,au,eu,ou">
+				<small class="form-text text-muted">Mit geschlossenen Vokalen sind diejenigen Vokale gemeint, bei denen
+					der Mund am wenigsten von allen Vokalen geöffnet ist. </small>
+			</div>
+			<div class="form-group">
+				<label for="semivowel">Halbvokale (Kommagetrennt, z.B. j,w):</label>
+				<input id="semivowel" class="form-control" type="text" value="j">
+				<small class="form-text text-muted">Halbvokale sind Konsonanten, die sich wie Vokale
+					verhalten und in der Silbenstruktur als Vokale fungieren.</small>
+			</div>
+			<div class="form-group">
+				<label for="liquidConsonants">Liquide Konsonanten (Kommagetrennt, z.B. l,r):</label>
+				<input id="liquidConsonants" class="form-control" type="text" value="l,r">
+				<small class="form-text text-muted">Liquide Konsonanten sind Konsonanten, die auch als Fließlaute
+					bekannt sind und
+					zeichnen sich durch eine fließende Artikulation aus.</small>
+			</div>
+			<div class="form-group">
+				<label for="nasalConsonants">Nasale (Kommagetrennt, z.B. m,n,ng):</label>
+				<input id="nasalConsonants" class="form-control" type="text" value="m,n,ng">
+				<small class="form-text text-muted">Nasale sind Konsonanten, die durch eine freie Passage des Luftstroms
+					durch die Nase charakterisiert sind.</small>
+			</div>
+			<div class="form-group">
+				<label for="fricativeConsonants">Frikative Konsonanten (Kommagetrennt, z.B.
+					v,f,s,z,h,ch,sch,st,ph):</label>
+				<input id="fricativeConsonants" class="form-control" type="text" value="v,f,s,z,h,ch,sch,st,ph">
+				<small class="form-text text-muted">Frikative sind Konsonanten, die durch eine Reibung des Luftstroms
+					erzeugt werden.</small>
+			</div>
+			<div class="form-group">
+				<label for="affricateConsonants">Affrikate (Kommagetrennt, z.B. pf,ts,tz,tsch,dsch,tch):</label>
+				<input id="affricateConsonants" class="form-control" type="text" value="pf,ts,tz,tsch,dsch,tch">
+				<small class="form-text text-muted">Affrikate sind Konsonanten, die aus einem Plosiv und einem Frikativ
+					bestehen.</small>
+			</div>
+			<div class="form-group">
+				<label for="plosiveConsonants">Plosive Konsonanten (Kommagetrennt, z.B. b,p,d,t,g,k,c,ck,q):</label>
+				<input id="plosiveConsonants" class="form-control" type="text" value="b,p,d,th,t,g,k,c,ck,q">
+				<small class="form-text text-muted">Plosive sind Konsonanten, die durch eine vollständige Blockade des
+					Luftstroms
+					erzeugt werden.</small>
+			</div>
+			<div class="form-group">
+				<label for="allowedOnsets">Erlaubte Silbenköpfe (Kommagetrennt, z.B.
+					b,bl,br,d,dr,f,fl,fr,g,gl,gr,h,k,kl,kr,l,m,n,p,pf,ph,pl,pr,r,s,sch,sp,st,t,th,tr,tsch,w):</label>
+				<input id="allowedOnsets" class="form-control" type="text"
+					value="b,bl,br,d,dr,f,fl,fr,g,gl,gr,h,k,kl,kr,l,m,n,p,pf,ph,pl,pr,r,s,sch,sp,st,t,th,tr,tsch,w">
+				<small class="form-text text-muted">Erlaubte Silbenköpfe sind Konsonanten oder Konsonantengruppen, die
+					in der Silbe am Anfang auftreten dürfen.</small>
+			</div>
+			<div class="form-group">
+				<label for="allowedCodas">Erlaubte Silbenkoda (Kommagetrennt, z.B.
+					ch,f,k,ks,lf,ll,lst,lt,m,mp,mpt,n,ng,nk,nst,nt,p,r,rkt,rm,rst,rt,s,sch,sp,st,st,t):</label>
+				<input id="allowedCodas" class="form-control" type="text"
+					value="ch,f,k,ks,lf,ll,lst,lt,m,mp,mpt,n,ng,nk,nst,nt,p,r,rkt,rm,rst,rt,s,sch,sp,st,st,t">
+				<small class="form-text text-muted">Erlaubte Silbenkoda sind Konsonanten oder Konsonantengruppen, die
+					in der Silbe am Ende auftreten dürfen.</small>
 			</div>
 
 			<!-- <div class="alert alert-info" role="alert">
@@ -87,15 +172,19 @@
 				</ul>
 			</div> -->
 
+
 			<button type="submit" class="btn btn-secondary" id="submit-names">Namen analysieren</button>
 		</form>
 		<script src="pronunciationRules.js"></script>
 		<div id="results" class="mt-4"></div>
 
-	</div>
+		<pre id="output"></pre>
 
+	</div>
+	<script src="profiles.js"></script>
 	<script src="tableUtils.js"></script>
 	<script src="syllableFormationLaws.js"></script>
+	<script src="syllableTokenizer.js"></script>
 	<script src="main.js"></script>
 	<script src="readNames.js"></script>
 	<script src="breakDownNames.js"></script>
@@ -108,4 +197,5 @@
 	<script src="extractMorphemes.js"></script>
 	<script src="displayMorphemesTable.js"></script>
 	<script src="createMorphemesFromPatterns.js"></script>
+
 </body>
