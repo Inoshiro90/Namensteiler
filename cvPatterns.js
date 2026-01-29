@@ -93,6 +93,13 @@
             });
 
             table.appendChild(tbody);
+
+            // Add copy button if available
+            if (typeof window.createTableCopyButton === 'function') {
+                const copyBtn = window.createTableCopyButton(table, `Länge ${item.length} kopieren`);
+                container.appendChild(copyBtn);
+            }
+
             container.appendChild(table);
 
             const probabilitiesObj = Object.fromEntries(

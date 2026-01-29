@@ -54,6 +54,13 @@
 		});
 
 		table.appendChild(tbody);
+
+		// Add copy button if available
+		if (typeof window.createTableCopyButton === 'function') {
+			const copyBtn = window.createTableCopyButton(table, 'Tabelle kopieren');
+			container.appendChild(copyBtn);
+		}
+
 		container.appendChild(table);
 	}
 

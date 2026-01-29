@@ -29,8 +29,64 @@
 					gelten.</small>
 			</div>
 
-			<!-- Ausspracheregeln placeholder (wird per JS eingebaut) -->
-			<div id="pronunciation-rules-container" class="mb-3"></div>
+			<div class="form-group">
+				<label for="sonorantsInput">Sonoranten (Kommagetrennt, z.B. m,n,ng,l,r,j,w):</label>
+				<input id="sonorantsInput" class="form-control" type="text"
+					value="m,n,ng,l,r,j,w">
+				<small class="form-text text-muted">Nasale, Laterale, Vibranten und Gleitlaute. Diese sind sonorer als Obstruenten und besser für Silbenkerne geeignet.</small>
+			</div>
+
+			<div class="form-group">
+				<label for="obstrutentsInput">Obstruenten (Kommagetrennt, z.B. p,b,t,d,k,g,f,v,s,z,sch,ch):</label>
+				<input id="obstrutentsInput" class="form-control" type="text"
+					value="p,b,t,d,k,g,f,v,s,z,sch,ch,tsch">
+				<small class="form-text text-muted">Plosive, Frikative und Affrikaten. Diese sind weniger sonorant und weniger ideal für Silbenkerne.</small>
+			</div>
+
+			<div class="form-group">
+				<label for="affricatesInput">Affrikaten (Kommagetrennt, z.B. ts,tsch,pf,dz):</label>
+				<input id="affricatesInput" class="form-control" type="text"
+					value="ts,tsch,pf,dz">
+				<small class="form-text text-muted">Affrikaten werden als ein einzelner Konsonant behandelt (z.B. pf in "Trumpf").</small>
+			</div>
+
+			<div class="form-group">
+				<label for="extrasyllabicInput">Extrasilbische Grapheme (Kommagetrennt, z.B. s,sp,st):</label>
+				<input id="extrasyllabicInput" class="form-control" type="text"
+					value="s,sp,st,str">
+				<small class="form-text text-muted">Konsonanten, die am Wort-Anfang/-Ende außerhalb der normalen Silbenstruktur stehen (z.B. 's' in "Sprachst" = XCCVCXX).</small>
+			</div>
+
+			<div class="form-group">
+				<label for="maxConsonantClusterInput">Maximale Konsonanten pro Silbe (z.B. CCVCC):</label>
+				<input id="maxConsonantClusterInput" class="form-control" type="text"
+					value="CCVCC">
+				<small class="form-text text-muted">Definiert die maximale Anzahl von Konsonanten vor/nach dem Vokal (C=Konsonant, V=Vokal).</small>
+			</div>
+
+			<div class="form-group">
+				<label for="forbiddenClustersInput">Unmögliche Konsonantenkombinationen (Kommagetrennt, z.B. tm,dm,pn):</label>
+				<input id="forbiddenClustersInput" class="form-control" type="text"
+					value="tm,dm,pn,bp,kg,gk">
+				<small class="form-text text-muted">Konsonantenkombinationen, die nicht erlaubt sind und den SSP verletzen.</small>
+			</div>
+
+			<div class="form-group">
+				<label for="sonorityHierarchyInput">Sonoritätshierarchie (Kommagetrennt, v.u.n.o., z.B. plosive,fricative,nasal,liquid,glide,vowel):</label>
+				<input id="sonorityHierarchyInput" class="form-control" type="text"
+					value="plosive,fricative,nasal,liquid,glide,vowel">
+				<small class="form-text text-muted">Hierarchische Reihenfolge von Konsonanten nach Sonorität (von weniger zu mehr Sonorität). Bestimmt die SSP-Validierung.</small>
+			</div>
+
+			<!-- <div class="alert alert-info" role="alert">
+				<h5>📚 Silbenbildungsgesetze</h5>
+				<ul style="margin-bottom: 0;">
+					<li><strong>Silbenanlautgesetz:</strong> Optimal sind Silben mit genau einem Konsonant im Onset (Anfang). Mehr oder weniger Konsonanten sind markierter.</li>
+					<li><strong>Silbenauslautgesetz:</strong> Optimal sind Silben ohne Konsonanten in der Koda (Ende). Je mehr Konsonanten, desto markierter.</li>
+					<li><strong>Silbenkerngesetz:</strong> Optimal sind Vokale im Nukleus (Kern). Sonoranten sind markierter als Vokale, Obstruenten sind am markiertesten.</li>
+				</ul>
+			</div> -->
+
 			<button type="submit" class="btn btn-secondary" id="submit-names">Namen analysieren</button>
 		</form>
 		<script src="pronunciationRules.js"></script>
@@ -38,6 +94,8 @@
 
 	</div>
 
+	<script src="tableUtils.js"></script>
+	<script src="syllableFormationLaws.js"></script>
 	<script src="main.js"></script>
 	<script src="readNames.js"></script>
 	<script src="breakDownNames.js"></script>
@@ -49,4 +107,5 @@
 	<script src="getCommonSubstrings.js"></script>
 	<script src="extractMorphemes.js"></script>
 	<script src="displayMorphemesTable.js"></script>
+	<script src="createMorphemesFromPatterns.js"></script>
 </body>

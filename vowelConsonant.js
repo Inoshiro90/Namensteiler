@@ -201,6 +201,19 @@
 				: new Set(['a', 'e', 'i', 'o', 'u', 'ä', 'ö', 'ü', 'y']);
 		const isLetterRe = /^[a-zäöüß]$/i;
 
+		// Helper function to calculate CV pattern
+		const toCVPattern = (str) => {
+			let pattern = '';
+			for (const ch of String(str).toLowerCase()) {
+				if (vowelSet.has(ch)) {
+					pattern += 'V';
+				} else if (/[a-zäöüß]/i.test(ch)) {
+					pattern += 'C';
+				}
+			}
+			return pattern;
+		};
+
 		const vGroups = {}; // length -> { total, counts }
 		const cGroups = {};
 		const namesByLen = {}; // length -> number of names of that length
@@ -263,6 +276,7 @@
 				}
 
 				if (posType) {
+					const cvPattern = toCVPattern(key);
 					if (runType === 'v') {
 						const seenKey = `${key}|${posType}`;
 						if (!seenV.has(seenKey)) {
@@ -272,6 +286,7 @@
 								vGroups[len].counts[key] = {
 									total: 0,
 									positions: {prefix: 0, infix: 0, suffix: 0},
+									cvPattern: cvPattern,
 								};
 							vGroups[len].counts[key].total += 1;
 							vGroups[len].counts[key].positions[posType] += 1;
@@ -286,6 +301,7 @@
 								cGroups[len].counts[key] = {
 									total: 0,
 									positions: {prefix: 0, infix: 0, suffix: 0},
+									cvPattern: cvPattern,
 								};
 							cGroups[len].counts[key].total += 1;
 							cGroups[len].counts[key].positions[posType] += 1;
@@ -330,14 +346,16 @@
 				.map((k) => {
 					const len = Number(k);
 					const total = groups[k].total;
-					const rawCounts = groups[k].counts; // pattern -> { total, positions }
+					const rawCounts = groups[k].counts; // pattern -> { total, positions, cvPattern }
 					const counts = {}; // pattern -> total
 					const probabilities = {}; // pattern -> total/total
 					const positions = {}; // pattern -> positions object
+					const cvPatterns = {}; // pattern -> cvPattern
 					Object.keys(rawCounts).forEach((pat) => {
 						counts[pat] = rawCounts[pat].total;
 						probabilities[pat] = rawCounts[pat].total / total;
 						positions[pat] = rawCounts[pat].positions;
+						cvPatterns[pat] = rawCounts[pat].cvPattern;
 					});
 					return {
 						length: len,
@@ -345,6 +363,7 @@
 						counts,
 						probabilities,
 						positions,
+						cvPatterns,
 						namesTotal: namesByLen[len] || 0,
 					};
 				})
@@ -418,6 +437,7 @@
 					it.positions && it.positions[pat]
 						? it.positions[pat]
 						: {prefix: 0, infix: 0, suffix: 0};
+				const cvPat = (it.cvPatterns && it.cvPatterns[pat]) || '';
 				positionsList.forEach((pName) => {
 					const cnt = pos[pName] || 0;
 					if (cnt > 0 && totals[pName].vowels > 0) {
@@ -439,6 +459,7 @@
 						temp[pName].vowels[String(len)] = temp[pName].vowels[String(len)] || [];
 						temp[pName].vowels[String(len)].push({
 							pattern: pat,
+							cvPattern: cvPat,
 							count: cnt,
 							probOverall,
 							probByLength,
@@ -470,6 +491,7 @@
 					it.positions && it.positions[pat]
 						? it.positions[pat]
 						: {prefix: 0, infix: 0, suffix: 0};
+				const cvPat = (it.cvPatterns && it.cvPatterns[pat]) || '';
 				positionsList.forEach((pName) => {
 					const cnt = pos[pName] || 0;
 					if (cnt > 0 && totals[pName].consonants > 0) {
@@ -491,6 +513,7 @@
 							temp[pName].consonants[String(len)] || [];
 						temp[pName].consonants[String(len)].push({
 							pattern: pat,
+							cvPattern: cvPat,
 							count: cnt,
 							probOverall,
 							probByLength,
@@ -518,6 +541,7 @@
 						arr.map((it) => [
 							it.pattern,
 							{
+								cvPattern: it.cvPattern,
 								count: it.count,
 								probOverall: it.probOverall,
 								probByLength: it.probByLength,
@@ -552,6 +576,7 @@
 						rows.push({
 							length: Number(len),
 							pattern: pat,
+							cvPattern: p.cvPattern || '',
 							probability: Number(p.probOverall || p.probability || 0),
 							count: Number(p.count || 0),
 							probs: {
@@ -585,7 +610,7 @@
 				table.className = 'table table-sm table-bordered';
 				const thead = document.createElement('thead');
 				thead.innerHTML =
-					'<tr><th>Kombination</th><th>Länge</th><th>Gesamt in Prozent</th><th>Pro Länge in Prozent</th><th>Anzahl</th></tr>';
+					'<tr><th>Kombination</th><th>CV-Muster</th><th>Länge</th><th>Gesamt in Prozent</th><th>Pro Länge in Prozent</th><th>Anzahl</th></tr>';
 				table.appendChild(thead);
 				const tbody = document.createElement('tbody');
 				const fmt = (n) => {
@@ -598,6 +623,8 @@
 					const tr = document.createElement('tr');
 					const tdK = document.createElement('td');
 					tdK.textContent = r.pattern;
+					const tdCV = document.createElement('td');
+					tdCV.textContent = r.cvPattern;
 					const tdL = document.createElement('td');
 					tdL.textContent = String(r.length);
 					const tdOverall = document.createElement('td');
@@ -607,6 +634,7 @@
 					const tdC = document.createElement('td');
 					tdC.textContent = String(r.count);
 					tr.appendChild(tdK);
+					tr.appendChild(tdCV);
 					tr.appendChild(tdL);
 					tr.appendChild(tdOverall);
 					tr.appendChild(tdLen);
@@ -614,6 +642,13 @@
 					tbody.appendChild(tr);
 				});
 				table.appendChild(tbody);
+
+				// Add copy button before table
+				if (typeof window.createTableCopyButton === 'function') {
+					const copyBtn = window.createTableCopyButton(table, `${posTitles[pName]} - ${typeTitles[type]} kopieren`);
+					container.appendChild(copyBtn);
+				}
+
 				container.appendChild(table);
 			});
 		});
