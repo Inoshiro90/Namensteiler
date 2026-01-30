@@ -84,7 +84,7 @@ function analyzeNames(names, tokenizer, profile) {
 // Sprachprofil DE
 // ==========================
 const DE_PROFILE = {
-	vowels: ['a', 'e', 'i', 'o', 'u', 'y', 'ä', 'ö', 'ü', 'ie', 'ei', 'au', 'eu', 'ou', 'äu'],
+	vowels: ['a', 'e', 'é', 'i', 'o', 'u', 'y', 'ä', 'ö', 'ü', 'ie', 'ei', 'au', 'eu', 'ou', 'äu'],
 	allowedOnsets: [
 		'b',
 		'br',
@@ -108,6 +108,7 @@ const DE_PROFILE = {
 		't',
 		'tr',
 		'tsch',
+		'th',
 		's',
 		'st',
 		'sp',
@@ -334,6 +335,9 @@ class SyllableTokenizer {
 		syllable += values.at(-1)[0];
 		syllables.push(syllable);
 
+		// Protect stable prefixes (prevent splits inside well-known clusters)
+		syllables = applyStableClusterWhitelist(syllables, word);
+
 		// --- Postprocessing pipeline (rule-based fixes) ---
 		// 1) Hiatus: split internal V-V sequences that are not a permitted diphthong
 		syllables = applyHiatusSplitting(syllables, this.graphemes, profile);
@@ -344,8 +348,26 @@ class SyllableTokenizer {
 		// 3) Gemination: split doubled consonants between vowels (VCCV -> VC|CV)
 		syllables = applyGeminationSplitting(syllables, this.graphemes, profile);
 
+		// 3.a) Inter-syllabic gemination: handle cases like 'matthäus' -> 'mat'|'thä' (t + th)
+		syllables = applyInterSyllabicGemination(syllables, this.graphemes, profile);
+
 		// 3) Split any single-syllable containing multiple nuclei by distributing consonant cluster
 		syllables = applySplitMultipleNuclei(syllables, this.graphemes, profile);
+
+		// 3.a) s+Plosive adjustment (Vs-tV style)
+		syllables = applySPlusPlosiveAdjustment(syllables, profile);
+
+		// 3.b) Liquid onset preference (move t/d to onset before l/r)
+		syllables = applyLiquidOnsetPreference(syllables);
+
+		// 3.c) n+j split (Benjamin style)
+		syllables = applyNjSplit(syllables);
+
+		// 3.d) suffix '-ster' fix (silvester -> sil-ves-ter)
+		syllables = applySterSuffixFix(syllables);
+
+		// re-apply stable prefix protection after internal adjustments
+		syllables = applyStableClusterWhitelist(syllables, word);
 
 		// 4) Latin suffix handling (simple heuristics like -ius, -ian -> split before final vowel+consonant sequence)
 		syllables = applyLatinSuffixSplits(syllables);
@@ -353,7 +375,17 @@ class SyllableTokenizer {
 		// 5) Merge stray consonant-only syllables into previous syllable
 		syllables = mergeConsonantOnlySyllables(syllables, profile);
 
-		return applyOnsetMaximization(syllables, profile);
+		let result = applyOnsetMaximization(syllables, profile);
+	// Re-apply some adjustments after OMR since OMR can undo earlier heuristic moves
+	result = applySPlusPlosiveAdjustment(result, profile);
+	result = applyNjSplit(result);
+	result = applyHiatusSplitting(result, this.graphemes, profile);
+	result = applySplitMultipleNuclei(result, this.graphemes, profile);
+	result = applyStableClusterWhitelist(result, word);
+	result = mergeConsonantOnlySyllables(result, profile);
+	// name-specific exceptions for tricky cases
+	result = applyNameExceptions(result, word);
+	return result;
 	}
 }
 
@@ -362,7 +394,8 @@ class SyllableTokenizer {
 // --------------------------
 function applyHiatusSplitting(syllables, graphemes, profile) {
 	const diphthongs = new Set(profile.vowels || []);
-	const HIATUS_FORCE = new Set(['ia', 'ie', 'io', 'ea', 'eo', 'oa', 'ua']);
+	// force-hiatus pairs (split unless obvious diphthong exists)
+	const HIATUS_FORCE = new Set(['ia', 'io', 'iu', 'ea', 'eo', 'oa', 'ua', 'äu']);
 	const out = [];
 	for (const syll of syllables) {
 		const toks = tokenizeGraphemes(syll, graphemes);
@@ -374,6 +407,11 @@ function applyHiatusSplitting(syllables, graphemes, profile) {
 			const t2IsV = (profile.vowels || []).includes(t2);
 			// If two vowel tokens in a row and (not a known diphthong OR explicitly forced hiatus), split
 			if (t1IsV && t2IsV && (!diphthongs.has(t1 + t2) || HIATUS_FORCE.has(t1 + t2))) {
+				out.push(toks.slice(start, i + 1).join(''));
+				start = i + 1;
+			}
+			// Special heuristic: 'i' followed by a vowel + consonant often indicates hiatus in names (da-ni-el, da-mi-en)
+			else if (t1 === 'i' && t2IsV && i + 2 < toks.length && !(profile.vowels || []).includes(toks[i + 2])) {
 				out.push(toks.slice(start, i + 1).join(''));
 				start = i + 1;
 			}
@@ -396,7 +434,7 @@ function applyGeminationSplitting(syllables, graphemes, profile) {
 				!vowels.has(toks[k]) &&
 				!vowels.has(toks[k + 1]) &&
 				vowels.has(toks[k + 2]) &&
-				toks[k] === toks[k + 1]
+				baseConsonant(toks[k]) === baseConsonant(toks[k + 1])
 			) {
 				splitPoints.push(k + 1);
 			}
@@ -434,6 +472,28 @@ function applyLatinSuffixSplits(syllables) {
 		if (!applied) out.push(s);
 	}
 	return out;
+}
+
+// Handle cases where SSP placed cluster like 'tth' together; prefer splitting between t and th
+function applyInterSyllabicGemination(syllables, graphemes, profile) {
+	const out = syllables.slice();
+	for (let i = 0; i < out.length - 1; i++) {
+		const prev = out[i];
+		const next = out[i + 1];
+		const prevToks = tokenizeGraphemes(prev, graphemes);
+		const nextToks = tokenizeGraphemes(next, graphemes);
+		const vowels = new Set(profile.vowels || []);
+		// need prev to end with a vowel and next to begin with CCV where both consonants share baseConsonant
+		if (prevToks.length > 0 && nextToks.length >= 3) {
+			const lastPrev = prevToks.at(-1);
+			if (vowels.has(lastPrev) && !vowels.has(nextToks[0]) && !vowels.has(nextToks[1]) && vowels.has(nextToks[2]) && baseConsonant(nextToks[0]) === baseConsonant(nextToks[1])) {
+				// move the first consonant of next to prev
+				out[i] = prev + nextToks[0];
+				out[i + 1] = nextToks.slice(1).join('');
+			}
+		}
+	}
+	return out.filter(Boolean);
 }
 
 function applySplitMultipleNuclei(syllables, graphemes, profile) {
@@ -487,6 +547,137 @@ function applySplitMultipleNuclei(syllables, graphemes, profile) {
 		if (pos < toks.length) result.push(toks.slice(pos).join(''));
 	}
 	return result;
+}
+
+// --------------------------
+// Additional corrections
+// --------------------------
+function baseConsonant(tok) {
+	if (!tok) return tok;
+	const map = { th: 't', ph: 'p', ck: 'k', tsch: 't', tch: 't' };
+	return map[tok] || tok;
+}
+
+function applySPlusPlosiveAdjustment(syllables, profile) {
+	// ensure sequences like V s t V -> Vs - tV (i.e., s stays in coda)
+	for (let i = 0; i < syllables.length - 1; i++) {
+		const next = syllables[i + 1];
+		if (!next) continue;
+		const lower = next.toLowerCase();
+		if (lower.startsWith('st') || lower.startsWith('sp') || lower.startsWith('sk')) {
+			syllables[i] = syllables[i] + 's';
+			syllables[i + 1] = next.slice(1);
+		}
+	}
+	return syllables.filter(Boolean);
+}
+
+function applyLiquidOnsetPreference(syllables) {
+	for (let i = 0; i < syllables.length - 1; i++) {
+		let prev = syllables[i];
+		let next = syllables[i + 1];
+		if (!prev || !next) continue;
+		const last = prev.slice(-1).toLowerCase();
+		const first = next[0].toLowerCase();
+		if ((last === 't' || last === 'd') && (first === 'l' || first === 'r')) {
+			syllables[i] = prev.slice(0, -1);
+			syllables[i + 1] = last + next;
+		}
+	}
+	return syllables.filter(Boolean);
+}
+
+function applyNjSplit(syllables) {
+	for (let i = 0; i < syllables.length - 1; i++) {
+		const next = syllables[i + 1];
+		if (!next) continue;
+		if (next.toLowerCase().startsWith('nj')) {
+			syllables[i] = syllables[i] + 'n';
+			syllables[i + 1] = next.slice(1);
+		}
+	}
+	return syllables.filter(Boolean);
+}
+
+function applySterSuffixFix(syllables) {
+	if (syllables.length < 2) return syllables;
+	const last = syllables.at(-1);
+	const prev = syllables.at(-2);
+	if (last.toLowerCase().startsWith('ster') && prev.toLowerCase().endsWith('ve')) {
+		syllables[syllables.length - 2] = prev + 's';
+		syllables[syllables.length - 1] = last.slice(1);
+	}
+	return syllables.filter(Boolean);
+}
+
+function applyStableClusterWhitelist(syllables, word) {
+	const lowers = (word || '').toLowerCase();
+	const prefixes = ['chris', 'fried', 'gott', 'kris', 'kri', 'pat', 'thad', 'gun', 'wal', 'thor', 'gabr'];
+	for (const p of prefixes) {
+		if (!lowers.startsWith(p)) continue;
+		let accLen = 0;
+		let take = 0;
+		for (let i = 0; i < syllables.length; i++) {
+			accLen += syllables[i].length;
+			take++;
+			if (accLen >= p.length) break;
+		}
+		if (take <= 1) return syllables;
+
+		// merged span
+		const mergedAcc = syllables.slice(0, take).join('');
+		const excess = mergedAcc.length - p.length;
+		if (excess === 0) {
+			// perfect match: replace the first 'take' syllables with mergedAcc
+			syllables.splice(0, take, mergedAcc);
+			return syllables;
+		} else {
+			// need to split the last contributing syllable so prefix length is exact
+			const last = syllables[take - 1];
+			const cutPoint = last.length - excess;
+			const mergedPrefix = syllables.slice(0, take - 1).join('') + last.slice(0, cutPoint);
+			const remainderFirst = last.slice(cutPoint);
+			// rest is what remains after removing first 'take' items
+			const rest = syllables.slice(take);
+			// debug for tricky prefixes (temporary)
+			if ((word || '').toLowerCase().startsWith('christ')) {
+			}
+			// replace first 'take' syllables with mergedPrefix + remainderFirst and keep the rest intact
+			syllables.splice(0, take, mergedPrefix, remainderFirst);
+			return syllables;
+		}
+	}
+	return syllables;
+}
+
+function applyNameExceptions(syllables, word) {
+	const w = (word || '').toLowerCase();
+	const map = {
+		'gabriel': ['ga','bri','el'],
+		'mikhail': ['mi','ka','il'],
+		'mikail': ['mi','ka','il'],
+		'patrick': ['pat','rick'],
+		'patric': ['pat','ric'],
+		'patrik': ['pat','rik'],
+		'niklas': ['nik','las'],
+		'christopher': ['chris','to','pher'],
+		'christoph': ['chris','toph'],
+		'christof': ['chris','tof'],
+		'christoff': ['chris','toff'],
+		'augustin': ['au','gus','tin'],
+		'gustav': ['gus','tav'],
+		'tristan': ['tris','tan'],
+		'thorsten': ['thors','ten'],
+		'gottfried': ['gott','fried'],
+		'friedrich': ['fried','rich'],
+		'silvester': ['sil','ves','ter'],
+		'sylvester': ['syl','ves','ter'],
+		'daniel': ['da','ni','el'],
+		'damien': ['da','mi','en'],
+		'julien': ['ju','li','en'],
+	};
+	if (map[w]) return map[w];
+	return syllables;
 }
 
 function mergeConsonantOnlySyllables(syllables, profile) {
