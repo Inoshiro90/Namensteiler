@@ -84,7 +84,7 @@ function analyzeNames(names, tokenizer, profile) {
 // Sprachprofil DE
 // ==========================
 const DE_PROFILE = {
-	vowels: ['a', 'e', 'i', 'o', 'u', 'y', 'ie', 'ei', 'au', 'eu', 'ou'],
+	vowels: ['a', 'e', 'i', 'o', 'u', 'y', 'ä', 'ö', 'ü', 'ie', 'ei', 'au', 'eu', 'ou', 'äu'],
 	allowedOnsets: [
 		'b',
 		'br',
@@ -112,6 +112,7 @@ const DE_PROFILE = {
 		'st',
 		'sp',
 		'sch',
+		'ch',
 		'm',
 		'n',
 		'l',
@@ -333,8 +334,188 @@ class SyllableTokenizer {
 		syllable += values.at(-1)[0];
 		syllables.push(syllable);
 
+		// --- Postprocessing pipeline (rule-based fixes) ---
+		// 1) Hiatus: split internal V-V sequences that are not a permitted diphthong
+		syllables = applyHiatusSplitting(syllables, this.graphemes, profile);
+
+		// 2) Merge initial semivowel ('y','j') + vowel into same syllable when appropriate
+		syllables = mergeInitialSemivowelSyllable(syllables, profile);
+
+		// 3) Gemination: split doubled consonants between vowels (VCCV -> VC|CV)
+		syllables = applyGeminationSplitting(syllables, this.graphemes, profile);
+
+		// 3) Split any single-syllable containing multiple nuclei by distributing consonant cluster
+		syllables = applySplitMultipleNuclei(syllables, this.graphemes, profile);
+
+		// 4) Latin suffix handling (simple heuristics like -ius, -ian -> split before final vowel+consonant sequence)
+		syllables = applyLatinSuffixSplits(syllables);
+
+		// 5) Merge stray consonant-only syllables into previous syllable
+		syllables = mergeConsonantOnlySyllables(syllables, profile);
+
 		return applyOnsetMaximization(syllables, profile);
 	}
+}
+
+// --------------------------
+// Rule helpers
+// --------------------------
+function applyHiatusSplitting(syllables, graphemes, profile) {
+	const diphthongs = new Set(profile.vowels || []);
+	const HIATUS_FORCE = new Set(['ia', 'ie', 'io', 'ea', 'eo', 'oa', 'ua']);
+	const out = [];
+	for (const syll of syllables) {
+		const toks = tokenizeGraphemes(syll, graphemes);
+		let start = 0;
+		for (let i = 0; i < toks.length - 1; i++) {
+			const t1 = toks[i];
+			const t2 = toks[i + 1];
+			const t1IsV = (profile.vowels || []).includes(t1);
+			const t2IsV = (profile.vowels || []).includes(t2);
+			// If two vowel tokens in a row and (not a known diphthong OR explicitly forced hiatus), split
+			if (t1IsV && t2IsV && (!diphthongs.has(t1 + t2) || HIATUS_FORCE.has(t1 + t2))) {
+				out.push(toks.slice(start, i + 1).join(''));
+				start = i + 1;
+			}
+		}
+		out.push(toks.slice(start).join(''));
+	}
+	return out.filter(Boolean);
+}
+
+function applyGeminationSplitting(syllables, graphemes, profile) {
+	const out = [];
+	const vowels = new Set(profile.vowels || []);
+	for (const syll of syllables) {
+		const toks = tokenizeGraphemes(syll, graphemes);
+		const splitPoints = [];
+		for (let k = 1; k < toks.length - 2; k++) {
+			// pattern V C C V and doubled consonants
+			if (
+				vowels.has(toks[k - 1]) &&
+				!vowels.has(toks[k]) &&
+				!vowels.has(toks[k + 1]) &&
+				vowels.has(toks[k + 2]) &&
+				toks[k] === toks[k + 1]
+			) {
+				splitPoints.push(k + 1);
+			}
+		}
+		if (splitPoints.length === 0) {
+			out.push(syll);
+			continue;
+		}
+		let prev = 0;
+		splitPoints.push(toks.length);
+		for (const p of splitPoints) {
+			out.push(toks.slice(prev, p).join(''));
+			prev = p;
+		}
+	}
+	return out;
+}
+
+function applyLatinSuffixSplits(syllables) {
+	const out = [];
+	const suffixes = ['ius', 'ian', 'eus', 'eas', 'eum', 'eo', 'eal'];
+	for (const s of syllables) {
+		const lower = s.toLowerCase();
+		let applied = false;
+		for (const suf of suffixes) {
+			if (lower.endsWith(suf) && s.length > suf.length + 1) {
+				// Cut so that short suffixes like 'ius' become 'i'|'us' (cut position = len - (suf.length - 1))
+				const cut = s.length - (suf.length - 1);
+				out.push(s.slice(0, cut));
+				out.push(s.slice(cut));
+				applied = true;
+				break;
+			}
+		}
+		if (!applied) out.push(s);
+	}
+	return out;
+}
+
+function applySplitMultipleNuclei(syllables, graphemes, profile) {
+	const result = [];
+	for (const syll of syllables) {
+		const toks = tokenizeGraphemes(syll, graphemes);
+		// find vowel token positions; treat adjacent tokens that form a known diphthong as a single nucleus
+		const vowelIdx = [];
+		const diphthongs = new Set(profile.vowels || []);
+		for (let i = 0; i < toks.length; i++) {
+			// treat initial 'y'/'j' as semivowel (not as full vowel) for multi-nucleus splitting
+			if (i === 0 && (toks[i] === 'y' || toks[i] === 'j')) continue;
+			if ((profile.vowels || []).includes(toks[i])) {
+				// look ahead for adjacent vowel forming diphthong
+				if (i + 1 < toks.length && (profile.vowels || []).includes(toks[i + 1]) && diphthongs.has(toks[i] + toks[i + 1])) {
+					vowelIdx.push(i); // treat i and i+1 as one nucleus at position i
+					i += 1; // skip next token
+				} else {
+					vowelIdx.push(i);
+				}
+			}
+		}
+		if (vowelIdx.length <= 1) {
+			result.push(syll);
+			continue;
+		}
+
+		let pos = 0;
+		for (let v = 0; v < vowelIdx.length - 1; v++) {
+			const leftV = vowelIdx[v];
+			const rightV = vowelIdx[v + 1];
+			const clusterTokens = toks.slice(leftV + 1, rightV);
+			const clusterStr = clusterTokens.join('');
+			const {coda, onset} = splitOnsetCoda(clusterStr, profile.allowedOnsets || []);
+			// calculate coda token count
+			let codaCount = 0;
+			let acc = '';
+			for (let k = 0; k < clusterTokens.length; k++) {
+				acc += clusterTokens[k];
+				if (acc === coda) {
+					codaCount = k + 1;
+					break;
+				}
+			}
+			// left piece: tokens from pos .. leftV + 1 + codaCount
+			const leftPiece = toks.slice(pos, leftV + 1 + codaCount).join('');
+			result.push(leftPiece);
+			pos = leftV + 1 + codaCount;
+		}
+		// push remainder
+		if (pos < toks.length) result.push(toks.slice(pos).join(''));
+	}
+	return result;
+}
+
+function mergeConsonantOnlySyllables(syllables, profile) {
+	const out = [];
+	for (const s of syllables) {
+		const hasVowel = (profile.vowels || []).some((v) => s.includes(v));
+		if (!hasVowel && out.length > 0) {
+			// merge with previous
+			out[out.length - 1] = out[out.length - 1] + s;
+		} else {
+			out.push(s);
+		}
+	}
+	return out;
+}
+
+function mergeInitialSemivowelSyllable(syllables, profile) {
+	if (!syllables || syllables.length < 2) return syllables;
+	const first = syllables[0];
+	const semi = (profile.semiVowels || []).slice();
+	// always treat 'y' and 'j' as possible semivowels for this heuristic
+	if (!semi.includes('y')) semi.push('y');
+	if (!semi.includes('j')) semi.push('j');
+	if (semi.includes(first.toLowerCase())) {
+		// merge semivowel at word start with the following syllable
+		syllables[0] = syllables[0] + syllables[1];
+		syllables.splice(1, 1);
+	}
+	return syllables;
 }
 
 function createTokenizerFromUI() {
