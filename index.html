@@ -1,201 +1,985 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-bs-theme="dark">
 
 <head>
-	<title>Namensgenerator</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<!-- <link rel="stylesheet" href="styles/custom.css"> -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Namensteiler — Silbenanalyse & Statistik</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="namensteiler.css">
 </head>
 
 <body>
-	<div class="container mt-5">
-		<h1><b>Namensteiler</b></h1>
-		<p>Teile Namen in Buchstaben auf und berechne die Wahrscheinlichkeit der vorhandenen Buchstaben pro Stelle.</p>
-		<form id="nameForm">
-			<div class="form-group">
-				<label for="namesInput">Gib hier die Namen ein (jeweils ein Name pro Zeile):</label>
-				<textarea class="form-control" id="namesInput" rows="16"
-					placeholder="Fulano&#10;Hanako&#10;Hong&#10;Ivan&#10;Jan&#10;Jean&#10;John&#10;Juan&#10;Mario&#10;Matti&#10;Max&#10;Mehmet&#10;Otto&#10;Pinco&#10;Taro&#10;Zhang&#10;"></textarea>
-			</div>
 
-			<div class="form-group">
-				<label for="vowelInput">Vokale (Kommagetrennt, z.B. a,e,i,o,u,ä,ö,ü,y):</label>
-				<input id="vowelInput" class="form-control" type="text"
-					value="a,e,i,o,u,ä,ö,ü,y,à,á,â,ã,å,æ,è,é,ê,ë,ì,í,î,ï,ò,ó,ô,õ,ø,ù,ú,û,ý,ÿ,ā,ă,ą,ē,ĕ,ė,ę,ě,ĩ,ī,ĭ,į,ı,ĳ,ō,ŏ,ő,œ,ũ,ū,ŭ,ů,ű,ų,ŷ,ÿ">
-				<small class="form-text text-muted">Passe dies an, falls in deinen Namen andere Buchstaben als Vokale
-					gelten.</small>
-			</div>
-			<!-- 
-			<div class="form-group">
-				<label for="sonorantsInput">Sonoranten (Kommagetrennt, z.B. m,n,ng,l,r,j,w):</label>
-				<input id="sonorantsInput" class="form-control" type="text" value="m,n,ng,l,r,j,w">
-				<small class="form-text text-muted">Nasale, Laterale, Vibranten und Gleitlaute. Diese sind sonorer als
-					Obstruenten und besser für Silbenkerne geeignet.</small>
-			</div>
+  <nav class="navbar border-bottom border-secondary border-opacity-25 mb-4" style="background:rgba(255,255,255,.02)">
+    <div class="container-xl">
+      <span class="navbar-brand mb-0">
+        <span class="app-brand">Namensteiler</span>
+        <span class="app-subtitle ms-2 d-none d-sm-inline">Silbenanalyse · SSP + MOP · 73 Sprachprofile ·
+          Vollstatistik</span>
+      </span>
+      <span class="text-muted small d-none d-md-block">
+        <i class="bi bi-info-circle me-1"></i>Längste-Treffer-zuerst · Gemination · Sonoritätssequenzprinzip
+      </span>
+    </div>
+  </nav>
 
-			<div class="form-group">
-				<label for="obstrutentsInput">Obstruenten (Kommagetrennt, z.B. p,b,t,d,k,g,f,v,s,z,sch,ch):</label>
-				<input id="obstrutentsInput" class="form-control" type="text" value="p,b,t,d,k,g,f,v,s,z,sch,ch,tsch">
-				<small class="form-text text-muted">Plosive, Frikative und Affrikaten. Diese sind weniger sonorant und
-					weniger ideal für Silbenkerne.</small>
-			</div>
+  <div class="container-xl pb-5">
 
-			<div class="form-group">
-				<label for="affricatesInput">Affrikaten (Kommagetrennt, z.B. ts,tsch,pf,dz):</label>
-				<input id="affricatesInput" class="form-control" type="text" value="ts,tsch,pf,dz">
-				<small class="form-text text-muted">Affrikaten werden als ein einzelner Konsonant behandelt (z.B. pf in
-					"Trumpf").</small>
-			</div>
+    <!-- PROFILE SELECTOR -->
+    <div class="card mb-4">
+      <div class="card-body py-3">
+        <div class="row align-items-center g-3">
+          <div class="col-auto">
+            <label class="form-label mb-0 text-muted small text-uppercase fw-semibold"
+              style="letter-spacing:.08em;font-size:.65rem">
+              <i class="bi bi-translate me-1"></i>Sprachprofil
+            </label>
+          </div>
+          <div class="col-sm-auto">
+            <select id="profile-select" class="form-select form-select-sm" style="min-width:280px"
+              onchange="applyProfile(this.value)">
+              <option value="universal" selected>Universal (Standard)</option>
+              <optgroup label="Germanisch">
+                <option value="german">Deutsch</option>
+                <option value="austrian">Österreichisch</option>
+                <option value="english">Englisch / Amerikanisch</option>
+                <option value="american">Amerikanisch</option>
+                <option value="dutch">Niederländisch</option>
+                <option value="belgian">Belgisch</option>
+              </optgroup>
+              <optgroup label="Skandinavisch">
+                <option value="swedish">Schwedisch</option>
+                <option value="norwegian">Norwegisch</option>
+                <option value="danish">Dänisch</option>
+                <option value="icelandic">Isländisch</option>
+              </optgroup>
+              <optgroup label="Keltisch">
+                <option value="scottish">Schottisch / Gälisch</option>
+                <option value="irish">Irisch / Gälisch</option>
+              </optgroup>
+              <optgroup label="Romanisch">
+                <option value="french">Französisch</option>
+                <option value="french_canadian">Kanadisches Französisch</option>
+                <option value="spanish">Spanisch</option>
+                <option value="portuguese">Portugiesisch</option>
+                <option value="brazilian">Brasilianisch</option>
+                <option value="italian">Italienisch</option>
+                <option value="romanian">Rumänisch</option>
+              </optgroup>
+              <optgroup label="Slawisch">
+                <option value="russian">Russisch</option>
+                <option value="ukrainian">Ukrainisch</option>
+                <option value="polish">Polnisch</option>
+                <option value="czech_slovak">Tschechisch / Slowakisch</option>
+                <option value="serbo_croatian">Serbisch / Kroatisch</option>
+                <option value="bosnian">Bosnisch</option>
+                <option value="bulgarian">Bulgarisch</option>
+                <option value="macedonian">Mazedonisch</option>
+                <option value="slovene">Slowenisch</option>
+              </optgroup>
+              <optgroup label="Baltisch / Finnisch-Ugrisch">
+                <option value="latvian">Lettisch</option>
+                <option value="lithuanian">Litauisch</option>
+                <option value="estonian">Estnisch</option>
+                <option value="finnish">Finnisch</option>
+                <option value="hungarian">Ungarisch</option>
+              </optgroup>
+              <optgroup label="Griechisch / Albanisch">
+                <option value="greek">Griechisch</option>
+                <option value="albanian">Albanisch</option>
+              </optgroup>
+              <optgroup label="Türkisch / Kaukasisch">
+                <option value="turkish">Türkisch</option>
+                <option value="azeri">Aserbaidschanisch</option>
+                <option value="kazakh">Kasachisch</option>
+                <option value="georgian">Georgisch</option>
+                <option value="tajik_uzbek">Tadschikisch / Usbekisch</option>
+              </optgroup>
+              <optgroup label="Arabisch / Semitisch">
+                <option value="arabic">Arabisch</option>
+                <option value="persian">Persisch / Dari</option>
+                <option value="kurdish">Kurdisch</option>
+                <option value="berber">Berber / Tamazight</option>
+                <option value="hebrew">Hebräisch</option>
+                <option value="pashtun">Paschtu</option>
+                <option value="armenian">Armenisch</option>
+              </optgroup>
+              <optgroup label="Südasiatisch">
+                <option value="hindi">Hindi</option>
+                <option value="bengali">Bengalisch</option>
+                <option value="punjabi">Punjabi</option>
+                <option value="sinhalese">Singhalesisch</option>
+              </optgroup>
+              <optgroup label="Subsahara-Afrika">
+                <option value="ethiopian">Äthiopisch</option>
+              </optgroup>
+              <optgroup label="Ostasiatisch">
+                <option value="japanese">Japanisch</option>
+                <option value="korean">Koreanisch</option>
+                <option value="chinese">Chinesisch</option>
+                <option value="mongolian">Mongolisch</option>
+              </optgroup>
+              <optgroup label="Südostasiatisch">
+                <option value="vietnamese">Vietnamesisch</option>
+                <option value="thai_lao">Thailändisch / Laotisch</option>
+                <option value="khmer">Khmer / Kambodschanisch</option>
+                <option value="indonesian">Indonesisch / Malaiisch</option>
+                <option value="malay">Malaiisch</option>
+                <option value="filipino">Philippinisch / Tagalog</option>
+                <option value="burmese">Burmesisch / Myanmar</option>
+              </optgroup>
+              <optgroup label="Westafrika">
+                <option value="akan">Akan / Twi / Ewe</option>
+                <option value="nigerian">Nigerianisch / Yoruba / Igbo</option>
+                <option value="senegalese">Senegalesisch / Wolof</option>
+                <option value="cameroonian">Kamerunisch</option>
+              </optgroup>
+              <optgroup label="Ostafrika / Bantu">
+                <option value="swahili">Swahili</option>
+                <option value="bantu">Bantu</option>
+                <option value="congolese">Kongolesisch</option>
+                <option value="south_african">Südafrikanisch</option>
+              </optgroup>
+              <optgroup label="Pazifisch">
+                <option value="maori">Maori</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="col">
+            <p id="profile-desc" class="profile-desc text-muted mb-0">
+              Universalprofil – optimale Erkennung für Namen aus aller Welt – 30+ Sprachen, Diacritica, Geminate
+            </p>
+          </div>
+          <div class="col-auto d-flex gap-2 align-items-center">
+            <button class="btn btn-sm btn-outline-info py-0 px-2" onclick="exportProfile()"
+              title="Profil exportieren (JSON)">
+              <i class="bi bi-download me-1"></i>Export
+            </button>
+            <label class="btn btn-sm btn-outline-info py-0 px-2 mb-0" title="Profil importieren (JSON)"
+              style="cursor:pointer">
+              <i class="bi bi-upload me-1"></i>Import
+              <input type="file" id="import-file-input" accept=".json" style="display:none"
+                onchange="importProfile(this)">
+            </label>
+            <button class="btn btn-sm btn-outline-secondary" onclick="resetDefaults()" title="Zurücksetzen">
+              <i class="bi bi-arrow-counterclockwise me-1"></i>Reset
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-			<div class="form-group">
-				<label for="extrasyllabicInput">Extrasilbische Grapheme (Kommagetrennt, z.B. s,sp,st):</label>
-				<input id="extrasyllabicInput" class="form-control" type="text" value="s,sp,st,str">
-				<small class="form-text text-muted">Konsonanten, die am Wort-Anfang/-Ende außerhalb der normalen
-					Silbenstruktur stehen (z.B. 's' in "Sprachst" = XCCVCXX).</small>
-			</div>
+    <div class="row g-4">
 
-			<div class="form-group">
-				<label for="maxConsonantClusterInput">Maximale Konsonanten pro Silbe (z.B. CCVCC):</label>
-				<input id="maxConsonantClusterInput" class="form-control" type="text" value="CCVCC">
-				<small class="form-text text-muted">Definiert die maximale Anzahl von Konsonanten vor/nach dem Vokal
-					(C=Konsonant, V=Vokal).</small>
-			</div>
+      <!-- LEFT COLUMN -->
+      <div class="col-xl-8">
 
-			<div class="form-group">
-				<label for="forbiddenClustersInput">Unmögliche Konsonantenkombinationen (Kommagetrennt, z.B.
-					tm,dm,pn):</label>
-				<input id="forbiddenClustersInput" class="form-control" type="text" value="tm,dm,pn,bp,kg,gk">
-				<small class="form-text text-muted">Konsonantenkombinationen, die nicht erlaubt sind und den SSP
-					verletzen.</small>
-			</div>
+        <div class="card mb-4">
+          <div class="card-header d-flex align-items-center justify-content-between py-2" style="cursor:pointer"
+            onclick="toggleRightCard('sonority-body','chev-sonority')">
+            <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+              <i class="bi bi-sliders me-1"></i>Sonoritätsklassen
+            </span>
+            <div class="d-flex align-items-center gap-2" onclick="event.stopPropagation()">
+              <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="addClassRow()">
+                <i class="bi bi-plus-lg me-1"></i>Klasse hinzufügen
+              </button>
+              <i class="bi bi-chevron-down" id="chev-sonority"
+                style="font-size:.75rem;transition:transform .2s;transform:rotate(-90deg)"></i>
+            </div>
+          </div>
+          <div class="card-body p-0" id="sonority-body" style="display:none">
+            <div class="table-responsive">
+              <table class="table table-sm table-hover mb-0 classes-table" id="classes-table">
+                <thead class="table-dark">
+                  <tr>
+                    <th class="ps-3" style="width:22px"></th>
+                    <th style="width:58px">Wert</th>
+                    <th style="min-width:170px">Klasse</th>
+                    <th>Grapheme <span class="fw-normal text-muted">(kommagetrennt, längste zuerst)</span></th>
+                    <th style="width:36px"></th>
+                  </tr>
+                </thead>
+                <tbody id="classes-body">
+                  <tr>
+                    <td class="align-middle text-center" style="width:22px">
+                      <span class="d-inline-block rounded-circle" id="swatch-0"
+                        style="width:10px;height:10px;background:#d63a3a"></span>
+                    </td>
+                    <td style="width:58px">
+                      <input class="input-val form-control form-control-sm text-center font-monospace px-1"
+                        type="number" min="1" max="20" value="1" oninput="syncSwatch(this,0)" onchange="updateLegend()">
+                    </td>
+                    <td style="min-width:170px">
+                      <input class="input-name form-control form-control-sm" type="text" value="Stimmlose Plosive">
+                    </td>
+                    <td>
+                      <input class="input-graphemes form-control form-control-sm font-monospace" type="text"
+                        value="ck, tch, qu, p, t, k, c, q, ķ, ț, ť" placeholder="Grapheme, kommagetrennt">
+                    </td>
+                    <td style="width:36px">
+                      <button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="removeRow(this)"
+                        title="Entfernen">
+                        <i class="bi bi-x-lg" style="font-size:.7rem"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="align-middle text-center" style="width:22px">
+                      <span class="d-inline-block rounded-circle" id="swatch-1"
+                        style="width:10px;height:10px;background:#e0553d"></span>
+                    </td>
+                    <td style="width:58px">
+                      <input class="input-val form-control form-control-sm text-center font-monospace px-1"
+                        type="number" min="1" max="20" value="2" oninput="syncSwatch(this,1)" onchange="updateLegend()">
+                    </td>
+                    <td style="min-width:170px">
+                      <input class="input-name form-control form-control-sm" type="text" value="Stimmhafte Plosive">
+                    </td>
+                    <td>
+                      <input class="input-graphemes form-control form-control-sm font-monospace" type="text"
+                        value="b, d, g, ģ, ď" placeholder="Grapheme, kommagetrennt">
+                    </td>
+                    <td style="width:36px">
+                      <button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="removeRow(this)"
+                        title="Entfernen">
+                        <i class="bi bi-x-lg" style="font-size:.7rem"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="align-middle text-center" style="width:22px">
+                      <span class="d-inline-block rounded-circle" id="swatch-2"
+                        style="width:10px;height:10px;background:#e07a2a"></span>
+                    </td>
+                    <td style="width:58px">
+                      <input class="input-val form-control form-control-sm text-center font-monospace px-1"
+                        type="number" min="1" max="20" value="3" oninput="syncSwatch(this,2)" onchange="updateLegend()">
+                    </td>
+                    <td style="min-width:170px">
+                      <input class="input-name form-control form-control-sm" type="text" value="Stimmlose Affrikate">
+                    </td>
+                    <td>
+                      <input class="input-graphemes form-control form-control-sm font-monospace" type="text"
+                        value="tsch, ts, tz, tsh, č, ć" placeholder="Grapheme, kommagetrennt">
+                    </td>
+                    <td style="width:36px">
+                      <button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="removeRow(this)"
+                        title="Entfernen">
+                        <i class="bi bi-x-lg" style="font-size:.7rem"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="align-middle text-center" style="width:22px">
+                      <span class="d-inline-block rounded-circle" id="swatch-3"
+                        style="width:10px;height:10px;background:#e0a020"></span>
+                    </td>
+                    <td style="width:58px">
+                      <input class="input-val form-control form-control-sm text-center font-monospace px-1"
+                        type="number" min="1" max="20" value="4" oninput="syncSwatch(this,3)" onchange="updateLegend()">
+                    </td>
+                    <td style="min-width:170px">
+                      <input class="input-name form-control form-control-sm" type="text" value="Stimmhafte Affrikate">
+                    </td>
+                    <td>
+                      <input class="input-graphemes form-control form-control-sm font-monospace" type="text"
+                        value="dsch, dz, dj, dž" placeholder="Grapheme, kommagetrennt">
+                    </td>
+                    <td style="width:36px">
+                      <button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="removeRow(this)"
+                        title="Entfernen">
+                        <i class="bi bi-x-lg" style="font-size:.7rem"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="align-middle text-center" style="width:22px">
+                      <span class="d-inline-block rounded-circle" id="swatch-4"
+                        style="width:10px;height:10px;background:#c8c020"></span>
+                    </td>
+                    <td style="width:58px">
+                      <input class="input-val form-control form-control-sm text-center font-monospace px-1"
+                        type="number" min="1" max="20" value="5" oninput="syncSwatch(this,4)" onchange="updateLegend()">
+                    </td>
+                    <td style="min-width:170px">
+                      <input class="input-name form-control form-control-sm" type="text" value="Stimmlose Frikative">
+                    </td>
+                    <td>
+                      <input class="input-graphemes form-control form-control-sm font-monospace" type="text"
+                        value="sch, sh, ph, th, ch, ß, f, h, s, x, ç, š, ś, ş, ș, þ"
+                        placeholder="Grapheme, kommagetrennt">
+                    </td>
+                    <td style="width:36px">
+                      <button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="removeRow(this)"
+                        title="Entfernen">
+                        <i class="bi bi-x-lg" style="font-size:.7rem"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="align-middle text-center" style="width:22px">
+                      <span class="d-inline-block rounded-circle" id="swatch-5"
+                        style="width:10px;height:10px;background:#9ab820"></span>
+                    </td>
+                    <td style="width:58px">
+                      <input class="input-val form-control form-control-sm text-center font-monospace px-1"
+                        type="number" min="1" max="20" value="6" oninput="syncSwatch(this,5)" onchange="updateLegend()">
+                    </td>
+                    <td style="min-width:170px">
+                      <input class="input-name form-control form-control-sm" type="text" value="Stimmhafte Frikative">
+                    </td>
+                    <td>
+                      <input class="input-graphemes form-control form-control-sm font-monospace" type="text"
+                        value="zh, ž, ğ, v, w, z, ð, ż, ź" placeholder="Grapheme, kommagetrennt">
+                    </td>
+                    <td style="width:36px">
+                      <button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="removeRow(this)"
+                        title="Entfernen">
+                        <i class="bi bi-x-lg" style="font-size:.7rem"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="align-middle text-center" style="width:22px">
+                      <span class="d-inline-block rounded-circle" id="swatch-6"
+                        style="width:10px;height:10px;background:#4db870"></span>
+                    </td>
+                    <td style="width:58px">
+                      <input class="input-val form-control form-control-sm text-center font-monospace px-1"
+                        type="number" min="1" max="20" value="7" oninput="syncSwatch(this,6)" onchange="updateLegend()">
+                    </td>
+                    <td style="min-width:170px">
+                      <input class="input-name form-control form-control-sm" type="text" value="Nasale">
+                    </td>
+                    <td>
+                      <input class="input-graphemes form-control form-control-sm font-monospace" type="text"
+                        value="ng, nh, ñ, ŋ, ň, ń, m, n, ņ" placeholder="Grapheme, kommagetrennt">
+                    </td>
+                    <td style="width:36px">
+                      <button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="removeRow(this)"
+                        title="Entfernen">
+                        <i class="bi bi-x-lg" style="font-size:.7rem"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="align-middle text-center" style="width:22px">
+                      <span class="d-inline-block rounded-circle" id="swatch-7"
+                        style="width:10px;height:10px;background:#2abda4"></span>
+                    </td>
+                    <td style="width:58px">
+                      <input class="input-val form-control form-control-sm text-center font-monospace px-1"
+                        type="number" min="1" max="20" value="8" oninput="syncSwatch(this,7)" onchange="updateLegend()">
+                    </td>
+                    <td style="min-width:170px">
+                      <input class="input-name form-control form-control-sm" type="text" value="Laterale">
+                    </td>
+                    <td>
+                      <input class="input-graphemes form-control form-control-sm font-monospace" type="text"
+                        value="ĺ, ļ, ľ, ł, l" placeholder="Grapheme, kommagetrennt">
+                    </td>
+                    <td style="width:36px">
+                      <button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="removeRow(this)"
+                        title="Entfernen">
+                        <i class="bi bi-x-lg" style="font-size:.7rem"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="align-middle text-center" style="width:22px">
+                      <span class="d-inline-block rounded-circle" id="swatch-8"
+                        style="width:10px;height:10px;background:#2aadcc"></span>
+                    </td>
+                    <td style="width:58px">
+                      <input class="input-val form-control form-control-sm text-center font-monospace px-1"
+                        type="number" min="1" max="20" value="9" oninput="syncSwatch(this,8)" onchange="updateLegend()">
+                    </td>
+                    <td style="min-width:170px">
+                      <input class="input-name form-control form-control-sm" type="text" value="Rhotische">
+                    </td>
+                    <td>
+                      <input class="input-graphemes form-control form-control-sm font-monospace" type="text"
+                        value="rh, ř, r" placeholder="Grapheme, kommagetrennt">
+                    </td>
+                    <td style="width:36px">
+                      <button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="removeRow(this)"
+                        title="Entfernen">
+                        <i class="bi bi-x-lg" style="font-size:.7rem"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="align-middle text-center" style="width:22px">
+                      <span class="d-inline-block rounded-circle" id="swatch-9"
+                        style="width:10px;height:10px;background:#4a9ee8"></span>
+                    </td>
+                    <td style="width:58px">
+                      <input class="input-val form-control form-control-sm text-center font-monospace px-1"
+                        type="number" min="1" max="20" value="10" oninput="syncSwatch(this,9)"
+                        onchange="updateLegend()">
+                    </td>
+                    <td style="min-width:170px">
+                      <input class="input-name form-control form-control-sm" type="text" value="Approximanten">
+                    </td>
+                    <td>
+                      <input class="input-graphemes form-control form-control-sm font-monospace" type="text" value="j"
+                        placeholder="Grapheme, kommagetrennt">
+                    </td>
+                    <td style="width:36px">
+                      <button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="removeRow(this)"
+                        title="Entfernen">
+                        <i class="bi bi-x-lg" style="font-size:.7rem"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="align-middle text-center" style="width:22px">
+                      <span class="d-inline-block rounded-circle" id="swatch-10"
+                        style="width:10px;height:10px;background:#7a7ef5"></span>
+                    </td>
+                    <td style="width:58px">
+                      <input class="input-val form-control form-control-sm text-center font-monospace px-1"
+                        type="number" min="1" max="20" value="11" oninput="syncSwatch(this,10)"
+                        onchange="updateLegend()">
+                    </td>
+                    <td style="min-width:170px">
+                      <input class="input-name form-control form-control-sm" type="text" value="Geschlossene Vokale">
+                    </td>
+                    <td>
+                      <input class="input-graphemes form-control form-control-sm font-monospace" type="text"
+                        value="yu, yi, uu, ii, ü, ű, ú, í, ï, ū, ī, ı, ý, î, û, ů, y, i, u"
+                        placeholder="Grapheme, kommagetrennt">
+                    </td>
+                    <td style="width:36px">
+                      <button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="removeRow(this)"
+                        title="Entfernen">
+                        <i class="bi bi-x-lg" style="font-size:.7rem"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="align-middle text-center" style="width:22px">
+                      <span class="d-inline-block rounded-circle" id="swatch-11"
+                        style="width:10px;height:10px;background:#a060e8"></span>
+                    </td>
+                    <td style="width:58px">
+                      <input class="input-val form-control form-control-sm text-center font-monospace px-1"
+                        type="number" min="1" max="20" value="12" oninput="syncSwatch(this,11)"
+                        onchange="updateLegend()">
+                    </td>
+                    <td style="min-width:170px">
+                      <input class="input-name form-control form-control-sm" type="text" value="Mittlere Vokale">
+                    </td>
+                    <td>
+                      <input class="input-graphemes form-control form-control-sm font-monospace" type="text"
+                        value="ye, yo, ö, ő, é, è, ê, ë, ó, ò, ô, ø, œ, ē, ō, ė, õ, ě, ę, e, o"
+                        placeholder="Grapheme, kommagetrennt">
+                    </td>
+                    <td style="width:36px">
+                      <button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="removeRow(this)"
+                        title="Entfernen">
+                        <i class="bi bi-x-lg" style="font-size:.7rem"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="align-middle text-center" style="width:22px">
+                      <span class="d-inline-block rounded-circle" id="swatch-12"
+                        style="width:10px;height:10px;background:#d050c8"></span>
+                    </td>
+                    <td style="width:58px">
+                      <input class="input-val form-control form-control-sm text-center font-monospace px-1"
+                        type="number" min="1" max="20" value="13" oninput="syncSwatch(this,12)"
+                        onchange="updateLegend()">
+                    </td>
+                    <td style="min-width:170px">
+                      <input class="input-name form-control form-control-sm" type="text" value="Offene Vokale">
+                    </td>
+                    <td>
+                      <input class="input-graphemes form-control form-control-sm font-monospace" type="text"
+                        value="äu, au, eu, ai, ei, ie, ou, oi, oo, ee, ay, oa, ow, aa, ya, ä, á, à, â, ã, å, æ, ā, ă, ą, ǎ, a"
+                        placeholder="Grapheme, kommagetrennt">
+                    </td>
+                    <td style="width:36px">
+                      <button class="btn btn-sm btn-outline-danger py-0 px-1" onclick="removeRow(this)"
+                        title="Entfernen">
+                        <i class="bi bi-x-lg" style="font-size:.7rem"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
-			<div class="form-group">
-				<label for="sonorityHierarchyInput">Sonoritätshierarchie (Kommagetrennt, v.u.n.o., z.B.
-					plosive,fricative,nasal,liquid,glide,vowel):</label>
-				<input id="sonorityHierarchyInput" class="form-control" type="text"
-					value="plosive,fricative,nasal,liquid,glide,vowel">
-				<small class="form-text text-muted">Hierarchische Reihenfolge von Konsonanten nach Sonorität (von
-					weniger zu mehr Sonorität). Bestimmt die SSP-Validierung.</small>
-			</div> -->
+        <div class="card">
+          <div class="card-header py-2 d-flex justify-content-between align-items-center" style="cursor:pointer"
+            onclick="toggleClusterCard()">
+            <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+              <i class="bi bi-intersect me-1"></i>Cluster-Phonotaktik
+            </span>
+            <i class="bi bi-chevron-down text-muted" id="cluster-chevron"
+              style="font-size:.7rem;transition:transform .2s"></i>
+          </div>
+          <div id="cluster-card-body">
+            <div class="card-body pb-1">
+              <p class="small text-muted mb-2" style="font-size:.72rem;line-height:1.4">
+                Sonoritätsklassen-Sequenzen, z. B. <code>1+9</code> = Pvl+Rh (pr,tr,kr), <code>5+1+9</code> = Fvl+Pvl+Rh
+                (str).
+                Kommagetrennt. Leeres Erlaubt-Feld = keine Whitelist.
+              </p>
+              <div id="cluster-legend" class="mb-2 d-flex flex-wrap gap-1" style="font-size:.62rem"></div>
+            </div>
+            <div class="card-body pt-0">
+              <div class="row g-2">
+                <div class="col-6">
+                  <label class="form-label mb-1" style="font-size:.7rem;color:#6fbf73">
+                    <i class="bi bi-check-circle me-1"></i>Erlaubte Onsets
+                  </label>
+                  <textarea id="cluster-ao" class="form-control form-control-sm font-monospace" rows="4"
+                    oninput="analyze()"></textarea>
+                </div>
+                <div class="col-6">
+                  <label class="form-label mb-1" style="font-size:.7rem;color:#e06c6c">
+                    <i class="bi bi-x-circle me-1"></i>Verbotene Onsets
+                  </label>
+                  <textarea id="cluster-fo" class="form-control form-control-sm font-monospace" rows="4"
+                    oninput="analyze()"></textarea>
+                </div>
+                <div class="col-6">
+                  <label class="form-label mb-1" style="font-size:.7rem;color:#6fbf73">
+                    <i class="bi bi-check-circle me-1"></i>Erlaubte Kodas
+                  </label>
+                  <textarea id="cluster-ac" class="form-control form-control-sm font-monospace" rows="4"
+                    oninput="analyze()"></textarea>
+                </div>
+                <div class="col-6">
+                  <label class="form-label mb-1" style="font-size:.7rem;color:#e06c6c">
+                    <i class="bi bi-x-circle me-1"></i>Verbotene Kodas
+                  </label>
+                  <textarea id="cluster-fc" class="form-control form-control-sm font-monospace" rows="4"
+                    oninput="analyze()"></textarea>
+                </div>
+              </div>
+              <div class="row g-2 mt-2 pt-2" style="border-top:1px solid rgba(255,255,255,.06)">
+                <div class="col-7">
+                  <label class="form-label mb-1" style="font-size:.7rem;color:#c78af0">
+                    <i class="bi bi-diagram-2 me-1"></i>Verbotene Onset-Paare
+                    <span class="text-muted d-block" style="font-size:.6rem">Homorgane Cluster, z.&nbsp;B.
+                      <code>tn, pm, dn</code> — kommagetrennt</span>
+                  </label>
+                  <input type="text" id="cluster-fop" class="form-control form-control-sm font-monospace"
+                    placeholder="tn, pm, dn, bm" oninput="analyze()">
+                </div>
+                <div class="col-5">
+                  <label class="form-label mb-1" style="font-size:.7rem;color:#8ab4f8">
+                    <i class="bi bi-grid-3x2 me-1"></i>Maximale Silbenstruktur
+                    <span class="text-muted d-block" style="font-size:.6rem">Max. C in Onset / Koda</span>
+                  </label>
+                  <div class="d-flex gap-2 align-items-center">
+                    <div class="d-flex align-items-center gap-1">
+                      <span style="font-size:.65rem;color:#aaa">Onset</span>
+                      <input type="number" id="max-onset"
+                        class="form-control form-control-sm text-center font-monospace" style="width:52px" min="0"
+                        max="8" value="0" oninput="updateCvBadge(); analyze()">
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                      <span style="font-size:.65rem;color:#aaa">Koda</span>
+                      <input type="number" id="max-coda" class="form-control form-control-sm text-center font-monospace"
+                        style="width:52px" min="0" max="8" value="0" oninput="updateCvBadge(); analyze()">
+                    </div>
+                    <div id="cv-structure-badge"
+                      style="font-size:.72rem;color:#8ab4f8;font-family:monospace;letter-spacing:.05em;white-space:nowrap">
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-			<hr>
-			<div class="form-group">
-				<label for="profileSelect"><strong>Sprachprofil</strong></label>
-				<select id="profileSelect" class="form-control">
-					<option value="de">Deutsch</option>
-					<option value="en">Englisch</option>
-				</select>
-			</div>
+              <div class="mt-2 d-flex gap-2 flex-wrap align-items-center">
+                <button class="btn btn-outline-secondary btn-sm py-0" style="font-size:.72rem"
+                  onclick="clearClusters()"><i class="bi bi-trash me-1"></i>Leeren</button>
+                <button class="btn btn-outline-secondary btn-sm py-0" style="font-size:.72rem"
+                  onclick="reloadProfileClusters()"><i class="bi bi-arrow-counterclockwise me-1"></i>Profil
+                  zurücksetzen</button>
+                <span class="text-muted ms-auto" style="font-size:.65rem" id="cluster-count"></span>
+              </div>
+            </div>
+            <div class="card-body pt-0 border-top border-secondary border-opacity-25 mt-1">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <i class="bi bi-journals" style="color:#8ab4f8;font-size:.8rem"></i>
+                <span style="font-size:.7rem;color:#8ab4f8;font-weight:600">Morphem-Wörterbuch</span>
+                <span class="text-muted ms-1" style="font-size:.63rem">— ein Eintrag pro Zeile, erzwingt Silbengrenzen
+                  an Morphemgrenzen</span>
+              </div>
+              <div class="row g-2">
+                <div class="col-4">
+                  <label class="form-label mb-1" style="font-size:.67rem;color:#6fbf73">
+                    <i class="bi bi-arrow-bar-right me-1"></i>Präfix-Morpheme
+                    <span class="text-muted d-block" style="font-size:.6rem">Grenze <em>nach</em> Präfix</span>
+                  </label>
+                  <textarea id="morpheme-prefixes" class="form-control form-control-sm font-monospace" rows="5"
+                    style="font-size:.7rem" placeholder="z.B.&#10;sieg&#10;bert&#10;gott"
+                    oninput="analyze()"></textarea>
+                </div>
+                <div class="col-4">
+                  <label class="form-label mb-1" style="font-size:.67rem;color:#f0a030">
+                    <i class="bi bi-arrow-bar-left me-1"></i><i class="bi bi-arrow-bar-right"></i> Infix-Morpheme
+                    <span class="text-muted d-block" style="font-size:.6rem">Grenze <em>vor + nach</em> Infix</span>
+                  </label>
+                  <textarea id="morpheme-infixes" class="form-control form-control-sm font-monospace" rows="5"
+                    style="font-size:.7rem" placeholder="z.B.&#10;mann&#10;fried" oninput="analyze()"></textarea>
+                </div>
+                <div class="col-4">
+                  <label class="form-label mb-1" style="font-size:.67rem;color:#e06c6c">
+                    <i class="bi bi-arrow-bar-left me-1"></i>Suffix-Morpheme
+                    <span class="text-muted d-block" style="font-size:.6rem">Grenze <em>vor</em> Suffix</span>
+                  </label>
+                  <textarea id="morpheme-suffixes" class="form-control form-control-sm font-monospace" rows="5"
+                    style="font-size:.7rem" placeholder="z.B.&#10;stein&#10;berg&#10;burg"
+                    oninput="analyze()"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-			<div class="mb-3">
-				<button type="button" class="btn btn-sm btn-outline-primary" id="saveProfileBtn">
-					Aktuelle Einstellungen als Profil speichern
-				</button>
-			</div>
-			<div class="form-group">
-				<label for="openVowels">Offene (Kommagetrennt, z.B. a,e,o,aa,ee,oo):</label>
-				<input id="openVowels" class="form-control" type="text" value="a,e,o,aa,ee,oo">
-				<small class="form-text text-muted">Mit offenen Vokalen sind diejenigen Vokale gemeint, bei denen der
-					Mund relativ weit geöffnet ist.</small>
-			</div>
-			<div class="form-group">
-				<label for="closeVowels">Geschlossene Vokale (Kommagetrennt, z.B. i,u,y,ie,ei,ai,au,eu,ou):</label>
-				<input id="closeVowels" class="form-control" type="text" value="i,u,y,ie,ei,ai,au,eu,ou">
-				<small class="form-text text-muted">Mit geschlossenen Vokalen sind diejenigen Vokale gemeint, bei denen
-					der Mund am wenigsten von allen Vokalen geöffnet ist. </small>
-			</div>
-			<div class="form-group">
-				<label for="semivowel">Halbvokale (Kommagetrennt, z.B. j,w):</label>
-				<input id="semivowel" class="form-control" type="text" value="j">
-				<small class="form-text text-muted">Halbvokale sind Konsonanten, die sich wie Vokale
-					verhalten und in der Silbenstruktur als Vokale fungieren.</small>
-			</div>
-			<div class="form-group">
-				<label for="liquidConsonants">Liquide Konsonanten (Kommagetrennt, z.B. l,r):</label>
-				<input id="liquidConsonants" class="form-control" type="text" value="l,r">
-				<small class="form-text text-muted">Liquide Konsonanten sind Konsonanten, die auch als Fließlaute
-					bekannt sind und
-					zeichnen sich durch eine fließende Artikulation aus.</small>
-			</div>
-			<div class="form-group">
-				<label for="nasalConsonants">Nasale (Kommagetrennt, z.B. m,n,ng):</label>
-				<input id="nasalConsonants" class="form-control" type="text" value="m,n,ng">
-				<small class="form-text text-muted">Nasale sind Konsonanten, die durch eine freie Passage des Luftstroms
-					durch die Nase charakterisiert sind.</small>
-			</div>
-			<div class="form-group">
-				<label for="fricativeConsonants">Frikative Konsonanten (Kommagetrennt, z.B.
-					v,f,s,z,h,ch,sch,st,ph):</label>
-				<input id="fricativeConsonants" class="form-control" type="text" value="v,f,s,z,h,ch,sch,st,ph">
-				<small class="form-text text-muted">Frikative sind Konsonanten, die durch eine Reibung des Luftstroms
-					erzeugt werden.</small>
-			</div>
-			<div class="form-group">
-				<label for="affricateConsonants">Affrikate (Kommagetrennt, z.B. pf,ts,tz,tsch,dsch,tch):</label>
-				<input id="affricateConsonants" class="form-control" type="text" value="pf,ts,tz,tsch,dsch,tch">
-				<small class="form-text text-muted">Affrikate sind Konsonanten, die aus einem Plosiv und einem Frikativ
-					bestehen.</small>
-			</div>
-			<div class="form-group">
-				<label for="plosiveConsonants">Plosive Konsonanten (Kommagetrennt, z.B. b,p,d,t,g,k,c,ck,q):</label>
-				<input id="plosiveConsonants" class="form-control" type="text" value="b,p,d,th,t,g,k,c,ck,q">
-				<small class="form-text text-muted">Plosive sind Konsonanten, die durch eine vollständige Blockade des
-					Luftstroms
-					erzeugt werden.</small>
-			</div>
-			<div class="form-group">
-				<label for="allowedOnsets">Erlaubte Silbenköpfe (Kommagetrennt, z.B.
-					b,bl,br,d,dr,f,fl,fr,g,gl,gr,h,k,kl,kr,l,m,n,p,pf,ph,pl,pr,r,s,sch,sp,st,t,th,tr,tsch,w):</label>
-				<input id="allowedOnsets" class="form-control" type="text"
-					value="b,bl,br,d,dr,f,fl,fr,g,gl,gr,h,k,kl,kr,l,m,n,p,pf,ph,pl,pr,r,s,sch,sp,st,t,th,tr,tsch,w">
-				<small class="form-text text-muted">Erlaubte Silbenköpfe sind Konsonanten oder Konsonantengruppen, die
-					in der Silbe am Anfang auftreten dürfen.</small>
-			</div>
-			<div class="form-group">
-				<label for="allowedCodas">Erlaubte Silbenkoda (Kommagetrennt, z.B.
-					ch,f,k,ks,lf,ll,lst,lt,m,mp,mpt,n,ng,nk,nst,nt,p,r,rkt,rm,rst,rt,s,sch,sp,st,st,t):</label>
-				<input id="allowedCodas" class="form-control" type="text"
-					value="ch,f,k,ks,lf,ll,lst,lt,m,mp,mpt,n,ng,nk,nst,nt,p,r,rkt,rm,rst,rt,s,sch,sp,st,st,t">
-				<small class="form-text text-muted">Erlaubte Silbenkoda sind Konsonanten oder Konsonantengruppen, die
-					in der Silbe am Ende auftreten dürfen.</small>
-			</div>
+        <div class="card">
+          <div class="card-header py-2">
+            <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+              <i class="bi bi-type me-1"></i>Namen analysieren
+            </span>
+          </div>
+          <div class="card-body">
+            <textarea id="words-input" class="form-control font-monospace mb-3" rows="4"
+              placeholder="Namen eingeben – eines pro Zeile oder leerzeichen-getrennt&#10;Beispiele: Alexandra Christoph München Hassan Kwabena Asantewaa"></textarea>
+            <div class="d-flex gap-2 flex-wrap">
+              <button class="btn btn-primary" onclick="analyze()">
+                <i class="bi bi-play-fill me-1"></i>Analysieren
+                <kbd class="ms-2 bg-white bg-opacity-10 rounded px-1" style="font-size:.68rem">⌘↵</kbd>
+              </button>
+              <button class="btn btn-outline-secondary" onclick="loadExample()">
+                <i class="bi bi-shuffle me-1"></i>Beispielnamen
+              </button>
+              <button class="btn btn-outline-secondary ms-auto" onclick="clearResults()">
+                <i class="bi bi-x-lg me-1"></i>Löschen
+              </button>
+            </div>
+          </div>
+        </div>
 
-			<!-- <div class="alert alert-info" role="alert">
-				<h5>📚 Silbenbildungsgesetze</h5>
-				<ul style="margin-bottom: 0;">
-					<li><strong>Silbenanlautgesetz:</strong> Optimal sind Silben mit genau einem Konsonant im Onset (Anfang). Mehr oder weniger Konsonanten sind markierter.</li>
-					<li><strong>Silbenauslautgesetz:</strong> Optimal sind Silben ohne Konsonanten in der Koda (Ende). Je mehr Konsonanten, desto markierter.</li>
-					<li><strong>Silbenkerngesetz:</strong> Optimal sind Vokale im Nukleus (Kern). Sonoranten sind markierter als Vokale, Obstruenten sind am markiertesten.</li>
-				</ul>
-			</div> -->
+      </div>
 
+      <!-- RIGHT COLUMN -->
+      <div class="col-xl-4">
 
-			<button type="submit" class="btn btn-secondary" id="submit-names">Namen analysieren</button>
-		</form>
-		<script src="pronunciationRules.js"></script>
-		<div id="results" class="mt-4"></div>
+        <div class="card mb-4">
+          <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+            onclick="toggleRightCard('optionen-body','chev-optionen')">
+            <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+              <i class="bi bi-gear me-1"></i>Optionen
+            </span>
+            <i class="bi bi-chevron-down" id="chev-optionen"
+              style="font-size:.75rem;transition:transform .2s;transform:rotate(-90deg)"></i>
+          </div>
+          <div class="card-body" id="optionen-body" style="display:none">
+            <div class="mb-3">
+              <label class="form-label small text-muted mb-1">
+                Minimale Vokalsonorität
+                <span class="text-muted" style="font-size:.7rem">— Schwellenwert für Silbenkerne</span>
+              </label>
+              <input type="number" id="vowel-min" class="form-control form-control-sm font-monospace" value="11" min="1"
+                max="20" style="width:70px">
+            </div>
+            <div class="mb-3">
+              <label class="form-label small text-muted mb-1">Balkenhöhe</label>
+              <div class="d-flex align-items-center gap-2">
+                <input type="range" id="bar-scale" class="form-range flex-grow-1" min="10" max="28" value="18"
+                  oninput="document.getElementById('bar-scale-val').textContent=this.value">
+                <code id="bar-scale-val" class="small">18</code>
+              </div>
+            </div>
+            <div>
+              <label class="form-label small text-muted mb-1">Balkenbreite (px)</label>
+              <div class="d-flex align-items-center gap-2">
+                <input type="range" id="bar-width" class="form-range flex-grow-1" min="28" max="80" value="48"
+                  oninput="document.getElementById('bar-width-val').textContent=this.value">
+                <code id="bar-width-val" class="small">48</code>
+              </div>
+            </div>
+          </div>
+        </div>
 
-		<pre id="output"></pre>
+        <div class="card mb-4">
+          <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+            onclick="toggleRightCard('farb-body','chev-farb')">
+            <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+              <i class="bi bi-palette me-1"></i>Farbcodierung
+            </span>
+            <i class="bi bi-chevron-down" id="chev-farb"
+              style="font-size:.75rem;transition:transform .2s;transform:rotate(-90deg)"></i>
+          </div>
+          <div class="card-body" id="farb-body" style="display:none">
+            <div id="legend" class="legend-area">
+              <div class="d-flex align-items-center gap-2 mb-1"><span
+                  class="d-inline-block rounded-circle flex-shrink-0"
+                  style="width:9px;height:9px;background:#d63a3a"></span><span class="text-muted small">Stimmlose
+                  Plosive</span><span class="badge rounded-pill ms-auto font-monospace"
+                  style="background:#d63a3a;font-size:.65rem">1</span></div>
+              <div class="d-flex align-items-center gap-2 mb-1"><span
+                  class="d-inline-block rounded-circle flex-shrink-0"
+                  style="width:9px;height:9px;background:#e0553d"></span><span class="text-muted small">Stimmhafte
+                  Plosive</span><span class="badge rounded-pill ms-auto font-monospace"
+                  style="background:#e0553d;font-size:.65rem">2</span></div>
+              <div class="d-flex align-items-center gap-2 mb-1"><span
+                  class="d-inline-block rounded-circle flex-shrink-0"
+                  style="width:9px;height:9px;background:#e07a2a"></span><span class="text-muted small">Stimmlose
+                  Affrikate</span><span class="badge rounded-pill ms-auto font-monospace"
+                  style="background:#e07a2a;font-size:.65rem">3</span></div>
+              <div class="d-flex align-items-center gap-2 mb-1"><span
+                  class="d-inline-block rounded-circle flex-shrink-0"
+                  style="width:9px;height:9px;background:#e0a020"></span><span class="text-muted small">Stimmhafte
+                  Affrikate</span><span class="badge rounded-pill ms-auto font-monospace"
+                  style="background:#e0a020;font-size:.65rem">4</span></div>
+              <div class="d-flex align-items-center gap-2 mb-1"><span
+                  class="d-inline-block rounded-circle flex-shrink-0"
+                  style="width:9px;height:9px;background:#c8c020"></span><span class="text-muted small">Stimmlose
+                  Frikative</span><span class="badge rounded-pill ms-auto font-monospace"
+                  style="background:#c8c020;font-size:.65rem">5</span></div>
+              <div class="d-flex align-items-center gap-2 mb-1"><span
+                  class="d-inline-block rounded-circle flex-shrink-0"
+                  style="width:9px;height:9px;background:#9ab820"></span><span class="text-muted small">Stimmhafte
+                  Frikative</span><span class="badge rounded-pill ms-auto font-monospace"
+                  style="background:#9ab820;font-size:.65rem">6</span></div>
+              <div class="d-flex align-items-center gap-2 mb-1"><span
+                  class="d-inline-block rounded-circle flex-shrink-0"
+                  style="width:9px;height:9px;background:#4db870"></span><span
+                  class="text-muted small">Nasale</span><span class="badge rounded-pill ms-auto font-monospace"
+                  style="background:#4db870;font-size:.65rem">7</span></div>
+              <div class="d-flex align-items-center gap-2 mb-1"><span
+                  class="d-inline-block rounded-circle flex-shrink-0"
+                  style="width:9px;height:9px;background:#2abda4"></span><span
+                  class="text-muted small">Laterale</span><span class="badge rounded-pill ms-auto font-monospace"
+                  style="background:#2abda4;font-size:.65rem">8</span></div>
+              <div class="d-flex align-items-center gap-2 mb-1"><span
+                  class="d-inline-block rounded-circle flex-shrink-0"
+                  style="width:9px;height:9px;background:#2aadcc"></span><span
+                  class="text-muted small">Rhotische</span><span class="badge rounded-pill ms-auto font-monospace"
+                  style="background:#2aadcc;font-size:.65rem">9</span></div>
+              <div class="d-flex align-items-center gap-2 mb-1"><span
+                  class="d-inline-block rounded-circle flex-shrink-0"
+                  style="width:9px;height:9px;background:#4a9ee8"></span><span
+                  class="text-muted small">Approximanten</span><span class="badge rounded-pill ms-auto font-monospace"
+                  style="background:#4a9ee8;font-size:.65rem">10</span></div>
+              <div class="d-flex align-items-center gap-2 mb-1"><span
+                  class="d-inline-block rounded-circle flex-shrink-0"
+                  style="width:9px;height:9px;background:#d050c8"></span><span class="text-muted small">Offene
+                  Vokale</span><span class="badge rounded-pill ms-auto font-monospace"
+                  style="background:#d050c8;font-size:.65rem">13</span></div>
+              <div class="d-flex align-items-center gap-2 mb-1"><span
+                  class="d-inline-block rounded-circle flex-shrink-0"
+                  style="width:9px;height:9px;background:#a060e8"></span><span class="text-muted small">Mittlere
+                  Vokale</span><span class="badge rounded-pill ms-auto font-monospace"
+                  style="background:#a060e8;font-size:.65rem">12</span></div>
+              <div class="d-flex align-items-center gap-2 mb-1"><span
+                  class="d-inline-block rounded-circle flex-shrink-0"
+                  style="width:9px;height:9px;background:#7a7ef5"></span><span class="text-muted small">Geschlossene
+                  Vokale</span><span class="badge rounded-pill ms-auto font-monospace"
+                  style="background:#7a7ef5;font-size:.65rem">11</span></div>
+            </div>
+            <hr class="my-2 opacity-25">
+            <div class="small text-muted lh-lg" style="font-size:.7rem">
+              <span style="color:#f06060">──</span> Silbengrenze &nbsp;
+              <span style="color:rgba(255,255,255,.4)">·······</span> Sonoritätskurve
+            </div>
+          </div>
+        </div>
 
-	</div>
-	<script src="profiles.js"></script>
-	<script src="tableUtils.js"></script>
-	<script src="syllableFormationLaws.js"></script>
-	<script src="syllableTokenizer.js"></script>
-	<script src="main.js"></script>
-	<script src="readNames.js"></script>
-	<script src="breakDownNames.js"></script>
-	<script src="displayLetters.js"></script>
-	<script src="probabilities.js"></script>
-	<script src="lengthDistribution.js"></script>
-	<script src="vowelConsonant.js"></script>
-	<script src="cvPatterns.js"></script>
-	<script src="getCommonSubstrings.js"></script>
-	<script src="extractMorphemes.js"></script>
-	<script src="displayMorphemesTable.js"></script>
-	<script src="createMorphemesFromPatterns.js"></script>
+        <div class="card">
+          <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+            onclick="toggleRightCard('algo-body','chev-algo')">
+            <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+              <i class="bi bi-cpu me-1"></i>Algorithmus
+            </span>
+            <i class="bi bi-chevron-down" id="chev-algo"
+              style="font-size:.75rem;transition:transform .2s;transform:rotate(-90deg)"></i>
+          </div>
+          <div class="card-body small text-muted lh-lg" id="algo-body" style="display:none;font-size:.74rem">
+            <div><span class="algo-term">Parsing:</span> Längste-Treffer-zuerst (greedy)</div>
+            <div><span class="algo-term">SSP:</span> Sonoritätssequenzprinzip</div>
+            <div><span class="algo-term">MOP:</span> Maximum Onset Prinzip</div>
+            <div><span class="algo-term">Gemination:</span> Konsonant-Dopplung → Koda+Onset (Has·san, Al·lou)</div>
+            <div><span class="algo-term">Plateau:</span> Gleiche Sonorität → Onset-Wachstum stoppt</div>
+            <div><span class="algo-term">Hiatus:</span> Angrenzende Vokale → Grenze vor rechtem Vokal</div>
+            <div><span class="algo-term">Cluster:</span> Erlaubte/verbotene Onset- &amp; Koda-Muster (Klassen-Sequenzen)
+            </div>
+            <hr class="my-2 opacity-25">
+            <div style="font-size:.68rem">73 Sprachprofile · Diacritica aus 30+ Sprachen erkannt</div>
+          </div>
+        </div>
 
+      </div>
+    </div>
+
+    <!-- RESULTS — collapsible wrapper (open by default) -->
+    <div class="mt-4">
+      <div class="d-flex align-items-center justify-content-between mb-2" id="results-header" style="cursor:pointer"
+        onclick="toggleRightCard('results','chev-results')">
+        <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+          <i class="bi bi-graph-up me-1"></i>Silbenanalyse — Einzelwörter
+        </span>
+        <i class="bi bi-chevron-down" id="chev-results"
+          style="font-size:.75rem;transition:transform .2s;transform:rotate(-90deg)"></i>
+      </div>
+      <div id="results" style="display:none">
+        <div class="empty-state">
+          <span class="empty-state-icon">◌</span>
+          Namen eingeben und auf <strong>Analysieren</strong> klicken
+        </div>
+      </div>
+    </div>
+
+    <!-- STATISTIK & JSON -->
+    <div id="stats-area" class="mt-4" style="display:none">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h6 class="text-uppercase fw-semibold text-muted mb-0" style="letter-spacing:.1em;font-size:.7rem">
+          <i class="bi bi-bar-chart me-1"></i>Statistik &amp; JSON-Ausgabe
+        </h6>
+        <button class="btn btn-sm btn-outline-success py-0 px-2" onclick="exportUnifiedJSON()">
+          <i class="bi bi-download me-1"></i>JSON exportieren
+        </button>
+      </div>
+
+      <!-- Unified JSON -->
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-json')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-braces me-1"></i>Vereinigtes JSON
+          </span>
+          <i class="bi bi-chevron-down" id="chev-json" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-0" id="sec-json" style="display:none">
+          <div class="p-2 d-flex gap-2">
+            <button class="btn btn-sm btn-outline-primary py-0 px-2" onclick="copyJSON()">
+              <i class="bi bi-clipboard me-1"></i>Kopieren
+            </button>
+          </div>
+          <pre id="json-output" class="m-0 p-3"
+            style="max-height:400px;overflow:auto;font-size:.72rem;background:rgba(0,0,0,.2)"></pre>
+        </div>
+      </div>
+
+      <!-- Namenslängen -->
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-lengths')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-rulers me-1"></i>Namenslängen
+          </span>
+          <i class="bi bi-chevron-down" id="chev-lengths" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-lengths" style="display:none">
+          <div id="tbl-lengths"></div>
+        </div>
+      </div>
+
+      <!-- CV-Muster -->
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-cv')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-alphabet me-1"></i>CV-Muster
+          </span>
+          <i class="bi bi-chevron-down" id="chev-cv" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-cv" style="display:none">
+          <div id="tbl-cv"></div>
+        </div>
+      </div>
+
+      <!-- Vokalkombinationen -->
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-vowels')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-soundwave me-1"></i>Vokalkombinationen
+          </span>
+          <i class="bi bi-chevron-down" id="chev-vowels" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-vowels" style="display:none">
+          <div id="tbl-vowels"></div>
+        </div>
+      </div>
+
+      <!-- Konsonantkombinationen -->
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-cons')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-soundwave me-1" style="transform:scaleX(-1)"></i>Konsonantkombinationen
+          </span>
+          <i class="bi bi-chevron-down" id="chev-cons" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-cons" style="display:none">
+          <div id="tbl-cons"></div>
+        </div>
+      </div>
+
+      <!-- Silben Präfix -->
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-syl-pre')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-arrow-bar-right me-1" style="color:#4db870"></i>Silben — Präfix (erste Silbe)
+          </span>
+          <i class="bi bi-chevron-down" id="chev-syl-pre" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-syl-pre" style="display:none">
+          <div id="tbl-syl-pre"></div>
+        </div>
+      </div>
+
+      <!-- Silben Infix -->
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-syl-in')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-arrows-expand-vertical me-1" style="color:#f8b030"></i>Silben — Infix (mittlere Silben)
+          </span>
+          <i class="bi bi-chevron-down" id="chev-syl-in" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-syl-in" style="display:none">
+          <div id="tbl-syl-in"></div>
+        </div>
+      </div>
+
+      <!-- Silben Suffix -->
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-syl-suf')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-arrow-bar-left me-1" style="color:#e0553d"></i>Silben — Suffix (letzte Silbe)
+          </span>
+          <i class="bi bi-chevron-down" id="chev-syl-suf" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-syl-suf" style="display:none">
+          <div id="tbl-syl-suf"></div>
+        </div>
+      </div>
+
+    </div><!-- /stats-area -->
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="scripts/data.js"></script>
+  <script src="scripts/algorithm.js"></script>
+  <script src="scripts/ui.js"></script>
+  <script src="scripts/stats.js"></script>
 </body>
+
+</html>
