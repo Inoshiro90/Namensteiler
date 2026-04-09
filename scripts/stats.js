@@ -276,13 +276,15 @@ function makeStatsTable(headers, rows) {
 // Table with copy-as-TSV button
 function makeCopyTable(copyId, headers, rows) {
   const wrap = document.createElement('div');
+  const btnWrap = document.createElement('div');
+  btnWrap.className = 'mb-2 d-flex gap-2 flex-wrap';
   const btn = document.createElement('button');
-  btn.className = 'btn btn-sm btn-outline-secondary py-0 px-2 mb-2';
+  btn.className = 'btn btn-sm btn-outline-secondary';
   btn.id = copyId;
-  btn.style.fontSize = '.68rem';
   btn.innerHTML = '<i class="bi bi-clipboard me-1"></i>Tabelle kopieren';
   btn.onclick = () => copyTableTSV(headers, rows, btn);
-  wrap.appendChild(btn);
+  btnWrap.appendChild(btn);
+  wrap.appendChild(btnWrap);
   wrap.appendChild(makeStatsTable(headers, rows));
   return wrap;
 }
