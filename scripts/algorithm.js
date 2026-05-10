@@ -255,6 +255,7 @@ function checkCluster(classes, allowedSet, forbiddenSet) {
   return true; // unconstrained
 }
 
+
 function syllabify(segments, vowelMin, allowedOnsets, forbiddenOnsets, allowedCodas, forbiddenCodas, forbiddenOnsetPairs, maxOnsetLen, maxCodaLen) {
   const vals = segments.map(s => s.sonority), n = vals.length, peaks = [];
   for (let i = 0; i < n; i++) if (vals[i] >= vowelMin) peaks.push(i);
@@ -273,6 +274,16 @@ function syllabify(segments, vowelMin, allowedOnsets, forbiddenOnsets, allowedCo
     const left = peaks[p], right = peaks[p + 1], cluster = [];
     for (let k = left+1; k < right; k++) cluster.push(k);
     if (cluster.length === 0) { boundaries.add(right); continue; }
+
+    // ── LEERZEICHEN = OBLIGATORISCHE SILBENGRENZE ─────────────────────────────
+    // Wenn das Cluster ein Leerzeichen enthält: Grenze nach dem Leerzeichen setzen
+    const spaceInCluster = cluster.findIndex(k => segments[k].grapheme === ' ');
+    if (spaceInCluster !== -1) {
+      // Nächstes Segment nach dem Leerzeichen = Beginn der neuen Silbe
+      const nextAfterSpace = cluster[spaceInCluster + 1] ?? right;
+      boundaries.add(nextAfterSpace);
+      continue;
+    }
     const cv = cluster.map(k => vals[k]);
 
     // ── Langvokal-Koda-Beschränkung (CV-Modell) ──────────────────────
