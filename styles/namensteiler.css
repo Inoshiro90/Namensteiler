@@ -436,7 +436,7 @@ input[type="number"] { font-family: var(--font-mono) !important; }
 
 .word-card-header {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
   padding: 0.75rem 1.1rem;
@@ -1000,3 +1000,156 @@ html.theme-transitioning *::after {
 @media (max-width: 768px) {
   .sonority-val-col { width: 52px; min-width: 44px; }
 }
+
+/* =====================================================
+   MANUELLE SILBENTRENNUNG — Edit Mode
+   ===================================================== */
+
+/* Edit-Button in der Wortkarten-Kopfzeile */
+.btn-edit-syllable {
+  margin-left: auto;
+  flex-shrink: 0;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm, 4px);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  padding: 0.15rem 0.45rem;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  line-height: 1.4;
+}
+.btn-edit-syllable:hover,
+.btn-edit-syllable.active {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  background: rgba(var(--accent-rgb, 100,180,255), 0.08);
+}
+
+/* Badge für manuell überschriebene Trennungen */
+.manual-hyph-badge {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  color: var(--color-accent);
+  opacity: 0.75;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* Trennzeichen-Info in der Wort-info-Zeile: pushe
+   den Edit-Button ganz nach rechts */
+.word-card-header .word-info {
+  /* keep margin-left:auto so it fills the gap before the button */
+}
+/* Wenn manuell-Badge da ist, zieht das den edit-Button nach rechts */
+.word-card-header .btn-edit-syllable {
+  margin-left: 0;
+}
+
+/* Editierbereich unter der Kopfzeile */
+.syllable-edit-area {
+  padding: 0.55rem 1.1rem 0.6rem;
+  background: var(--bg-warm);
+  border-bottom: var(--border-whisper);
+  animation: fadeUp 0.12s ease-out;
+}
+
+.syllable-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.syllable-edit-input {
+  flex: 1 1 140px;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 4px);
+  padding: 0.28rem 0.6rem;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.syllable-edit-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(var(--accent-rgb, 100,180,255), 0.18);
+}
+
+/* Save / Cancel / Reset buttons */
+.btn-syllable-save,
+.btn-syllable-cancel,
+.btn-syllable-reset {
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm, 4px);
+  font-size: 0.78rem;
+  padding: 0.28rem 0.65rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.btn-syllable-save {
+  color: #6fcf97;
+  border-color: rgba(111,207,151,0.35);
+}
+.btn-syllable-save:hover {
+  background: rgba(111,207,151,0.12);
+  border-color: #6fcf97;
+}
+.btn-syllable-cancel {
+  color: var(--text-muted);
+}
+.btn-syllable-cancel:hover {
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+}
+.btn-syllable-reset {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+.btn-syllable-reset:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* Hilfetext */
+.syllable-edit-hint {
+  margin-top: 0.35rem;
+  font-size: 0.71rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+.syllable-edit-hint code {
+  background: rgba(255,255,255,0.07);
+  border-radius: 3px;
+  padding: 0.05em 0.3em;
+  font-size: 0.85em;
+  color: var(--color-accent);
+}
+
+/* Fehlermeldung */
+.syllable-edit-error {
+  margin-top: 0.3rem;
+  font-size: 0.75rem;
+  color: #e07070;
+  font-family: var(--font-mono);
+}
+
+/* Light-mode overrides */
+[data-bs-theme="light"] .syllable-edit-input {
+  background: #fff;
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+[data-bs-theme="light"] .syllable-edit-hint code {
+  background: rgba(0,0,0,0.06);
+}
+[data-bs-theme="light"] .btn-syllable-save  { color: #1a7a40; border-color: rgba(26,122,64,0.3); }
+[data-bs-theme="light"] .btn-syllable-reset { color: var(--text-muted); }
+[data-bs-theme="light"] .manual-hyph-badge  { color: var(--color-accent); }

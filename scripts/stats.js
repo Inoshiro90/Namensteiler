@@ -158,17 +158,10 @@ function calcSyllableStats(names, gmap, vowelMin, cl) {
   };
 
   names.forEach(word => {
-    const parts = word.split('-');
-    const allSegs = [], allBounds = new Set();
-    let offset = 0;
-    parts.forEach(part => {
-      if (!part) return;
-      const segs   = parseWord(part, gmap);
-      const bounds = syllabify(segs, vowelMin, cl.ao, cl.fo, cl.ac, cl.fc, cl.fop, cl.mol, cl.mcl);
-      bounds.forEach(b => allBounds.add(b + offset));
-      segs.forEach(s => allSegs.push(s));
-      offset += segs.length;
-    });
+    // ── Use the central resolver so manual overrides are honoured ─────
+    // resolveWordBoundaries() is defined in ui.js (loaded before stats.js)
+    // and already applies manualHyphenations + morpheme splitting.
+    const { segments: allSegs, boundaries: allBounds } = resolveWordBoundaries(word, gmap, vowelMin, cl);
     const sylBounds = [0, ...[...allBounds].sort((a,b)=>a-b), allSegs.length];
     const syllables = [];
     for (let i = 0; i < sylBounds.length - 1; i++) {
@@ -456,8 +449,10 @@ function exportUnifiedJSON() {
   document.getElementById('morpheme-infixes').value  = _morphemeInfixes.join('\n');
   document.getElementById('morpheme-suffixes').value = _morphemeSuffixes.join('\n');
   initTable(profile.classes);
-  document.getElementById('profile-desc').textContent = profile.desc;
-  document.getElementById('words-input').value = HINTS[profile.id] || HINTS['universal'];
+  const _pdEl = document.getElementById('profile-desc');
+  if (_pdEl) _pdEl.textContent = profile.desc;
+  const _wiEl = document.getElementById('words-input');
+  if (_wiEl) _wiEl.value = HINTS[profile.id] || HINTS['universal'];
   buildClusterLegend();
   analyze();
 })();
