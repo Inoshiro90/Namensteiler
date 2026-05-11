@@ -1,0 +1,295 @@
+{
+  "id": "korean",
+  "name": "Koreanisch",
+  "emoji": "🇰🇷",
+  "group": "Ostasiatisch",
+  "desc": "Koreanisch (RR-Romanisierung) – ng initial/final, ae, oe, spezifische Silbenstruktur",
+  "allowedOnsets": [
+    [
+      1,
+      10
+    ],
+    [
+      2,
+      10
+    ],
+    [
+      3,
+      10
+    ],
+    [
+      4,
+      10
+    ],
+    [
+      5,
+      10
+    ],
+    [
+      6,
+      10
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      9,
+      10
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      2,
+      10
+    ],
+    [
+      5,
+      10
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      5
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      8
+    ],
+    [
+      10,
+      9
+    ]
+  ],
+  "maxOnsetLen": 1,
+  "maxCodaLen": 1,
+  "forbiddenOnsetPairs": [],
+  "maxOnsetLength": 2,
+  "maxCodaLength": 1,
+  "morphemePrefixes": [
+    "hyun",
+    "byung",
+    "chang",
+    "dong",
+    "sung",
+    "sang"
+  ],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [
+    "young",
+    "hoon",
+    "kyung",
+    "seong",
+    "hyun",
+    "chul",
+    "woo"
+  ],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "pp",
+        "tt",
+        "kk",
+        "p",
+        "t",
+        "k",
+        "c"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "b",
+        "d",
+        "g"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "ch",
+        "ts"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "j",
+        "dj"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "sh",
+        "kh",
+        "ph",
+        "f",
+        "h",
+        "s",
+        "x"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "v",
+        "w",
+        "z"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "ng",
+        "m",
+        "n"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "r"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "-",
+        "y"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "woo",
+        "yoo",
+        "you",
+        "eui",
+        "wae",
+        "yae",
+        "yeo",
+        "aa",
+        "ae",
+        "ee",
+        "eu",
+        "oe",
+        "oi",
+        "oo",
+        "ou",
+        "ui",
+        "wa",
+        "we",
+        "wi",
+        "wo",
+        "ya",
+        "yo",
+        "a",
+        "à",
+        "á",
+        "â"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "eo",
+        "ye",
+        "yo",
+        "é",
+        "è",
+        "ê",
+        "ó",
+        "ò",
+        "ô",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "uu",
+        "ii",
+        "ú",
+        "í",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}

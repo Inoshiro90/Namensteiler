@@ -1,0 +1,334 @@
+{
+  "id": "turkish",
+  "name": "Türkisch",
+  "emoji": "🇹🇷",
+  "group": "Türkisch / Kaukasisch",
+  "desc": "Türkisch – ğ, ş, ç, ı, spezifische Vokalharmonie",
+  "allowedOnsets": [
+    [
+      1,
+      9
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      5,
+      7
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      5
+    ],
+    [
+      7,
+      8
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      9,
+      10
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      2,
+      10
+    ],
+    [
+      5,
+      10
+    ],
+    [
+      6,
+      10
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      5
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      9,
+      10
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ]
+  ],
+  "maxOnsetLen": 2,
+  "maxCodaLen": 1,
+  "forbiddenOnsetPairs": [],
+  "maxOnsetLength": 2,
+  "maxCodaLength": 1,
+  "morphemePrefixes": [
+    "deniz",
+    "emine",
+    "serkan",
+    "omer",
+    "nazl",
+    "elif",
+    "burak"
+  ],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [
+    "tafa",
+    "hmet",
+    "ullah",
+    "uddin",
+    "oğlu"
+  ],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "ck",
+        "p",
+        "t",
+        "k",
+        "c"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "b",
+        "d",
+        "g"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "tsch",
+        "ts",
+        "tz",
+        "tsh",
+        "ch"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "dz",
+        "dj"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "sh",
+        "ph",
+        "f",
+        "h",
+        "s",
+        "x",
+        "ş",
+        "ç"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "zh",
+        "ğ",
+        "v",
+        "w",
+        "z"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "ng",
+        "nh",
+        "m",
+        "n"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "r"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "y",
+        "j"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "uy",
+        "oy",
+        "ey",
+        "ay",
+        "au",
+        "eu",
+        "ai",
+        "ei",
+        "ou",
+        "oi",
+        "aa",
+        "ya",
+        "á",
+        "à",
+        "â",
+        "a"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "ye",
+        "yo",
+        "ö",
+        "é",
+        "è",
+        "ê",
+        "ë",
+        "ó",
+        "ò",
+        "ô",
+        "ø",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "uu",
+        "ii",
+        "ü",
+        "ú",
+        "í",
+        "ï",
+        "ū",
+        "ı",
+        "ý",
+        "î",
+        "û",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}

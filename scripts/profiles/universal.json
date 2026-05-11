@@ -1,0 +1,347 @@
+{
+  "id": "universal",
+  "name": "Universal (Standard)",
+  "emoji": "🌐",
+  "group": null,
+  "desc": "Optimale Silbentrennung für Namen aus aller Welt – 30+ Sprachen, Diacritica, Geminate",
+  "default": true,
+  "allowedOnsets": [
+    [
+      1,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      1,
+      9
+    ],
+    [
+      5,
+      1,
+      8
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      8,
+      5
+    ],
+    [
+      9,
+      5
+    ],
+    [
+      8,
+      7
+    ],
+    [
+      9,
+      7
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      5
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      8
+    ],
+    [
+      10,
+      9
+    ]
+  ],
+  "maxOnsetLen": 3,
+  "maxCodaLen": 3,
+  "forbiddenOnsetPairs": [],
+  "maxOnsetLength": 3,
+  "maxCodaLength": 3,
+  "morphemePrefixes": [],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "ck",
+        "tch",
+        "qu",
+        "p",
+        "t",
+        "k",
+        "c",
+        "q",
+        "ķ",
+        "ț",
+        "ť"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "b",
+        "d",
+        "g",
+        "ģ",
+        "ď"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "tsch",
+        "ts",
+        "tz",
+        "tsh",
+        "č",
+        "ć"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "dsch",
+        "dz",
+        "dj",
+        "dž"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "sch",
+        "sh",
+        "ph",
+        "th",
+        "ch",
+        "ß",
+        "f",
+        "h",
+        "s",
+        "x",
+        "ç",
+        "š",
+        "ś",
+        "ş",
+        "ș",
+        "þ"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "zh",
+        "ž",
+        "ğ",
+        "v",
+        "w",
+        "z",
+        "ð",
+        "ż",
+        "ź"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "ng",
+        "nh",
+        "ñ",
+        "ŋ",
+        "ň",
+        "ń",
+        "m",
+        "n",
+        "ņ"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "ĺ",
+        "ļ",
+        "ľ",
+        "ł",
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "rh",
+        "ř",
+        "r"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "j"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "äu",
+        "au",
+        "eu",
+        "ai",
+        "ei",
+        "ie",
+        "ou",
+        "oi",
+        "oo",
+        "ee",
+        "ay",
+        "oa",
+        "ow",
+        "aa",
+        "ya",
+        "ä",
+        "á",
+        "à",
+        "â",
+        "ã",
+        "å",
+        "æ",
+        "ā",
+        "ă",
+        "ą",
+        "ǎ",
+        "a"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "ae",
+        "oe",
+        "ye",
+        "yo",
+        "ö",
+        "ő",
+        "é",
+        "è",
+        "ê",
+        "ë",
+        "ó",
+        "ò",
+        "ô",
+        "ø",
+        "œ",
+        "ē",
+        "ō",
+        "ė",
+        "õ",
+        "ě",
+        "ę",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "yu",
+        "yi",
+        "uu",
+        "ii",
+        "ü",
+        "ű",
+        "ú",
+        "í",
+        "ï",
+        "ū",
+        "ī",
+        "ı",
+        "ý",
+        "î",
+        "û",
+        "ů",
+        "y",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}

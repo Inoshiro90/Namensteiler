@@ -1,0 +1,258 @@
+{
+  "id": "filipino",
+  "name": "Philippinisch / Tagalog",
+  "emoji": "🇵🇭",
+  "group": "Südostasiatisch",
+  "desc": "Tagalog – ng als einzelnes Phonem (initial!), mga, ñ, spezifische Silbenstruktur",
+  "allowedOnsets": [
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      9
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      7,
+      8
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      1
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      5
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      8
+    ],
+    [
+      10,
+      9
+    ]
+  ],
+  "maxOnsetLen": 2,
+  "maxCodaLen": 1,
+  "forbiddenOnsetPairs": [],
+  "maxOnsetLength": 2,
+  "maxCodaLength": 1,
+  "morphemePrefixes": [],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "p",
+        "t",
+        "k",
+        "c",
+        "q"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "b",
+        "d",
+        "g"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "tsch",
+        "ts",
+        "ch"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "dz",
+        "dj"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "sh",
+        "f",
+        "h",
+        "s",
+        "x"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "v",
+        "w",
+        "z"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "ng",
+        "ñ",
+        "m",
+        "n"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "r"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "j",
+        "y"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "ae",
+        "ea",
+        "ey",
+        "ay",
+        "ai",
+        "au",
+        "ei",
+        "ie",
+        "ou",
+        "oi",
+        "oo",
+        "ee",
+        "aa",
+        "ya",
+        "á",
+        "à",
+        "â",
+        "a"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "ye",
+        "yo",
+        "ó",
+        "ò",
+        "ô",
+        "é",
+        "è",
+        "ê",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "uu",
+        "ii",
+        "ü",
+        "ú",
+        "í",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}

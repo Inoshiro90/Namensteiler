@@ -1,0 +1,271 @@
+{
+  "id": "burmese",
+  "name": "Burmesisch / Myanmar",
+  "emoji": "🇲🇲",
+  "group": "Südostasiatisch",
+  "desc": "Burmesisch (Romanisierung) – ky, gy, ny, hm, hn, hng, ng, spezifische Aspirate",
+  "allowedOnsets": [
+    [
+      1,
+      9
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      1
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      7,
+      8
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      2,
+      10
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      5
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      8
+    ],
+    [
+      10,
+      9
+    ]
+  ],
+  "maxOnsetLen": 2,
+  "maxCodaLen": 1,
+  "forbiddenOnsetPairs": [],
+  "maxOnsetLength": 2,
+  "maxCodaLength": 1,
+  "morphemePrefixes": [],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "ky",
+        "hm",
+        "hn",
+        "p",
+        "t",
+        "k",
+        "c"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "gy",
+        "b",
+        "d",
+        "g"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "tsch",
+        "ch",
+        "ts"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "dz",
+        "dj"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "hng",
+        "sh",
+        "f",
+        "h",
+        "s",
+        "x"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "v",
+        "w",
+        "z"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "ng",
+        "ny",
+        "m",
+        "n"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "r"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "j",
+        "y"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "aei",
+        "yai",
+        "aye",
+        "yae",
+        "ey",
+        "ay",
+        "ae",
+        "au",
+        "ai",
+        "ei",
+        "ie",
+        "ou",
+        "oi",
+        "oo",
+        "ee",
+        "aa",
+        "ya",
+        "a"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "yoe",
+        "yee",
+        "yone",
+        "oe",
+        "one",
+        "ye",
+        "yo",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "ine",
+        "uu",
+        "ii",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}

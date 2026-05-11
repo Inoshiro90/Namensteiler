@@ -1,0 +1,397 @@
+{
+  "id": "italian",
+  "name": "Italienisch",
+  "emoji": "🇮🇹",
+  "group": "Romanisch",
+  "desc": "Italienisch – sc, gl, gn, ch, gh, Gemination – Baseline-optimiert (V2-MAX)",
+  "allowedOnsets": [
+    [
+      1,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      6,
+      9
+    ],
+    [
+      6,
+      8
+    ],
+    [
+      3,
+      8
+    ],
+    [
+      3,
+      9
+    ],
+    [
+      5,
+      1,
+      9
+    ],
+    [
+      5,
+      1,
+      8
+    ],
+    [
+      5,
+      2,
+      9
+    ],
+    [
+      5,
+      2,
+      8
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      7,
+      8
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      9,
+      10
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      5
+    ],
+    [
+      7,
+      3
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      8,
+      5
+    ],
+    [
+      8,
+      3
+    ],
+    [
+      8,
+      7
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      9,
+      5
+    ],
+    [
+      9,
+      3
+    ],
+    [
+      9,
+      7
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      3,
+      5
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      7,
+      1,
+      5
+    ],
+    [
+      8,
+      1,
+      5
+    ],
+    [
+      9,
+      1,
+      5
+    ],
+    [
+      9,
+      5,
+      1
+    ],
+    [
+      8,
+      5,
+      1
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      8
+    ],
+    [
+      10,
+      9
+    ]
+  ],
+  "maxOnsetLen": 2,
+  "maxCodaLen": 1,
+  "forbiddenOnsetPairs": [
+    "tn",
+    "dn",
+    "pm",
+    "bm"
+  ],
+  "maxOnsetLength": 2,
+  "maxCodaLength": 1,
+  "morphemePrefixes": [
+    "ales",
+    "fran",
+    "bene",
+    "marg",
+    "ambr",
+    "loren",
+    "enri",
+    "giaco",
+    "stef",
+    "nico"
+  ],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [
+    "cesca",
+    "seppe",
+    "vanni",
+    "dette",
+    "enzio",
+    "cenzo",
+    "gheri",
+    "olamo",
+    "tista"
+  ],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "q",
+        "ch",
+        "ck",
+        "p",
+        "t",
+        "k",
+        "c"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "gh",
+        "b",
+        "d",
+        "g"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "tsch",
+        "ts",
+        "tz",
+        "tsh"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "dsch",
+        "dz",
+        "dj"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "sch",
+        "sh",
+        "sc",
+        "ph",
+        "f",
+        "h",
+        "s",
+        "x"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "zh",
+        "v",
+        "w",
+        "z"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "gn",
+        "ng",
+        "m",
+        "n"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "gl",
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "r"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "j"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "ió",
+        "iá",
+        "ié",
+        "uó",
+        "uá",
+        "ué",
+        "uí",
+        "á",
+        "à",
+        "â",
+        "a"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "é",
+        "è",
+        "ê",
+        "ó",
+        "ò",
+        "ô",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "uu",
+        "ii",
+        "ü",
+        "ú",
+        "í",
+        "ï",
+        "î",
+        "û",
+        "y",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}

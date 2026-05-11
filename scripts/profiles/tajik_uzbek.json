@@ -1,0 +1,289 @@
+{
+  "id": "tajik_uzbek",
+  "name": "Tadschikisch / Usbekisch",
+  "emoji": "🇺🇿",
+  "group": "Türkisch / Kaukasisch",
+  "desc": "Tadschikisch & Usbekisch – Persisch-Turkische Mischung, kh, gh, sh, zh, q",
+  "allowedOnsets": [
+    [
+      1,
+      9
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      5,
+      1
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      5
+    ],
+    [
+      7,
+      8
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      9,
+      10
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      2,
+      10
+    ],
+    [
+      5,
+      10
+    ],
+    [
+      6,
+      10
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      5
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      9,
+      10
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ]
+  ],
+  "maxOnsetLen": 2,
+  "maxCodaLen": 2,
+  "forbiddenOnsetPairs": [],
+  "maxOnsetLength": 2,
+  "maxCodaLength": 2,
+  "morphemePrefixes": [],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "p",
+        "t",
+        "k",
+        "c",
+        "q"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "b",
+        "d",
+        "g"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "ts",
+        "tz",
+        "ch"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "dz",
+        "dj"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "sh",
+        "kh",
+        "ph",
+        "f",
+        "h",
+        "s",
+        "x",
+        "ş"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "gh",
+        "zh",
+        "v",
+        "w",
+        "z"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "ng",
+        "m",
+        "n"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "r"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "j",
+        "y"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "ey",
+        "ay",
+        "ai",
+        "ei",
+        "ou",
+        "ya",
+        "á",
+        "à",
+        "â",
+        "ā",
+        "a"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "ö",
+        "é",
+        "è",
+        "ê",
+        "ó",
+        "ò",
+        "ô",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "uu",
+        "ii",
+        "ü",
+        "ú",
+        "í",
+        "ï",
+        "ū",
+        "ı",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,335 @@
+{
+  "id": "greek",
+  "name": "Griechisch",
+  "emoji": "🇬🇷",
+  "group": "Griechisch / Albanisch",
+  "desc": "Griechisch (Romanisierung) – ph, th, ch, ks, ps, ng, spezifische Silbenstruktur",
+  "allowedOnsets": [
+    [
+      1,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      6,
+      9
+    ],
+    [
+      6,
+      8
+    ],
+    [
+      1,
+      7
+    ],
+    [
+      2,
+      7
+    ],
+    [
+      5,
+      1,
+      9
+    ],
+    [
+      5,
+      1,
+      8
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      7,
+      8
+    ],
+    [
+      7,
+      9
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      5
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      8,
+      5
+    ],
+    [
+      8,
+      7
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      9,
+      5
+    ],
+    [
+      9,
+      7
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      3,
+      5
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      8
+    ],
+    [
+      10,
+      9
+    ]
+  ],
+  "maxOnsetLen": 2,
+  "maxCodaLen": 2,
+  "forbiddenOnsetPairs": [
+    "tn",
+    "dn",
+    "pm",
+    "bm"
+  ],
+  "maxOnsetLength": 2,
+  "maxCodaLength": 2,
+  "morphemePrefixes": [
+    "theod",
+    "stav",
+    "papa",
+    "para",
+    "deme",
+    "nikol",
+    "vasos",
+    "yannis"
+  ],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [
+    "andros",
+    "poulos",
+    "poulou",
+    "opoulos",
+    "opoulou"
+  ],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "ck",
+        "qu",
+        "p",
+        "t",
+        "k",
+        "c"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "b",
+        "d",
+        "g"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "ks",
+        "ps",
+        "ts",
+        "tz",
+        "tsh"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "dz",
+        "dj"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "th",
+        "sh",
+        "ch",
+        "kh",
+        "ph",
+        "f",
+        "h",
+        "s",
+        "x"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "zh",
+        "v",
+        "w",
+        "z"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "ng",
+        "m",
+        "n"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "r"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "j",
+        "y"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "ay",
+        "ea",
+        "au",
+        "ai",
+        "ei",
+        "ie",
+        "ou",
+        "oi",
+        "oo",
+        "ee",
+        "aa",
+        "ya",
+        "á",
+        "à",
+        "â",
+        "a"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "ye",
+        "yo",
+        "é",
+        "è",
+        "ê",
+        "ë",
+        "ó",
+        "ò",
+        "ô",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "uu",
+        "ii",
+        "ü",
+        "ú",
+        "í",
+        "ï",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}

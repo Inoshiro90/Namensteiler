@@ -1,0 +1,416 @@
+{
+  "id": "romanian",
+  "name": "Rumänisch",
+  "emoji": "🇷🇴",
+  "group": "Romanisch",
+  "desc": "Rumänisch – ș, ț, â, î, spezifische Laute",
+  "allowedOnsets": [
+    [
+      1,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      6,
+      9
+    ],
+    [
+      6,
+      8
+    ],
+    [
+      3,
+      8
+    ],
+    [
+      3,
+      9
+    ],
+    [
+      5,
+      1,
+      9
+    ],
+    [
+      5,
+      1,
+      8
+    ],
+    [
+      5,
+      2,
+      9
+    ],
+    [
+      5,
+      2,
+      8
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      7,
+      8
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      9,
+      10
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      5
+    ],
+    [
+      7,
+      3
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      8,
+      5
+    ],
+    [
+      8,
+      3
+    ],
+    [
+      8,
+      7
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      9,
+      5
+    ],
+    [
+      9,
+      3
+    ],
+    [
+      9,
+      7
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      3,
+      5
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      7,
+      1,
+      5
+    ],
+    [
+      8,
+      1,
+      5
+    ],
+    [
+      9,
+      1,
+      5
+    ],
+    [
+      9,
+      5,
+      1
+    ],
+    [
+      8,
+      5,
+      1
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      8
+    ],
+    [
+      10,
+      9
+    ]
+  ],
+  "maxOnsetLen": 2,
+  "maxCodaLen": 2,
+  "forbiddenOnsetPairs": [],
+  "maxOnsetLength": 2,
+  "maxCodaLength": 2,
+  "morphemePrefixes": [
+    "gheor",
+    "const",
+    "bogd",
+    "cristi",
+    "stefan",
+    "adri",
+    "ioana"
+  ],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [
+    "escu",
+    "eanu",
+    "oanu",
+    "anu",
+    "aru",
+    "ică",
+    "ilor",
+    "oaia",
+    "ului"
+  ],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "ck",
+        "qu",
+        "p",
+        "t",
+        "k",
+        "c",
+        "ț",
+        "ť"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "gh",
+        "b",
+        "d",
+        "g"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "ts",
+        "tz",
+        "tsh"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "dz",
+        "dj"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "sh",
+        "ch",
+        "ph",
+        "f",
+        "h",
+        "s",
+        "x",
+        "ș",
+        "ş"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "zh",
+        "v",
+        "w",
+        "z"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "ng",
+        "m",
+        "n"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "r"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "j"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "ió",
+        "iá",
+        "ié",
+        "iú",
+        "uó",
+        "uá",
+        "ué",
+        "io",
+        "iu",
+        "lie",
+        "rie",
+        "iel",
+        "nie",
+        "oo",
+        "ee",
+        "ue",
+        "ua",
+        "ia",
+        "oa",
+        "ea",
+        "au",
+        "ai",
+        "ei",
+        "ie",
+        "ou",
+        "oi",
+        "aa",
+        "a",
+        "â",
+        "ä",
+        "á",
+        "à",
+        "ã",
+        "ǎ",
+        "ă"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "ye",
+        "ö",
+        "é",
+        "è",
+        "ê",
+        "ó",
+        "ò",
+        "ô",
+        "ø",
+        "ě",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "uu",
+        "ii",
+        "ü",
+        "ú",
+        "í",
+        "ï",
+        "î",
+        "û",
+        "ı",
+        "y",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}

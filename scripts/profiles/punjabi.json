@@ -1,0 +1,334 @@
+{
+  "id": "punjabi",
+  "name": "Punjabi",
+  "emoji": "🇵🇰",
+  "group": "Südasiatisch",
+  "desc": "Punjabi – aspirierte Stops, Töne, ng, sh, kh",
+  "allowedOnsets": [
+    [
+      1,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      1,
+      7
+    ],
+    [
+      2,
+      7
+    ],
+    [
+      5,
+      7
+    ],
+    [
+      6,
+      9
+    ],
+    [
+      6,
+      8
+    ],
+    [
+      5,
+      1,
+      9
+    ],
+    [
+      5,
+      1,
+      8
+    ],
+    [
+      5,
+      2,
+      9
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      7,
+      8
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      9,
+      10
+    ],
+    [
+      10,
+      8
+    ],
+    [
+      10,
+      9
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      5
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      8,
+      5
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      9,
+      5
+    ],
+    [
+      8,
+      7
+    ],
+    [
+      9,
+      7
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      3,
+      5
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      8
+    ],
+    [
+      10,
+      9
+    ]
+  ],
+  "maxOnsetLen": 2,
+  "maxCodaLen": 2,
+  "forbiddenOnsetPairs": [],
+  "maxOnsetLength": 2,
+  "maxCodaLength": 2,
+  "morphemePrefixes": [],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "ck",
+        "p",
+        "t",
+        "k",
+        "c",
+        "q"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "b",
+        "d",
+        "g"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "tsch",
+        "ch",
+        "ts",
+        "tz"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "jh",
+        "dz",
+        "dj"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "sh",
+        "kh",
+        "ph",
+        "th",
+        "f",
+        "h",
+        "s",
+        "x"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "bh",
+        "dh",
+        "gh",
+        "v",
+        "w",
+        "z"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "ng",
+        "m",
+        "n"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "r"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "j"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "oo",
+        "ee",
+        "au",
+        "ai",
+        "ei",
+        "ie",
+        "ou",
+        "oi",
+        "aa",
+        "ya",
+        "á",
+        "à",
+        "â",
+        "a"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "ye",
+        "yo",
+        "é",
+        "è",
+        "ê",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "uu",
+        "ii",
+        "ü",
+        "ú",
+        "í",
+        "y",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}

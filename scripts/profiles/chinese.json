@@ -1,0 +1,293 @@
+{
+  "id": "chinese",
+  "name": "Chinesisch",
+  "emoji": "🇨🇳",
+  "group": "Ostasiatisch",
+  "desc": "Chinesisch (Pinyin) – zh, ch, sh, ng, q, x, Töne – Baseline-optimiert (V2-MAX)",
+  "allowedOnsets": [
+    [
+      5,
+      7
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      1
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      2,
+      9
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      2,
+      10
+    ],
+    [
+      5,
+      10
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      5
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      8
+    ],
+    [
+      10,
+      9
+    ]
+  ],
+  "maxOnsetLen": 2,
+  "maxCodaLen": 1,
+  "forbiddenOnsetPairs": [],
+  "maxOnsetLength": 2,
+  "maxCodaLength": 1,
+  "morphemePrefixes": [
+    "bao",
+    "bei",
+    "chang",
+    "chen",
+    "cheng",
+    "dao",
+    "dong",
+    "fan",
+    "fang",
+    "feng",
+    "guo",
+    "han",
+    "hao"
+  ],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [
+    "hua",
+    "hui",
+    "mei",
+    "ming",
+    "lin",
+    "ling",
+    "yang",
+    "yun",
+    "xia",
+    "xin",
+    "ping",
+    "fang",
+    "feng",
+    "lei",
+    "lan",
+    "tao",
+    "ting",
+    "chen",
+    "wei",
+    "wen"
+  ],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "p",
+        "t",
+        "k",
+        "c"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "b",
+        "d",
+        "g"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "zh",
+        "ch",
+        "q",
+        "ts",
+        "tsh"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "dz",
+        "dj"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "sh",
+        "x",
+        "f",
+        "h",
+        "s"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "v",
+        "w",
+        "z",
+        "r"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "ng",
+        "m",
+        "n"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "rh"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "j",
+        "y"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "á",
+        "à",
+        "â",
+        "ā",
+        "a"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "ye",
+        "yo",
+        "é",
+        "è",
+        "ê",
+        "ó",
+        "ò",
+        "ô",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "ü",
+        "ú",
+        "í",
+        "ï",
+        "ū",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}

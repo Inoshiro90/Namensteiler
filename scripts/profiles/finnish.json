@@ -1,0 +1,340 @@
+{
+  "id": "finnish",
+  "name": "Finnisch",
+  "emoji": "🇫🇮",
+  "group": "Baltisch / Finnisch-Ugrisch",
+  "desc": "Finnisch – lange Vokale aa/ee/ii/oo/uu, ng, Gemination, offene Silbenstruktur",
+  "allowedOnsets": [
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      1,
+      9
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      5
+    ],
+    [
+      7,
+      8
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      9,
+      10
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      2,
+      10
+    ],
+    [
+      5,
+      10
+    ],
+    [
+      6,
+      10
+    ],
+    [
+      2,
+      7
+    ],
+    [
+      1,
+      7
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      9,
+      7
+    ],
+    [
+      8,
+      7
+    ],
+    [
+      7,
+      5
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      9,
+      10
+    ],
+    [
+      8,
+      10
+    ]
+  ],
+  "maxOnsetLen": 1,
+  "maxCodaLen": 2,
+  "forbiddenOnsetPairs": [],
+  "maxOnsetLength": 1,
+  "maxCodaLength": 2,
+  "morphemePrefixes": [
+    "salm",
+    "korh",
+    "virt",
+    "aino",
+    "eino",
+    "altti"
+  ],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [
+    "kinen",
+    "linen",
+    "rinen",
+    "ninen",
+    "minen",
+    "lahti",
+    "niemi",
+    "koski",
+    "laine",
+    "järvi"
+  ],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "ck",
+        "qu",
+        "p",
+        "t",
+        "k",
+        "c",
+        "q"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "b",
+        "d",
+        "g"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "ts",
+        "tz"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "dz"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "sh",
+        "f",
+        "h",
+        "s",
+        "x"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "v",
+        "w",
+        "z"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "ng",
+        "nk",
+        "mp",
+        "m",
+        "n"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "r"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "j",
+        "y"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "au",
+        "ai",
+        "ei",
+        "ie",
+        "ou",
+        "oi",
+        "oo",
+        "ee",
+        "aa",
+        "ya",
+        "ä",
+        "á",
+        "å",
+        "æ",
+        "a"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "öö",
+        "ye",
+        "yo",
+        "ö",
+        "ő",
+        "é",
+        "è",
+        "ê",
+        "ë",
+        "ō",
+        "ė",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "ää",
+        "yy",
+        "uu",
+        "ii",
+        "ü",
+        "ű",
+        "ú",
+        "í",
+        "ï",
+        "ū",
+        "ī",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}

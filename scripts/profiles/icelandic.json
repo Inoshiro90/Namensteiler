@@ -1,0 +1,372 @@
+{
+  "id": "icelandic",
+  "name": "Isländisch",
+  "emoji": "🇮🇸",
+  "group": "Skandinavisch",
+  "desc": "Isländisch – þ, ð, hl, hr, hv, fn, hn + korrekte Vokal-Digraphe (V2-MAX)",
+  "allowedOnsets": [
+    [
+      1,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      7
+    ],
+    [
+      2,
+      7
+    ],
+    [
+      5,
+      7
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      5,
+      1,
+      8
+    ],
+    [
+      5,
+      1,
+      9
+    ],
+    [
+      2,
+      10
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      7,
+      8
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      9,
+      10
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      5
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      8,
+      5
+    ],
+    [
+      8,
+      7
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      9,
+      5
+    ],
+    [
+      9,
+      7
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      3,
+      5
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      7,
+      1,
+      5
+    ],
+    [
+      8,
+      1,
+      5
+    ],
+    [
+      9,
+      1,
+      5
+    ],
+    [
+      9,
+      5,
+      1
+    ],
+    [
+      8,
+      5,
+      1
+    ],
+    [
+      7,
+      5,
+      1
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      8
+    ],
+    [
+      10,
+      9
+    ]
+  ],
+  "maxOnsetLen": 3,
+  "maxCodaLen": 3,
+  "forbiddenOnsetPairs": [],
+  "maxOnsetLength": 3,
+  "maxCodaLength": 3,
+  "morphemePrefixes": [
+    "bjorn",
+    "bjørn",
+    "torb",
+    "hall",
+    "grim",
+    "ragn",
+    "svein",
+    "leif",
+    "knut",
+    "aðal",
+    "guðr",
+    "gunn",
+    "hrafn",
+    "bald",
+    "bard",
+    "ingi"
+  ],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [
+    "dóttir",
+    "dottir",
+    "sson",
+    "sdóttir",
+    "sdottir",
+    "sson",
+    "berg",
+    "heim"
+  ],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "ck",
+        "q",
+        "p",
+        "t",
+        "k",
+        "c"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "b",
+        "d",
+        "g"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "ts",
+        "tz"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "dz"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "hl",
+        "hr",
+        "hv",
+        "fn",
+        "hn",
+        "sh",
+        "f",
+        "h",
+        "s",
+        "x",
+        "þ"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "v",
+        "w",
+        "z",
+        "ð"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "ng",
+        "m",
+        "n"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "r"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "j",
+        "y"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "á",
+        "à",
+        "â",
+        "å",
+        "æ",
+        "a"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "ö",
+        "ø",
+        "ó",
+        "ò",
+        "ô",
+        "é",
+        "è",
+        "ê",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "ü",
+        "ú",
+        "í",
+        "ý",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}

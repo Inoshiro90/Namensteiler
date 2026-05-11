@@ -1,0 +1,379 @@
+{
+  "id": "persian",
+  "name": "Persisch / Dari",
+  "emoji": "🇮🇷",
+  "group": "Arabisch / Semitisch",
+  "desc": "Persisch, Dari, Farsi – kh, gh, sh, zh, ch, q (Qoph), spezifische Diphthonge",
+  "allowedOnsets": [
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      6,
+      9
+    ],
+    [
+      6,
+      8
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      2,
+      9
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      5
+    ],
+    [
+      7,
+      8
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      9,
+      10
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      2,
+      10
+    ],
+    [
+      5,
+      10
+    ],
+    [
+      6,
+      10
+    ]
+  ],
+  "allowedCodas": [
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      9,
+      5
+    ],
+    [
+      9,
+      7
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      8,
+      5
+    ],
+    [
+      8,
+      7
+    ],
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      5
+    ],
+    [
+      7,
+      6
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      9,
+      1,
+      5
+    ],
+    [
+      8,
+      1,
+      5
+    ],
+    [
+      7,
+      1,
+      5
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      9,
+      10
+    ]
+  ],
+  "maxOnsetLen": 2,
+  "maxCodaLen": 2,
+  "forbiddenOnsetPairs": [],
+  "maxOnsetLength": 2,
+  "maxCodaLength": 2,
+  "morphemePrefixes": [
+    "moha",
+    "fati",
+    "reza",
+    "moham",
+    "zahr"
+  ],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [
+    "zadeh",
+    "nejad",
+    "abadi",
+    "bakhsh",
+    "doust"
+  ],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "p",
+        "t",
+        "k",
+        "c",
+        "q"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "b",
+        "d",
+        "g"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "ch",
+        "ts",
+        "tsh"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "dj",
+        "dz"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "sh",
+        "kh",
+        "ph",
+        "f",
+        "h",
+        "s",
+        "x"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "gh",
+        "zh",
+        "v",
+        "w",
+        "z"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "ng",
+        "m",
+        "n"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "r"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "j",
+        "y"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "oo",
+        "ee",
+        "ey",
+        "ay",
+        "au",
+        "ai",
+        "ou",
+        "oi",
+        "aa",
+        "ya",
+        "ā",
+        "á",
+        "à",
+        "â",
+        "a"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "ye",
+        "ö",
+        "é",
+        "è",
+        "ê",
+        "ó",
+        "ò",
+        "ô",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "ii",
+        "uu",
+        "ü",
+        "ū",
+        "ī",
+        "í",
+        "ï",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}

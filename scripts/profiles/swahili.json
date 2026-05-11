@@ -1,0 +1,263 @@
+{
+  "id": "swahili",
+  "name": "Swahili / Ostafrikanisch",
+  "emoji": "🇹🇿",
+  "group": "Ostafrika / Bantu",
+  "desc": "Swahili/Ostafrikanisch – mb, nd, nz, ng, ny, kh, vh – Baseline-optimiert (V2-MAX)",
+  "allowedOnsets": [
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      1
+    ],
+    [
+      2,
+      9
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      6,
+      9
+    ],
+    [
+      6,
+      8
+    ],
+    [
+      3,
+      9
+    ],
+    [
+      3,
+      8
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      2
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      2,
+      10
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      5
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      1,
+      5
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      8
+    ],
+    [
+      10,
+      9
+    ]
+  ],
+  "maxOnsetLen": 2,
+  "maxCodaLen": 1,
+  "forbiddenOnsetPairs": [],
+  "maxOnsetLength": 2,
+  "maxCodaLength": 1,
+  "morphemePrefixes": [],
+  "morphemeInfixes": [],
+  "morphemeSuffixes": [],
+  "classes": [
+    {
+      "value": 1,
+      "graphemes": [
+        "p",
+        "t",
+        "k",
+        "c",
+        "q"
+      ]
+    },
+    {
+      "value": 2,
+      "graphemes": [
+        "b",
+        "d",
+        "g"
+      ]
+    },
+    {
+      "value": 3,
+      "graphemes": [
+        "tsch",
+        "ts"
+      ]
+    },
+    {
+      "value": 4,
+      "graphemes": [
+        "dj",
+        "dz"
+      ]
+    },
+    {
+      "value": 5,
+      "graphemes": [
+        "sh",
+        "kh",
+        "f",
+        "h",
+        "s",
+        "x"
+      ]
+    },
+    {
+      "value": 6,
+      "graphemes": [
+        "vh",
+        "v",
+        "w",
+        "z"
+      ]
+    },
+    {
+      "value": 7,
+      "graphemes": [
+        "mb",
+        "nd",
+        "nz",
+        "ng",
+        "ny",
+        "m",
+        "n"
+      ]
+    },
+    {
+      "value": 8,
+      "graphemes": [
+        "l"
+      ]
+    },
+    {
+      "value": 9,
+      "graphemes": [
+        "r"
+      ]
+    },
+    {
+      "value": 10,
+      "graphemes": [
+        "j"
+      ]
+    },
+    {
+      "value": 13,
+      "graphemes": [
+        "ey",
+        "ay",
+        "ya",
+        "á",
+        "a"
+      ]
+    },
+    {
+      "value": 12,
+      "graphemes": [
+        "ye",
+        "yo",
+        "e",
+        "o"
+      ]
+    },
+    {
+      "value": 11,
+      "graphemes": [
+        "ú",
+        "í",
+        "i",
+        "u"
+      ]
+    }
+  ]
+}
