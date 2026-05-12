@@ -59,8 +59,8 @@ function readClusters() {
   };
 }
 
-function applyProfile(profileId) {
-  const profile = PROFILES.find(p => p.id === profileId);
+async function applyProfile(profileId) {
+  const profile = await loadProfile(profileId);
   if (!profile) return;
   // Load cluster constraints from profile into UI fields
   _allowedOnsets    = profile.allowedOnsets    || [];
@@ -85,7 +85,8 @@ function applyProfile(profileId) {
   document.getElementById('morpheme-infixes').value  = _morphemeInfixes.join('\n');
   document.getElementById('morpheme-suffixes').value = _morphemeSuffixes.join('\n');
   initTable(profile.classes);
-  document.getElementById('profile-desc').textContent = profile.desc;
+  const _pdEl = document.getElementById('profile-desc');
+  if (_pdEl) _pdEl.textContent = profile.desc;
   const hint = HINTS[profileId] || HINTS['universal'];
   document.getElementById('words-input').value = hint;
   analyze();

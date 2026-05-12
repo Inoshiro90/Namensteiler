@@ -419,40 +419,15 @@ function exportUnifiedJSON() {
 }
 
 // ─── INIT ────────────────────────────────────────────────────────────
-(function() {
-  const profile = PROFILES.find(p => p.default) || PROFILES[0];
-  // Initialize cluster card as collapsed
+document.addEventListener('DOMContentLoaded', async function () {
+  // Cluster-Phonotaktik-Karte standardmäßig einklappen
   const ccb = document.getElementById('cluster-card-body');
   if (ccb) ccb.style.display = 'none';
   const chev = document.getElementById('cluster-chevron');
   if (chev) chev.style.transform = 'rotate(-90deg)';
-  // Apply profile (loads cluster data + classes table)
-  _allowedOnsets    = profile.allowedOnsets    || [];
-  _forbiddenOnsets  = profile.forbiddenOnsets  || [];
-  _allowedCodas     = profile.allowedCodas     || [];
-  _forbiddenCodas   = profile.forbiddenCodas   || [];
-  _morphemePrefixes = profile.morphemePrefixes || [];
-  _morphemeInfixes  = profile.morphemeInfixes  || [];
-  _morphemeSuffixes = profile.morphemeSuffixes || [];
-  _forbiddenOnsetPairs = profile.forbiddenOnsetPairs || [];
-  _maxOnsetLen = profile.maxOnsetLength || profile.maxOnsetLen || 0;
-  _maxCodaLen  = profile.maxCodaLength  || profile.maxCodaLen  || 0;
-  const _fopEl = document.getElementById('cluster-fop'); if (_fopEl) _fopEl.value = _forbiddenOnsetPairs.join(', ');
-  const _moEl = document.getElementById('max-onset'); if (_moEl) _moEl.value = _maxOnsetLen;
-  const _mcEl = document.getElementById('max-coda');  if (_mcEl) _mcEl.value = _maxCodaLen;
-  updateCvBadge();
-  document.getElementById('cluster-ao').value = patsToText(_allowedOnsets);
-  document.getElementById('cluster-fo').value = patsToText(_forbiddenOnsets);
-  document.getElementById('cluster-ac').value = patsToText(_allowedCodas);
-  document.getElementById('cluster-fc').value = patsToText(_forbiddenCodas);
-  document.getElementById('morpheme-prefixes').value = _morphemePrefixes.join('\n');
-  document.getElementById('morpheme-infixes').value  = _morphemeInfixes.join('\n');
-  document.getElementById('morpheme-suffixes').value = _morphemeSuffixes.join('\n');
-  initTable(profile.classes);
-  const _pdEl = document.getElementById('profile-desc');
-  if (_pdEl) _pdEl.textContent = profile.desc;
-  const _wiEl = document.getElementById('words-input');
-  if (_wiEl) _wiEl.value = HINTS[profile.id] || HINTS['universal'];
+
+  // Standardprofil aus JSON laden und anwenden
+  const sel = document.getElementById('profile-select');
+  await applyProfile(sel ? sel.value : 'universal');
   buildClusterLegend();
-  analyze();
-})();
+});
