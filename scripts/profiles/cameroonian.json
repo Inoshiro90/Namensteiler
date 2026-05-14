@@ -52,6 +52,42 @@
     [
       5,
       2
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      7,
+      9
+    ],
+    [
+      2,
+      7
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      1,
+      6
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      5,
+      7
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      6
     ]
   ],
   "forbiddenOnsets": [
@@ -62,10 +98,6 @@
     [
       9,
       8
-    ],
-    [
-      7,
-      10
     ],
     [
       8,
@@ -104,6 +136,26 @@
     [
       5,
       1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      7,
+      5
+    ],
+    [
+      8,
+      5
+    ],
+    [
+      9,
+      5
+    ],
+    [
+      5,
+      5
     ]
   ],
   "forbiddenCodas": [
@@ -125,10 +177,10 @@
     ]
   ],
   "maxOnsetLen": 2,
-  "maxCodaLen": 1,
+  "maxCodaLen": 2,
   "forbiddenOnsetPairs": [],
   "maxOnsetLength": 2,
-  "maxCodaLength": 1,
+  "maxCodaLength": 2,
   "morphemePrefixes": [],
   "morphemeInfixes": [],
   "morphemeSuffixes": [],
