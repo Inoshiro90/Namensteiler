@@ -145,13 +145,45 @@
       5,
       2,
       7
-    ]
-  ],
-  "forbiddenOnsets": [
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      2,
+      6
+    ],
+    [
+      7,
+      9
+    ],
     [
       7,
       10
     ],
+    [
+      6,
+      10
+    ],
+    [
+      1,
+      10
+    ],
+    [
+      5,
+      10
+    ],
+    [
+      2,
+      7
+    ],
+    [
+      1,
+      5
+    ]
+  ],
+  "forbiddenOnsets": [
     [
       8,
       9
@@ -386,7 +418,8 @@
   "maxCodaLen": 3,
   "forbiddenOnsetPairs": [
     "bm",
-    "dn"
+    "dn",
+    "ks"
   ],
   "maxOnsetLength": 5,
   "maxCodaLength": 3,
