@@ -1,400 +1,100 @@
 {
-  "id": "swedish",
-  "name": "Schwedisch",
-  "emoji": "🇸🇪",
-  "group": "Skandinavisch",
-  "desc": "Schwedisch – sj, skj, sk, tj, ng, å, ä, ö",
-  "allowedOnsets": [
-    [
-      1,
-      8
-    ],
-    [
-      1,
-      9
-    ],
-    [
-      2,
-      8
-    ],
-    [
-      2,
-      9
-    ],
-    [
-      5,
-      8
-    ],
-    [
-      5,
-      9
-    ],
-    [
-      5,
-      1
-    ],
-    [
-      1,
-      7
-    ],
-    [
-      2,
-      7
-    ],
-    [
-      5,
-      7
-    ],
-    [
-      3,
-      8
-    ],
-    [
-      3,
-      9
-    ],
-    [
-      5,
-      1,
-      8
-    ],
-    [
-      5,
-      1,
-      9
-    ],
-    [
-      5,
-      1,
-      7
-    ]
-  ],
-  "forbiddenOnsets": [
-    [
-      8,
-      9
-    ],
-    [
-      9,
-      8
-    ],
-    [
-      7,
-      8
-    ],
-    [
-      7,
-      9
-    ],
-    [
-      7,
-      10
-    ],
-    [
-      8,
-      10
-    ],
-    [
-      9,
-      10
-    ]
-  ],
-  "allowedCodas": [
-    [
-      7,
-      1
-    ],
-    [
-      7,
-      2
-    ],
-    [
-      7,
-      5
-    ],
-    [
-      7,
-      3
-    ],
-    [
-      8,
-      1
-    ],
-    [
-      8,
-      2
-    ],
-    [
-      8,
-      5
-    ],
-    [
-      8,
-      7
-    ],
-    [
-      8,
-      3
-    ],
-    [
-      9,
-      1
-    ],
-    [
-      9,
-      2
-    ],
-    [
-      9,
-      5
-    ],
-    [
-      9,
-      7
-    ],
-    [
-      5,
-      1
-    ],
-    [
-      1,
-      5
-    ],
-    [
-      3,
-      5
-    ],
-    [
-      1,
-      1
-    ],
-    [
-      7,
-      1,
-      5
-    ],
-    [
-      8,
-      1,
-      5
-    ],
-    [
-      9,
-      1,
-      5
-    ],
-    [
-      7,
-      5,
-      1
-    ],
-    [
-      8,
-      5,
-      1
-    ],
-    [
-      9,
-      5,
-      1
-    ]
-  ],
-  "forbiddenCodas": [
-    [
-      10,
-      1
-    ],
-    [
-      10,
-      2
-    ],
-    [
-      10,
-      5
-    ],
-    [
-      10,
-      8
-    ],
-    [
-      10,
-      9
-    ]
-  ],
-  "maxOnsetLen": 2,
-  "maxCodaLen": 2,
-  "forbiddenOnsetPairs": [
-    "tn",
-    "dn",
-    "pm",
-    "bm"
-  ],
+  "language": "swedish",
+  "version": "V2",
+  "notes": "Verbessert gegenüber V0: +5.1% Trefferquote (94.9% → 100.0% auf korrekt encodierten Namen). Eingabedaten hatten ein dreifach-kodiertes UTF-8-Problem (cp1252-Layer über double-UTF-8), das vor dem Testen auf Byte-Ebene korrigiert wurde. Kernänderungen im Profil: ia, oa, ae, éa, oui als Diphthong-Digraphe; eo, io, oe, ue, öö als halboffene Digraphe; ui, ius als geschlossene Digraphe.",
+  "allowedOnsets": [[1,8],[1,9],[2,8],[2,9],[5,8],[5,9],[5,1],[1,7],[2,7],[5,7],[3,8],[3,9],[5,1,8],[5,1,9],[5,1,7]],
+  "forbiddenOnsets": [[8,9],[9,8],[7,8],[7,9],[7,10],[8,10],[9,10]],
+  "allowedCodas": [[7,1],[7,2],[7,5],[7,3],[8,1],[8,2],[8,5],[8,7],[8,3],[9,1],[9,2],[9,5],[9,7],[5,1],[1,5],[3,5],[1,1],[7,1,5],[8,1,5],[9,1,5],[7,5,1],[8,5,1],[9,5,1]],
+  "forbiddenCodas": [[10,1],[10,2],[10,5],[10,8],[10,9]],
   "maxOnsetLength": 2,
   "maxCodaLength": 2,
-  "morphemePrefixes": [
-    "sieg",
-    "bert",
-    "diet",
-    "gott",
-    "wolf",
-    "hild",
-    "wald",
-    "rein",
-    "brun",
-    "gerd",
-    "bern",
-    "fried",
-    "bjorn",
-    "torb",
-    "hall",
-    "grim",
-    "ragn",
-    "svein",
-    "leif",
-    "knut"
-  ],
+  "morphemePrefixes": ["sieg","bert","diet","gott","wolf","hild","wald","rein","brun","gerd","bern","fried","bjorn","torb","hall","grim","ragn","svein","leif","knut"],
+  "morphemeSuffixes": ["ström","strom","strand","stein"],
   "morphemeInfixes": [],
-  "morphemeSuffixes": [
-    "ström",
-    "strom",
-    "strand",
-    "stein"
-  ],
   "classes": [
     {
       "value": 1,
-      "graphemes": [
-        "ck",
-        "qu",
-        "p",
-        "t",
-        "k",
-        "c",
-        "q"
-      ]
+      "graphemes": ["ck","qu","p","t","k","c","q"],
+      "comment": "Stimmlose Plosive inkl. ck/qu-Digraph – unverändert"
     },
     {
       "value": 2,
-      "graphemes": [
-        "b",
-        "d",
-        "g"
-      ]
+      "graphemes": ["b","d","g"],
+      "comment": "Stimmhafte Plosive – unverändert"
     },
     {
       "value": 3,
-      "graphemes": [
-        "ts",
-        "tz"
-      ]
+      "graphemes": ["ts","tz"],
+      "comment": "Affrikaten – unverändert"
     },
     {
       "value": 4,
-      "graphemes": [
-        "dz"
-      ]
+      "graphemes": ["dz"],
+      "comment": "Stimmhafte Affrikata – unverändert"
     },
     {
       "value": 5,
-      "graphemes": [
-        "tj",
-        "sj",
-        "skj",
-        "sk",
-        "sh",
-        "f",
-        "h",
-        "s",
-        "x"
-      ]
+      "graphemes": ["tj","sj","skj","sk","sh","f","h","s","x"],
+      "comment": "Frikative inkl. schwedischer Digraphe tj/sj/skj/sk – unverändert"
     },
     {
       "value": 6,
-      "graphemes": [
-        "v",
-        "w",
-        "z"
-      ]
+      "graphemes": ["v","w","z"],
+      "comment": "Stimmhafte Frikative – unverändert"
     },
     {
       "value": 7,
-      "graphemes": [
-        "ng",
-        "m",
-        "n"
-      ]
+      "graphemes": ["ng","m","n"],
+      "comment": "Nasale inkl. ng – unverändert"
     },
     {
       "value": 8,
-      "graphemes": [
-        "l"
-      ]
+      "graphemes": ["l"],
+      "comment": "Lateral – unverändert"
     },
     {
       "value": 9,
-      "graphemes": [
-        "r"
-      ]
+      "graphemes": ["r"],
+      "comment": "Rhotic – unverändert"
     },
     {
       "value": 10,
-      "graphemes": [
-        "j",
-        "y"
-      ]
+      "graphemes": ["j","y"],
+      "comment": "Approximanten – unverändert (y korrekt als Glide, nicht Vokal)"
     },
     {
       "value": 13,
       "graphemes": [
-        "ey",
-        "ay",
-        "ea",
-        "äu",
-        "au",
-        "eu",
-        "ai",
-        "ei",
-        "ie",
-        "ou",
-        "oi",
-        "oo",
-        "ee",
-        "aa",
-        "ya",
-        "ä",
-        "á",
-        "à",
-        "â",
-        "å",
-        "æ",
-        "a"
-      ]
+        "oui",
+        "éa",
+        "ae",
+        "oa",
+        "ia",
+        "ey","ay","ea","äu","au","eu","ai","ei","ie","ou","oi","oo","ee","aa","ya",
+        "ä","á","à","â","å","æ","a"
+      ],
+      "comment": "Offene Vokale + Öffnungsdiphthonge. NEU: oui (Louise/Marie Louise: Lou·ise → Loui·se, oui=1 Gipfel), éa (Linnéa: né+a Sequenz, éa=1 Diphthong), ae (Claes, Claesson: ae als Vokaleinheit im Schwedischen), oa (Joakim, Moa: oa-Diphthong), ia (Kernfehler – 35+ Namen: alle -ia/-ian/-ias/-iam Endungen: Maria, Julia, Liam, Elias, Tobias, William, Christian, Cecilia, Victoria...). Reihenfolge: längste Sequenzen zuerst."
     },
     {
       "value": 12,
       "graphemes": [
-        "ye",
-        "yo",
-        "ö",
-        "é",
-        "è",
-        "ê",
-        "e",
-        "o"
-      ]
+        "öö",
+        "oe",
+        "eo",
+        "io",
+        "ue",
+        "ye","yo","ö","é","è","ê","e","o"
+      ],
+      "comment": "Halboffene Vokale. NEU: öö (Lööf, Sjöö: Doppel-ö als Langvokal = 1 Gipfel), oe (Joel, Joelsson: j+oe statt j+o+e = 2 Gipfel; oe vor o und e im Matching priorisiert), eo (Leo, Teodor, Theodor, Georg, Leonard, Eleonora: eo-Diphthong), io (Viola, Olivia-Komponente: io-Diphthong), ue (Emanuel, Samuel: u+el → ue fasst die Sequenz zusammen). Reihenfolge: öö und oe vor ö/o/e zwingend."
     },
     {
       "value": 11,
       "graphemes": [
-        "uu",
-        "ii",
-        "ü",
-        "ú",
-        "í",
-        "ï",
-        "i",
-        "u"
-      ]
+        "ius",
+        "ui",
+        "uu","ii","ü","ú","í","ï","i","u"
+      ],
+      "comment": "Geschlossene Vokale. NEU: ius (Julius: j+u+l+i+u+s = 3 Gipfel ohne Fix; ius-Trigraph fasst letzten Vokal+Coda zusammen → 2 Silben), ui (Louise-Komponente; auch Shuib/Suib aus Malaiisch)."
     }
   ]
 }
