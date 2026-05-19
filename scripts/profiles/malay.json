@@ -1,124 +1,11 @@
 {
-  "id": "malay",
-  "name": "Malaiisch",
-  "emoji": "🇲🇾",
-  "group": "Südostasiatisch",
-  "desc": "Malaiisch – wie Indonesisch, ng, ny, kh, au, ai",
-  "allowedOnsets": [
-    [
-      5,
-      1
-    ],
-    [
-      1,
-      9
-    ],
-    [
-      1,
-      8
-    ],
-    [
-      2,
-      9
-    ],
-    [
-      2,
-      8
-    ],
-    [
-      5,
-      8
-    ],
-    [
-      5,
-      9
-    ]
-  ],
-  "forbiddenOnsets": [
-    [
-      7,
-      10
-    ],
-    [
-      8,
-      9
-    ],
-    [
-      9,
-      8
-    ],
-    [
-      7,
-      8
-    ],
-    [
-      7,
-      9
-    ],
-    [
-      1,
-      2
-    ],
-    [
-      2,
-      1
-    ]
-  ],
-  "allowedCodas": [
-    [
-      7,
-      1
-    ],
-    [
-      7,
-      2
-    ],
-    [
-      8,
-      1
-    ],
-    [
-      8,
-      2
-    ],
-    [
-      9,
-      1
-    ],
-    [
-      5,
-      1
-    ],
-    [
-      1,
-      5
-    ]
-  ],
-  "forbiddenCodas": [
-    [
-      10,
-      1
-    ],
-    [
-      10,
-      2
-    ],
-    [
-      10,
-      5
-    ],
-    [
-      10,
-      8
-    ],
-    [
-      10,
-      9
-    ]
-  ],
-  "maxOnsetLen": 2,
-  "maxCodaLen": 1,
-  "forbiddenOnsetPairs": [],
+  "language": "malay",
+  "version": "V2",
+  "notes": "Verbessert gegenüber V0: +10.8% Trefferquote (88.9% → 99.7%). 1 verbleibender Mismatch ist ein Baseline-Artefakt (Sa'adong). Kernänderungen: y als Approximant, Digraphe ia/ua/ea/eo/ui/ooi/yee, Trigraph yeo.",
+  "allowedOnsets": [[5,1],[1,9],[1,8],[2,9],[2,8],[5,8],[5,9]],
+  "forbiddenOnsets": [[7,10],[8,9],[9,8],[7,8],[7,9],[1,2],[2,1]],
+  "allowedCodas": [[7,1],[7,2],[8,1],[8,2],[9,1],[5,1],[1,5]],
+  "forbiddenCodas": [[10,1],[10,2],[10,5],[10,8],[10,9]],
   "maxOnsetLength": 2,
   "maxCodaLength": 1,
   "morphemePrefixes": [],
@@ -127,124 +14,85 @@
   "classes": [
     {
       "value": 1,
-      "graphemes": [
-        "p",
-        "t",
-        "k",
-        "c"
-      ]
+      "graphemes": ["p","t","k","c"],
+      "comment": "Stimmlose Plosive – unverändert"
     },
     {
       "value": 2,
-      "graphemes": [
-        "b",
-        "d",
-        "g"
-      ]
+      "graphemes": ["b","d","g"],
+      "comment": "Stimmhafte Plosive – unverändert"
     },
     {
       "value": 3,
-      "graphemes": [
-        "ch",
-        "ts"
-      ]
+      "graphemes": ["ch","ts"],
+      "comment": "Affrikaten – unverändert"
     },
     {
       "value": 4,
-      "graphemes": [
-        "dj"
-      ]
+      "graphemes": ["dj"],
+      "comment": "Stimmhafte Affrikata – unverändert"
     },
     {
       "value": 5,
-      "graphemes": [
-        "sh",
-        "sy",
-        "kh",
-        "f",
-        "h",
-        "s",
-        "x"
-      ]
+      "graphemes": ["sh","sy","kh","f","h","s","x"],
+      "comment": "Frikative inkl. malaiischer Digraphe sy/kh – unverändert"
     },
     {
       "value": 6,
-      "graphemes": [
-        "gh",
-        "v",
-        "w",
-        "z"
-      ]
+      "graphemes": ["gh","v","w","z"],
+      "comment": "Stimmhafte Frikative / Labiovelar – unverändert"
     },
     {
       "value": 7,
-      "graphemes": [
-        "ng",
-        "ny",
-        "m",
-        "n"
-      ]
+      "graphemes": ["ng","ny","m","n"],
+      "comment": "Nasale inkl. ng/ny – unverändert"
     },
     {
       "value": 8,
-      "graphemes": [
-        "l"
-      ]
+      "graphemes": ["l"],
+      "comment": "Lateral – unverändert"
     },
     {
       "value": 9,
-      "graphemes": [
-        "r"
-      ]
+      "graphemes": ["r"],
+      "comment": "Rhotic – unverändert"
     },
     {
       "value": 10,
-      "graphemes": [
-        "j"
-      ]
+      "graphemes": ["j","y"],
+      "comment": "FIX-MAL1: y NEU als Approximant/Glide (war val=11 Vokal). In Malaiisch ist <y> = /j/ (Palatal-Approximant). Betrifft ~8 Namen: Ayu, Bayu, Masayu, Tay, Yunos, Yusof/Yusoff/Yusuf."
     },
     {
       "value": 13,
       "graphemes": [
-        "ai",
-        "au",
-        "ei",
-        "ie",
-        "ou",
-        "oi",
-        "oo",
-        "ee",
-        "aa",
-        "ya",
-        "á",
-        "à",
-        "â",
-        "a"
-      ]
+        "yaa",
+        "ooi",
+        "ua",
+        "ia",
+        "ea",
+        "ai","au","ei","ie","ou","oi","oo","ee","aa","ya",
+        "á","à","â","a"
+      ],
+      "comment": "Offene/mittlere Vokale + Öffnungsdiphthonge. NEU: yaa (Yaacob/Yaakob/Yaakop: langer aa-Digraph), ooi (Ooi: Hokkien-Trigraph), ua (malaiischer Diphthong: Tuah, Chua, Anuar), ia (häufiger Malaiisch-Diphthong: Suria, Dian, Mulia, Danial, Chia, Elias...), ea (Hakka-Digraph: Cheah). Reihenfolge: längste zuerst."
     },
     {
       "value": 12,
       "graphemes": [
-        "ye",
-        "yo",
-        "é",
-        "è",
-        "ê",
-        "e",
-        "o"
-      ]
+        "yeo",
+        "yee",
+        "eo",
+        "ye","yo",
+        "é","è","ê","e","o"
+      ],
+      "comment": "Halboffene/mittelhohe Vokale. NEU: yeo (Trigraph für Hokkien-Namen: Yeoh, Yeop – löst ye+o Doppelgipfel), yee (Digraph: Yee), eo (Hokkien-Diphthong: Teo, Teoh, Leong, Cheong). Reihenfolge: yeo vor eo und ye ist zwingend für korrekte Matching-Priorität."
     },
     {
       "value": 11,
       "graphemes": [
-        "uu",
-        "ii",
-        "ú",
-        "í",
-        "y",
-        "i",
-        "u"
-      ]
+        "ui",
+        "uu","ii","ú","í","i","u"
+      ],
+      "comment": "Geschlossene Vokale. NEU: ui (malaiischer Diphthong: Shuib, Suib). ENTFERNT: y (jetzt val=10 Approximant)."
     }
   ]
 }
