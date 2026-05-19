@@ -3,7 +3,7 @@
   "name": "Maori",
   "emoji": "🇳🇿",
   "group": "Pazifisch",
-  "desc": "Māori – wh, ng, strenge (C)V-Silbenstruktur, offene Silben – Baseline-optimiert (V2-MAX)",
+  "desc": "Maori – wh, ng, strenge (C)V-Silbenstruktur, offene Silben",
   "allowedOnsets": [],
   "forbiddenOnsets": [
     [
@@ -247,7 +247,6 @@
     {
       "value": 13,
       "graphemes": [
-        "ya",
         "á",
         "a"
       ]
@@ -255,8 +254,6 @@
     {
       "value": 12,
       "graphemes": [
-        "ye",
-        "yo",
         "é",
         "è",
         "e",
@@ -268,6 +265,7 @@
       "graphemes": [
         "ú",
         "í",
+        "y",
         "i",
         "u"
       ]
