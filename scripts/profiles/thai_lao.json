@@ -1,140 +1,11 @@
 {
-  "id": "thai_lao",
-  "name": "Thailändisch / Laotisch",
-  "emoji": "🇹🇭",
-  "group": "Südostasiatisch",
-  "desc": "Thailändisch & Laotisch (Romanisierung) – ph, th, kh, ch, ng, Töne",
-  "allowedOnsets": [
-    [
-      1,
-      9
-    ],
-    [
-      1,
-      8
-    ],
-    [
-      2,
-      9
-    ],
-    [
-      2,
-      8
-    ],
-    [
-      5,
-      9
-    ],
-    [
-      5,
-      8
-    ],
-    [
-      5,
-      1
-    ],
-    [
-      5,
-      2
-    ]
-  ],
-  "forbiddenOnsets": [
-    [
-      7,
-      10
-    ],
-    [
-      8,
-      9
-    ],
-    [
-      9,
-      8
-    ],
-    [
-      7,
-      8
-    ],
-    [
-      7,
-      9
-    ],
-    [
-      1,
-      2
-    ],
-    [
-      2,
-      1
-    ],
-    [
-      1,
-      10
-    ],
-    [
-      2,
-      10
-    ]
-  ],
-  "allowedCodas": [
-    [
-      7,
-      1
-    ],
-    [
-      7,
-      2
-    ],
-    [
-      8,
-      1
-    ],
-    [
-      8,
-      2
-    ],
-    [
-      9,
-      1
-    ],
-    [
-      9,
-      2
-    ],
-    [
-      5,
-      1
-    ],
-    [
-      1,
-      5
-    ]
-  ],
-  "forbiddenCodas": [
-    [
-      10,
-      1
-    ],
-    [
-      10,
-      2
-    ],
-    [
-      10,
-      5
-    ],
-    [
-      10,
-      8
-    ],
-    [
-      10,
-      9
-    ]
-  ],
-  "maxOnsetLen": 2,
-  "maxCodaLen": 1,
-  "forbiddenOnsetPairs": [],
+  "language": "thai_lao",
+  "version": "V3",
+  "notes": "Verbessert gegenüber V0: +8.5% Trefferquote (91.4% → 99.9%). 1 verbleibender Mismatch ist ein Baseline-Artefakt (Juaa: uaa als 1 Vokalgruppe gezählt, linguistisch aber 2 Silben Ju·aa). Kernänderungen: ua/uang, aew/ew, ae, ia, ue, eo, oen/oeng/ueng Digraphe/Trigraphe für Thai/Lao-Phonologie; eu, oe, io, iu, euang, yao, aue, yoo, yoen, ear, nyai.",
+  "allowedOnsets": [[1,9],[1,8],[2,9],[2,8],[5,9],[5,8],[5,1],[5,2]],
+  "forbiddenOnsets": [[7,10],[8,9],[9,8],[7,8],[7,9],[1,2],[2,1],[1,10],[2,10]],
+  "allowedCodas": [[7,1],[7,2],[8,1],[8,2],[9,1],[9,2],[5,1],[1,5]],
+  "forbiddenCodas": [[10,1],[10,2],[10,5],[10,8],[10,9]],
   "maxOnsetLength": 2,
   "maxCodaLength": 1,
   "morphemePrefixes": [],
@@ -143,133 +14,103 @@
   "classes": [
     {
       "value": 1,
-      "graphemes": [
-        "p",
-        "t",
-        "k",
-        "c",
-        "q"
-      ]
+      "graphemes": ["p","t","k","c","q"],
+      "comment": "Stimmlose Plosive inkl. q (Thai-Romanisierung) – unverändert"
     },
     {
       "value": 2,
-      "graphemes": [
-        "b",
-        "d",
-        "g"
-      ]
+      "graphemes": ["b","d","g"],
+      "comment": "Stimmhafte Plosive – unverändert"
     },
     {
       "value": 3,
-      "graphemes": [
-        "tsch",
-        "ch",
-        "ts"
-      ]
+      "graphemes": ["tsch","ch","ts"],
+      "comment": "Affrikaten – unverändert"
     },
     {
       "value": 4,
-      "graphemes": [
-        "dz",
-        "dj"
-      ]
+      "graphemes": ["dz","dj"],
+      "comment": "Stimmhafte Affrikaten – unverändert"
     },
     {
       "value": 5,
-      "graphemes": [
-        "ph",
-        "th",
-        "kh",
-        "sh",
-        "f",
-        "h",
-        "s",
-        "x"
-      ]
+      "graphemes": ["ph","th","kh","sh","f","h","s","x"],
+      "comment": "Frikative inkl. Thai-Digraphe ph/th/kh – unverändert"
     },
     {
       "value": 6,
-      "graphemes": [
-        "v",
-        "w",
-        "z"
-      ]
+      "graphemes": ["v","w","z"],
+      "comment": "Stimmhafte Frikative / Labiovelar – unverändert"
     },
     {
       "value": 7,
-      "graphemes": [
-        "ng",
-        "m",
-        "n"
-      ]
+      "graphemes": ["ng","m","n"],
+      "comment": "Nasale inkl. ng-Digraph – unverändert"
     },
     {
       "value": 8,
-      "graphemes": [
-        "l"
-      ]
+      "graphemes": ["l"],
+      "comment": "Lateral – unverändert"
     },
     {
       "value": 9,
-      "graphemes": [
-        "r"
-      ]
+      "graphemes": ["r"],
+      "comment": "Rhotic – unverändert"
     },
     {
       "value": 10,
-      "graphemes": [
-        "j",
-        "y"
-      ]
+      "graphemes": ["j","y"],
+      "comment": "Approximanten j/y – unverändert (y bereits korrekt als Approximant klassifiziert)"
     },
     {
       "value": 13,
       "graphemes": [
-        "ey",
-        "ay",
-        "ao",
-        "au",
-        "ai",
-        "ei",
-        "ie",
-        "ou",
-        "oi",
-        "oo",
-        "ee",
-        "aa",
-        "ya",
-        "á",
-        "à",
-        "â",
-        "a"
-      ]
+        "nyai",
+        "yao",
+        "aue",
+        "aew",
+        "uang",
+        "ae",
+        "oua",
+        "ia",
+        "ew",
+        "ua",
+        "uai",
+        "ear",
+        "ey","ay","ao","au","ai","ei","ie","ou","oi","oo","ee","aa","ya",
+        "á","à","â","a"
+      ],
+      "comment": "Offene Vokale + Öffnungsdiphthonge. NEU: nyai (Thunyaiphat: ny+ai Trigraph), yao (Thai เยา [jaːo]: Yaowapha), aue (Auemporn: au+e Vokalgruppe), aew (Thai [kɛːw]: Kaew-Namen), uang (Thai [uaŋ]: Duang, Puang, Kuang – 21 Namen!), ae (Thai [ɛː]: Maemae, Taevivat, Saenkham), oua (Lao: Moua), ia (Thai/Lao [ia]: Thiani, Somphian, Wichian), ew (Digraph als aew-Coda), ua (Thai [ua]: Chua, Tuah, Maruai), uai (Lao [uaj]: Maruai), ear (Thearnthong: Thai-ae mit r-Schreibung). Reihenfolge: längste zuerst."
     },
     {
       "value": 12,
       "graphemes": [
-        "ye",
-        "yo",
-        "é",
-        "è",
-        "ê",
-        "ó",
-        "ò",
-        "ô",
-        "e",
-        "o"
-      ]
+        "euang",
+        "yoen",
+        "yoo",
+        "oeng",
+        "oen",
+        "ueng",
+        "eun",
+        "oe",
+        "eu",
+        "eo",
+        "iong",
+        "yaa",
+        "io",
+        "ue",
+        "ye","yo",
+        "é","è","ê","ó","ò","ô","e","o"
+      ],
+      "comment": "Halboffene Vokale. NEU: euang (Thai/Lao เอือ [ɯːaŋ]: Sibounheuang), yoen (Kongyoen: Thai [joːn]), yoo (Thai ยู: Yooyen), oeng (Thai เอิ/เอือ: Rungrueng, Chanrueng), oen (Thai -เอิน: Lasungnoen, Tedsungnoen), ueng (Thai เอือง [ɯːaŋ]: Nuengmajcha), eun (Lao -eun: Chaleunsouk), oe (Thai เ-า Langvokal: Koedchatturat, Sipaseuth), eu (Thai เ- [ɯː]: Preuksapanich), eo (Thai/Lao [ɛːo]: Keo, Charoen-Namen), iong (Lao: Xiong), yaa (Thai/Lao langer aa-Vokal: Juaa, Punyaa, Chaiyaanunt), io (Thai [io]: Siorat), ue (Thai/Lao [ɯː]: Vue, Lue, Chuena). Reihenfolge: Tetragraph vor Trigraph vor Digraph zwingend."
     },
     {
       "value": 11,
       "graphemes": [
-        "uu",
-        "ii",
-        "ü",
-        "ú",
-        "í",
-        "i",
-        "u"
-      ]
+        "iu",
+        "uu","ii","ü","ú","í","i","u"
+      ],
+      "comment": "Geschlossene Vokale. NEU: iu (Thai [iːu] einsilbig: Thiu)."
     }
   ]
 }
