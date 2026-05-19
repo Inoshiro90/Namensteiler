@@ -178,14 +178,7 @@
   "forbiddenOnsetPairs": [],
   "maxOnsetLength": 3,
   "maxCodaLength": 3,
-  "morphemePrefixes": [
-    "andres",
-    "jaak",
-    "marid",
-    "taavi",
-    "krist",
-    "siim"
-  ],
+  "morphemePrefixes": [],
   "morphemeInfixes": [],
   "morphemeSuffixes": [
     "son",
@@ -208,7 +201,6 @@
     {
       "value": 1,
       "graphemes": [
-        "ck",
         "p",
         "t",
         "k",
@@ -229,7 +221,6 @@
       "value": 3,
       "graphemes": [
         "ts",
-        "tz",
         "č"
       ]
     },
@@ -243,11 +234,9 @@
     {
       "value": 5,
       "graphemes": [
-        "sh",
         "f",
         "h",
         "s",
-        "x",
         "š"
       ]
     },
@@ -255,7 +244,6 @@
       "value": 6,
       "graphemes": [
         "v",
-        "w",
         "z",
         "ž"
       ]
@@ -300,37 +288,17 @@
         "oo",
         "ee",
         "aa",
-        "ya",
         "ā",
         "ä",
-        "á",
-        "à",
-        "â",
-        "å",
-        "æ",
         "a"
       ]
     },
     {
       "value": 12,
       "graphemes": [
-        "ye",
-        "yo",
         "ö",
-        "ő",
         "õ",
-        "é",
-        "è",
-        "ê",
-        "ë",
-        "ó",
-        "ò",
-        "ô",
-        "ø",
-        "œ",
         "ē",
-        "ō",
-        "ė",
         "e",
         "o"
       ]
@@ -341,18 +309,8 @@
         "uu",
         "ii",
         "ü",
-        "ű",
-        "ú",
-        "í",
-        "ï",
         "ū",
         "ī",
-        "ı",
-        "ý",
-        "î",
-        "û",
-        "ů",
-        "y",
         "i",
         "u"
       ]
