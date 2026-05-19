@@ -222,14 +222,11 @@
       "value": 13,
       "graphemes": [
         "au",
-        "ai",
         "ou",
         "oi",
         "oo",
         "ee",
         "ay",
-        "oa",
-        "aa",
         "ya",
         "á",
         "a"
@@ -238,8 +235,6 @@
     {
       "value": 12,
       "graphemes": [
-        "ye",
-        "yo",
         "ë",
         "é",
         "è",
@@ -251,8 +246,6 @@
     {
       "value": 11,
       "graphemes": [
-        "ii",
-        "uu",
         "ú",
         "í",
         "ï",
