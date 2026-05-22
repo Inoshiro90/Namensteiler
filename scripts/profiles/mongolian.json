@@ -176,20 +176,15 @@
     {
       "value": 10,
       "graphemes": [
-        "j"
+        "j",
+        "y"
       ]
     },
     {
       "value": 13,
       "graphemes": [
-        "ey",
         "ay",
-        "au",
         "ai",
-        "ei",
-        "ie",
-        "ou",
-        "oi",
         "aa",
         "ya",
         "á",
@@ -201,8 +196,8 @@
     {
       "value": 12,
       "graphemes": [
-        "ye",
-        "yo",
+        "oo",
+        "ee",
         "ö",
         "é",
         "è",
@@ -217,12 +212,12 @@
     {
       "value": 11,
       "graphemes": [
+        "iu",
         "uu",
         "ii",
         "ü",
         "ú",
         "í",
-        "y",
         "i",
         "u"
       ]
