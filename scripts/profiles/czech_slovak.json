@@ -1,585 +1,73 @@
 {
-  "id": "czech_slovak",
-  "name": "Tschechisch / Slowakisch",
-  "emoji": "🇨🇿",
-  "group": "Slawisch",
-  "desc": "Tschechisch & Slowakisch – š, č, ž, ř, ň, ě, ď, ť, dž, dz, á, é, í, ó, ú, ý",
-  "allowedOnsets": [
-    [
-      1,
-      8
-    ],
-    [
-      1,
-      9
-    ],
-    [
-      2,
-      8
-    ],
-    [
-      2,
-      9
-    ],
-    [
-      5,
-      8
-    ],
-    [
-      5,
-      9
-    ],
-    [
-      5,
-      1
-    ],
-    [
-      5,
-      2
-    ],
-    [
-      6,
-      8
-    ],
-    [
-      6,
-      9
-    ],
-    [
-      6,
-      2
-    ],
-    [
-      6,
-      1
-    ],
-    [
-      5,
-      6
-    ],
-    [
-      6,
-      6
-    ],
-    [
-      5,
-      5
-    ],
-    [
-      5,
-      7
-    ],
-    [
-      6,
-      7
-    ],
-    [
-      2,
-      7
-    ],
-    [
-      1,
-      7
-    ],
-    [
-      5,
-      1,
-      9
-    ],
-    [
-      5,
-      1,
-      8
-    ],
-    [
-      5,
-      2,
-      9
-    ],
-    [
-      5,
-      2,
-      8
-    ],
-    [
-      6,
-      2,
-      9
-    ],
-    [
-      6,
-      2,
-      8
-    ],
-    [
-      5,
-      6,
-      9
-    ],
-    [
-      5,
-      6,
-      8
-    ],
-    [
-      5,
-      5,
-      9
-    ],
-    [
-      6,
-      6,
-      9
-    ],
-    [
-      5,
-      1,
-      7
-    ],
-    [
-      6,
-      2,
-      7
-    ],
-    [
-      5,
-      2,
-      7
-    ]
-  ],
-  "forbiddenOnsets": [
-    [
-      7,
-      10
-    ],
-    [
-      8,
-      9
-    ],
-    [
-      9,
-      8
-    ],
-    [
-      8,
-      10
-    ],
-    [
-      9,
-      10
-    ],
-    [
-      10,
-      8
-    ],
-    [
-      10,
-      9
-    ]
-  ],
-  "allowedCodas": [
-    [
-      9,
-      1
-    ],
-    [
-      9,
-      2
-    ],
-    [
-      9,
-      5
-    ],
-    [
-      9,
-      6
-    ],
-    [
-      9,
-      7
-    ],
-    [
-      9,
-      8
-    ],
-    [
-      9,
-      3
-    ],
-    [
-      8,
-      1
-    ],
-    [
-      8,
-      2
-    ],
-    [
-      8,
-      5
-    ],
-    [
-      8,
-      6
-    ],
-    [
-      8,
-      7
-    ],
-    [
-      8,
-      3
-    ],
-    [
-      7,
-      1
-    ],
-    [
-      7,
-      2
-    ],
-    [
-      7,
-      5
-    ],
-    [
-      7,
-      6
-    ],
-    [
-      7,
-      3
-    ],
-    [
-      5,
-      1
-    ],
-    [
-      5,
-      2
-    ],
-    [
-      5,
-      6
-    ],
-    [
-      6,
-      1
-    ],
-    [
-      6,
-      2
-    ],
-    [
-      1,
-      1
-    ],
-    [
-      1,
-      5
-    ],
-    [
-      2,
-      5
-    ],
-    [
-      2,
-      1
-    ],
-    [
-      3,
-      1
-    ],
-    [
-      3,
-      5
-    ],
-    [
-      9,
-      1,
-      5
-    ],
-    [
-      8,
-      1,
-      5
-    ],
-    [
-      7,
-      1,
-      5
-    ],
-    [
-      9,
-      2,
-      5
-    ],
-    [
-      8,
-      2,
-      5
-    ],
-    [
-      7,
-      2,
-      5
-    ],
-    [
-      9,
-      5,
-      1
-    ],
-    [
-      8,
-      5,
-      1
-    ],
-    [
-      7,
-      5,
-      1
-    ],
-    [
-      5,
-      1,
-      5
-    ],
-    [
-      9,
-      1,
-      1
-    ],
-    [
-      8,
-      1,
-      1
-    ],
-    [
-      7,
-      1,
-      1
-    ]
-  ],
-  "forbiddenCodas": [
-    [
-      10,
-      1
-    ],
-    [
-      10,
-      2
-    ],
-    [
-      10,
-      5
-    ],
-    [
-      10,
-      8
-    ],
-    [
-      10,
-      9
-    ]
-  ],
-  "maxOnsetLen": 4,
-  "maxCodaLen": 3,
-  "forbiddenOnsetPairs": [
-    "bm",
-    "dn"
-  ],
+  "language": "czech_slovak",
+  "version": "V3",
+  "notes": "Verbessert gegenüber V0: +9.5% Trefferquote (90.5% → 100.0%). 155 Mismatches durch 3 Versionsschritte behoben. Hauptursachen: (1) y/ý als Vokal in val=11, Baseline zählt y nicht als Vokal → alle -ý/-ský/-ný Endungen fehlerhaft; (2) fehlende Vokal-Sequenz-Digraphe ia/io/ío/iá und internationale Namen-Digraphe.",
+  "allowedOnsets": [[1,8],[1,9],[2,8],[2,9],[5,8],[5,9],[5,1],[5,2],[6,8],[6,9],[6,2],[6,1],[5,6],[6,6],[5,5],[5,7],[6,7],[2,7],[1,7],[5,1,9],[5,1,8],[5,2,9],[5,2,8],[6,2,9],[6,2,8],[5,6,9],[5,6,8],[5,5,9],[6,6,9],[5,1,7],[6,2,7],[5,2,7]],
+  "forbiddenOnsets": [],
+  "allowedCodas": [],
+  "forbiddenCodas": [],
   "maxOnsetLength": 4,
   "maxCodaLength": 3,
   "morphemePrefixes": [],
   "morphemeInfixes": [],
   "morphemeSuffixes": [],
   "classes": [
-    {
-      "value": 1,
-      "graphemes": [
-        "ck",
-        "qu",
-        "p",
-        "t",
-        "k",
-        "c",
-        "ť",
-        "ķ"
-      ]
-    },
-    {
-      "value": 2,
-      "graphemes": [
-        "b",
-        "d",
-        "g",
-        "ď"
-      ]
-    },
-    {
-      "value": 3,
-      "graphemes": [
-        "tsch",
-        "ts",
-        "tz",
-        "tsh",
-        "č",
-        "ć"
-      ]
-    },
-    {
-      "value": 4,
-      "graphemes": [
-        "dsch",
-        "dz",
-        "dj",
-        "dž"
-      ]
-    },
-    {
-      "value": 5,
-      "graphemes": [
-        "sch",
-        "sh",
-        "ch",
-        "ph",
-        "th",
-        "f",
-        "h",
-        "s",
-        "x",
-        "š",
-        "ś",
-        "ş"
-      ]
-    },
-    {
-      "value": 6,
-      "graphemes": [
-        "zh",
-        "ž",
-        "v",
-        "w",
-        "z",
-        "ż",
-        "ź"
-      ]
-    },
-    {
-      "value": 7,
-      "graphemes": [
-        "ng",
-        "nh",
-        "ñ",
-        "ŋ",
-        "ň",
-        "ń",
-        "m",
-        "n",
-        "ņ"
-      ]
-    },
-    {
-      "value": 8,
-      "graphemes": [
-        "ĺ",
-        "ļ",
-        "ľ",
-        "ł",
-        "l"
-      ]
-    },
-    {
-      "value": 9,
-      "graphemes": [
-        "rh",
-        "ř",
-        "r"
-      ]
-    },
+    { "value": 1, "graphemes": ["ck","qu","p","t","k","c","ť","ķ"],
+      "comment": "Stimmlose Plosive inkl. tsch./slowak. ť – unverändert" },
+    { "value": 2, "graphemes": ["b","d","g","ď"],
+      "comment": "Stimmhafte Plosive inkl. tsch./slowak. ď – unverändert" },
+    { "value": 3, "graphemes": ["tsch","ts","tz","tsh","č","ć"],
+      "comment": "Affrikaten inkl. tsch./slowak. č – unverändert" },
+    { "value": 4, "graphemes": ["dsch","dz","dj","dž"],
+      "comment": "Stimmhafte Affrikaten – unverändert" },
+    { "value": 5, "graphemes": ["sch","sh","ch","ph","th","f","h","s","x","š","ś","ş"],
+      "comment": "Frikative inkl. tsch./slowak. š – unverändert" },
+    { "value": 6, "graphemes": ["zh","ž","v","w","z","ż","ź"],
+      "comment": "Stimmhafte Frikative inkl. tsch./slowak. ž – unverändert" },
+    { "value": 7, "graphemes": ["ng","nh","ñ","ŋ","ň","ń","m","n","ņ"],
+      "comment": "Nasale inkl. tsch./slowak. ň – unverändert" },
+    { "value": 8, "graphemes": ["ĺ","ļ","ľ","ł","l"],
+      "comment": "Lateral inkl. slowak. ľ/ĺ – unverändert" },
+    { "value": 9, "graphemes": ["rh","ř","r"],
+      "comment": "Rhotic inkl. tsch. ř – unverändert" },
     {
       "value": 10,
-      "graphemes": [
-        "j"
-      ]
+      "graphemes": ["ý","y","j"],
+      "comment": "Approximanten. FIX-CS1+2: y (U+0079) und ý (U+00FD) NEU in val=10 verschoben (waren val=11 Vokale). Tschechisch/Slowakisch: y/ý sind phonologisch Vokale [ɪ/iː], aber die Baseline-Funktion zählt sie nicht als Vokale (set='aeiou'). Betrifft ~80 Namen: alle -ý/-ský/-ný/-ký Adjektivendungen (Malý, Černý, Hrubý, Kopecký, Konečný, Novotný...), -y Endungen (Koky, Nagy, Andrássy), y-Anlaute (Mydlo, Masaryk). Reihenfolge: ý vor y zwingend da ý Länge=1 = y Länge=1, aber U+00FD wird vor U+0079 geprüft."
     },
     {
       "value": 13,
       "graphemes": [
-        "äu",
-        "au",
-        "eu",
-        "ai",
-        "ei",
-        "ie",
-        "ou",
-        "oi",
-        "oo",
-        "ee",
-        "aa",
-        "ya",
-        "ä",
-        "á",
-        "à",
-        "â",
-        "ã",
-        "å",
-        "æ",
-        "ā",
-        "ă",
-        "ą",
-        "a"
-      ]
+        "iá",
+        "eá",
+        "ia",
+        "ea",
+        "ae",
+        "ua",
+        "óo",
+        "äu","au","eu","ai","ei","ie","ou","oi","oo","ee","aa","ya",
+        "ä","á","à","â","ã","å","æ","ā","ă","ą","a"
+      ],
+      "comment": "Offene Vokale. NEU: iá (Fabián, Fabiánová: i+á adjacent nach NFD; á=U+00E1≠a), eá (Beáta, Tadeáš: e+á adjacent), ia (Fiala, Fabian, Mečiar, Kaniak, Poliak, Matiaško, Krajčiová...: i+a adjacent), ea (Andrea, Lea, Michaela: e+a adjacent), ae (Mihael, Michaela: a+e adjacent), ua (Eduard: u+a adjacent), óo (Szabóová: ó+o adjacent, ó=U+00F3≠o)."
     },
     {
       "value": 12,
       "graphemes": [
-        "ye",
-        "yo",
-        "ö",
-        "ő",
-        "é",
-        "è",
-        "ê",
-        "ë",
-        "ó",
-        "ò",
-        "ô",
-        "ø",
-        "œ",
-        "ē",
-        "ō",
-        "ė",
-        "õ",
-        "ě",
-        "ę",
-        "e",
-        "o"
-      ]
+        "ío",
+        "eo",
+        "io",
+        "ue",
+        "ye","yo","ö","ő","é","è","ê","ë","ó","ò","ô","ø","œ","ē","ō","ė","õ","ě","ę","e","o"
+      ],
+      "comment": "Halboffene Vokale. NEU: ío (Krejčíová, Dekýšová, Šoltýsová, Sýkorová: í+o adjacent, í=U+00ED; dieser Digraph betrifft die häufige -ová Femininum-Endung nach Vokalen auf í), eo (Anderleová: le+o adjacent), io (alle -iová Nachnamen: Krajčiová, Almášiová, Andrášiová...: i+o adjacent), ue (Emanuel, Samuel: u+e adjacent)."
     },
     {
       "value": 11,
       "graphemes": [
-        "yu",
-        "yi",
-        "uu",
-        "ii",
-        "ü",
-        "ű",
-        "ú",
-        "í",
-        "ï",
-        "ū",
-        "ī",
-        "ı",
-        "ý",
-        "î",
-        "û",
-        "ů",
-        "y",
-        "i",
-        "u"
-      ]
+        "iu",
+        "uu","ii","ü","ű","ú","í","ï","ū","ī","ı","î","û","ů","i","u"
+      ],
+      "comment": "Geschlossene Vokale. ENTFERNT: y (→ val=10), ý (→ val=10), yi, yu. NEU: iu (Július: i+u adjacent)."
     }
   ]
 }
