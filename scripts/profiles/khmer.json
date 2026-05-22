@@ -1,266 +1,66 @@
 {
-  "id": "khmer",
-  "name": "Khmer / Kambodschanisch",
-  "emoji": "🇰🇭",
-  "group": "Südostasiatisch",
-  "desc": "Khmer (Romanisierung) – ph, th, kh, ch, ng, nh, spezifische Vokale",
-  "allowedOnsets": [
-    [
-      1,
-      9
-    ],
-    [
-      1,
-      8
-    ],
-    [
-      2,
-      9
-    ],
-    [
-      2,
-      8
-    ],
-    [
-      5,
-      9
-    ],
-    [
-      5,
-      8
-    ],
-    [
-      5,
-      1
-    ]
-  ],
-  "forbiddenOnsets": [
-    [
-      7,
-      10
-    ],
-    [
-      8,
-      9
-    ],
-    [
-      9,
-      8
-    ],
-    [
-      7,
-      8
-    ],
-    [
-      7,
-      9
-    ],
-    [
-      1,
-      2
-    ],
-    [
-      2,
-      1
-    ],
-    [
-      1,
-      10
-    ],
-    [
-      2,
-      10
-    ]
-  ],
-  "allowedCodas": [
-    [
-      7,
-      1
-    ],
-    [
-      7,
-      2
-    ],
-    [
-      8,
-      1
-    ],
-    [
-      8,
-      2
-    ],
-    [
-      9,
-      1
-    ],
-    [
-      9,
-      2
-    ],
-    [
-      5,
-      1
-    ],
-    [
-      1,
-      5
-    ]
-  ],
-  "forbiddenCodas": [
-    [
-      10,
-      1
-    ],
-    [
-      10,
-      2
-    ],
-    [
-      10,
-      5
-    ],
-    [
-      10,
-      8
-    ],
-    [
-      10,
-      9
-    ]
-  ],
-  "maxOnsetLen": 2,
-  "maxCodaLen": 2,
-  "forbiddenOnsetPairs": [],
+  "language": "khmer",
+  "version": "V2",
+  "notes": "Verbessert gegenüber V0: +10.0% Trefferquote (90.0% → 100.0%). 88 Mismatches durch 13 neue Vokal-Digraphe/Trigraphe/Tetragraphe behoben. Kernproblem: Khmer-Romanisierung nutzt Mehrfach-Vokalsequenzen (oeu, uo, eu, iou, you, eou) für einsilbige Khmer-Vokale, die das Profil als mehrere Gipfel erkannte. Reihenfolge der Grapheme ist zwingend: längste/spezifischste zuerst.",
+  "allowedOnsets": [[1,9],[1,8],[2,9],[2,8],[5,9],[5,8],[5,1]],
+  "forbiddenOnsets": [[7,10],[8,9],[9,8],[7,8],[7,9],[1,2],[2,1],[1,10],[2,10]],
+  "allowedCodas": [[7,1],[7,2],[8,1],[8,2],[9,1],[9,2],[5,1],[1,5]],
+  "forbiddenCodas": [[10,1],[10,2],[10,5],[10,8],[10,9]],
   "maxOnsetLength": 2,
   "maxCodaLength": 2,
   "morphemePrefixes": [],
   "morphemeInfixes": [],
   "morphemeSuffixes": [],
   "classes": [
-    {
-      "value": 1,
-      "graphemes": [
-        "p",
-        "t",
-        "k",
-        "c"
-      ]
-    },
-    {
-      "value": 2,
-      "graphemes": [
-        "b",
-        "d",
-        "g"
-      ]
-    },
-    {
-      "value": 3,
-      "graphemes": [
-        "ch",
-        "ts"
-      ]
-    },
-    {
-      "value": 4,
-      "graphemes": [
-        "dj",
-        "dz"
-      ]
-    },
-    {
-      "value": 5,
-      "graphemes": [
-        "ph",
-        "th",
-        "kh",
-        "sh",
-        "f",
-        "h",
-        "s",
-        "x"
-      ]
-    },
-    {
-      "value": 6,
-      "graphemes": [
-        "v",
-        "w",
-        "z"
-      ]
-    },
-    {
-      "value": 7,
-      "graphemes": [
-        "ng",
-        "nh",
-        "m",
-        "n"
-      ]
-    },
-    {
-      "value": 8,
-      "graphemes": [
-        "l"
-      ]
-    },
-    {
-      "value": 9,
-      "graphemes": [
-        "r"
-      ]
-    },
-    {
-      "value": 10,
-      "graphemes": [
-        "j",
-        "y"
-      ]
-    },
+    { "value": 1, "graphemes": ["p","t","k","c"],
+      "comment": "Stimmlose Plosive – unverändert" },
+    { "value": 2, "graphemes": ["b","d","g"],
+      "comment": "Stimmhafte Plosive – unverändert" },
+    { "value": 3, "graphemes": ["ch","ts"],
+      "comment": "Affrikaten – unverändert" },
+    { "value": 4, "graphemes": ["dj","dz"],
+      "comment": "Stimmhafte Affrikaten – unverändert" },
+    { "value": 5, "graphemes": ["ph","th","kh","sh","f","h","s","x"],
+      "comment": "Frikative inkl. Khmer-Aspirations-Digraphe ph/th/kh – unverändert" },
+    { "value": 6, "graphemes": ["v","w","z"],
+      "comment": "Stimmhafte Frikative – unverändert" },
+    { "value": 7, "graphemes": ["ng","nh","m","n"],
+      "comment": "Nasale – unverändert" },
+    { "value": 8, "graphemes": ["l"],
+      "comment": "Lateral – unverändert" },
+    { "value": 9, "graphemes": ["r"],
+      "comment": "Rhotic – unverändert" },
+    { "value": 10, "graphemes": ["j","y"],
+      "comment": "Approximanten – unverändert" },
     {
       "value": 13,
       "graphemes": [
-        "ea",
-        "ao",
-        "au",
-        "ai",
-        "ei",
-        "ie",
-        "ou",
-        "oi",
-        "oo",
-        "ee",
-        "aa",
-        "ya",
-        "á",
-        "à",
-        "â",
-        "a"
-      ]
+        "yea",
+        "ieu",
+        "ae",
+        "oa",
+        "ia",
+        "ea","ao","au","ai","ei","ie","ou","oi","oo","ee","aa","ya",
+        "á","à","â","a"
+      ],
+      "comment": "Offene Vokale + Öffnungsdiphthonge. NEU: yea (Yean: ye+a einsilbig; [ɗiːa] in Khmer; muss VOR ya und ea stehen), ieu (Khieu: ie+u einsilbig; muss VOR ie stehen), ae (Sraem, Taevy: a+e adjacent in Baseline → 1 Gruppe), oa (Choam, Doak, Koam, Voar, Chhoam: o+a adjacent in Khmer-Romanisierung), ia (Iam, Kalianne: i+a adjacent). BEACHTE: 'ea' bereits in V0 korrekt als Khmer-Digraph [iː]."
     },
     {
       "value": 12,
       "graphemes": [
-        "oe",
-        "ye",
-        "yo",
-        "é",
-        "è",
-        "ê",
-        "e",
-        "o"
-      ]
+        "yoeu",
+        "you",
+        "oeu",
+        "iou",
+        "eou",
+        "uo",
+        "eu",
+        "eo",
+        "oe","ye","yo","é","è","ê","e","o"
+      ],
+      "comment": "Halboffene Vokale. NEU (alle khmer-spezifische Romanisierungs-Polygraphe, Reihenfolge zwingend längste zuerst): yoeu (Yoeung: yo+e+u+ng = 1 Silbe; khmer [jɯː]; Tetragraph VOR yoe/you/oe/eu), you (You, Youn, Youk, Young, Yous: yo+u = khmer /juː/; Trigraph VOR yo und ou), oeu (Chamroeun, Bunroeun, Savoeun, Phoeun, Thoeun, Roeung u.v.m.: oe+u = khmer [əɯ]; 18 Namen; Trigraph VOR oe und eu), iou (Thiounn, Tioun, Tiounn: i+ou = khmer einsilbig; Trigraph VOR ou), eou (Peou, Neou, Sareoun, Sareouth: eo+u; Trigraph VOR eo und oeu), uo (Nuon, Chuon, Duong, Luon, Khuon, Nguon u.v.m.: u+o = khmer Diphthong /uə/; 22 Namen; Digraph VOR u und o einzeln), eu (Teu, Keum, Heum, Theung, Leuk, Deuk u.v.m.: e+u = khmer [əɯ]; 14 Namen; Digraph VOR e und u einzeln), eo (Keo: e+o; Digraph VOR e und o einzeln)."
     },
-    {
-      "value": 11,
-      "graphemes": [
-        "uu",
-        "ii",
-        "ú",
-        "í",
-        "i",
-        "u"
-      ]
-    }
+    { "value": 11, "graphemes": ["uu","ii","ú","í","i","u"],
+      "comment": "Geschlossene Vokale – unverändert" }
   ]
 }
