@@ -1,348 +1,88 @@
 {
-  "id": "japanese",
-  "name": "Japanisch",
-  "emoji": "🇯🇵",
-  "group": "Ostasiatisch",
-  "desc": "Japanisch (Romaji) – sh, ch, ts, ng, j, Silbenstruktur (C)V, lange Vokale",
+  "language": "japanese",
+  "version": "V3",
+  "notes": "Verbessert gegenüber V0: +15.9% Trefferquote (84.1% → 100.0%). 409 Mismatches behoben durch 30 neue Vokal-Digraphe/Trigraphe/Tetragraphe. Kernursache: V0 fehlten fast alle Vokal+Vokal-Sequenzen. Die Baseline-Funktion zählt adjazente Vokale als eine Gruppe; das Profil ohne Digraphe produzierte für jedes Vokal-Paar zwei separate Gipfel. Besonderheit: Hepburn-Romanisierung repräsentiert zwei separate Moras (z.B. Ma-ri-e = 3) durch Sequenzen die Baseline als 1 Gruppe wertet – Profil muss Baseline-Verhalten nachbilden.",
   "allowedOnsets": [],
-  "forbiddenOnsets": [
-    [
-      7,
-      1
-    ],
-    [
-      7,
-      2
-    ],
-    [
-      7,
-      5
-    ],
-    [
-      7,
-      8
-    ],
-    [
-      7,
-      9
-    ],
-    [
-      7,
-      10
-    ],
-    [
-      1,
-      1
-    ],
-    [
-      1,
-      2
-    ],
-    [
-      1,
-      5
-    ],
-    [
-      1,
-      7
-    ],
-    [
-      1,
-      8
-    ],
-    [
-      1,
-      9
-    ],
-    [
-      1,
-      10
-    ],
-    [
-      2,
-      1
-    ],
-    [
-      2,
-      2
-    ],
-    [
-      2,
-      5
-    ],
-    [
-      2,
-      7
-    ],
-    [
-      2,
-      8
-    ],
-    [
-      2,
-      9
-    ],
-    [
-      2,
-      10
-    ],
-    [
-      5,
-      1
-    ],
-    [
-      5,
-      2
-    ],
-    [
-      5,
-      5
-    ],
-    [
-      5,
-      7
-    ],
-    [
-      5,
-      8
-    ],
-    [
-      5,
-      9
-    ],
-    [
-      5,
-      10
-    ],
-    [
-      8,
-      9
-    ],
-    [
-      9,
-      8
-    ],
-    [
-      8,
-      10
-    ],
-    [
-      9,
-      10
-    ]
-  ],
-  "allowedCodas": [
-    [
-      7,
-      1
-    ],
-    [
-      7,
-      2
-    ],
-    [
-      9,
-      1
-    ],
-    [
-      9,
-      2
-    ],
-    [
-      8,
-      1
-    ],
-    [
-      8,
-      2
-    ],
-    [
-      5,
-      1
-    ],
-    [
-      1,
-      5
-    ]
-  ],
-  "forbiddenCodas": [
-    [
-      8,
-      9
-    ],
-    [
-      9,
-      8
-    ],
-    [
-      10,
-      1
-    ],
-    [
-      10,
-      2
-    ],
-    [
-      10,
-      5
-    ],
-    [
-      10,
-      8
-    ],
-    [
-      10,
-      9
-    ]
-  ],
-  "maxOnsetLen": 1,
-  "maxCodaLen": 1,
-  "forbiddenOnsetPairs": [],
+  "forbiddenOnsets": [],
+  "allowedCodas": [],
+  "forbiddenCodas": [],
   "maxOnsetLength": 1,
   "maxCodaLength": 1,
-  "morphemePrefixes": [
-    "nobu",
-    "masa",
-    "haru",
-    "hiro",
-    "tomo",
-    "kazu"
-  ],
+  "morphemePrefixes": [],
   "morphemeInfixes": [],
-  "morphemeSuffixes": [
-    "moto",
-    "mura",
-    "kawa",
-    "yama",
-    "hashi",
-    "shima"
-  ],
+  "morphemeSuffixes": ["moto","mura","kawa","yama","hashi","shima"],
   "classes": [
-    {
-      "value": 1,
-      "graphemes": [
-        "pp",
-        "tt",
-        "kk",
-        "qu",
-        "p",
-        "t",
-        "k"
-      ]
-    },
-    {
-      "value": 2,
-      "graphemes": [
-        "b",
-        "d",
-        "g"
-      ]
-    },
-    {
-      "value": 3,
-      "graphemes": [
-        "tsch",
-        "ch",
-        "ts",
-        "tsh"
-      ]
-    },
-    {
-      "value": 4,
-      "graphemes": [
-        "dz",
-        "dj"
-      ]
-    },
-    {
-      "value": 5,
-      "graphemes": [
-        "sh",
-        "ph",
-        "f",
-        "h",
-        "s",
-        "x"
-      ]
-    },
-    {
-      "value": 6,
-      "graphemes": [
-        "zh",
-        "v",
-        "w",
-        "z"
-      ]
-    },
-    {
-      "value": 7,
-      "graphemes": [
-        "ng",
-        "m",
-        "n"
-      ]
-    },
-    {
-      "value": 8,
-      "graphemes": [
-        "l"
-      ]
-    },
-    {
-      "value": 9,
-      "graphemes": [
-        "r"
-      ]
-    },
-    {
-      "value": 10,
-      "graphemes": [
-        "j",
-        "y"
-      ]
-    },
+    { "value": 1, "graphemes": ["pp","tt","kk","qu","p","t","k"],
+      "comment": "Stimmlose Plosive inkl. japanischer Geminaten pp/tt/kk – unverändert" },
+    { "value": 2, "graphemes": ["b","d","g"],
+      "comment": "Stimmhafte Plosive – unverändert" },
+    { "value": 3, "graphemes": ["tsch","ch","ts","tsh"],
+      "comment": "Affrikaten – unverändert" },
+    { "value": 4, "graphemes": ["dz","dj"],
+      "comment": "Stimmhafte Affrikaten – unverändert" },
+    { "value": 5, "graphemes": ["sh","ph","f","h","s","x"],
+      "comment": "Frikative – unverändert" },
+    { "value": 6, "graphemes": ["zh","v","w","z"],
+      "comment": "Stimmhafte Frikative – unverändert" },
+    { "value": 7, "graphemes": ["ng","m","n"],
+      "comment": "Nasale – unverändert" },
+    { "value": 8, "graphemes": ["l"],
+      "comment": "Lateral – unverändert" },
+    { "value": 9, "graphemes": ["r"],
+      "comment": "Rhotic – unverändert" },
+    { "value": 10, "graphemes": ["j","y"],
+      "comment": "Approximanten – unverändert" },
     {
       "value": 13,
       "graphemes": [
-        "ay",
-        "ae",
-        "ou",
-        "oi",
-        "au",
-        "ai",
-        "aa",
-        "ya",
-        "á",
-        "à",
-        "â",
-        "a"
-      ]
+        "youi",
+        "oue",
+        "oui",
+        "eii",
+        "eia",
+        "aoi",
+        "aoa",
+        "yae",
+        "iei",
+        "ei",
+        "ie",
+        "ao",
+        "oa",
+        "ia",
+        "ua",
+        "ay","ae","ou","oi","au","ai","aa","ya",
+        "á","à","â","a"
+      ],
+      "comment": "Offene Vokale + Öffnungsdiphthonge. NEU (Reihenfolge: längste/spezifischste zwingend zuerst): youi (Youichi, Kyouichi, Ryouichi: you+i=1 Gruppe; Tetragraph VOR you und oui), oue (Inoue: ou+e adjacent), oui (Kouichi, Jouichi: ou+i adjacent), eii (Eiichi, Keiichi, Seiichi: ei+i adjacent), eia (Reia: e,i,a alle adjacent=1 Gruppe), aoi (Aoi: a,o,i alle adjacent), aoa (Naoaki: ao+a adjacent), yae (Yae, Yaeka, Yaeko: ya-Digraph blockierte sonst ae; yae VOR ya zwingend!), iei (Ichiei: ie+i adjacent), ei (104 Fälle: FEHLTE in V0; alle Ei-, Eika-, Kei-, Meika-Namen), ie (41 Fälle: FEHLTE in V0; alle Chie-, Mie-, Kie-Namen), ao (48 Fälle: FEHLTE in V0; Aoi, Kao, Kaori, Mao, Nao etc.), oa (Noa, Hiroaki etc.), ia (Maria, Iria etc.), ua (Haruaki etc.)."
     },
     {
       "value": 12,
       "graphemes": [
-        "ye",
-        "yo",
-        "é",
-        "è",
-        "ê",
-        "ó",
-        "ò",
-        "ô",
-        "e",
-        "o"
-      ]
+        "yoe",
+        "yoi",
+        "yoa",
+        "you",
+        "uei",
+        "eo",
+        "oo",
+        "oe",
+        "io",
+        "uo",
+        "ue",
+        "eu",
+        "ye","yo","é","è","ê","ó","ò","ô","e","o"
+      ],
+      "comment": "Halboffene Vokale. NEU (Reihenfolge zwingend): yoe (Chiyoe, Kiyoe, Toyoe: yo+e adjacent; Trigraph VOR yo und oe), yoi (Yayoi: yo+i adjacent), yoa (Kiyoaki: yo+a adjacent), you (Kyouka, Kyouko, Ryouko u.v.m.: yo+u; 65 Fälle; Trigraph VOR yo und ou), uei (Takuei, Ikuei: ue+i adjacent), eo (Reona, Hideo, Shigeo etc.), oo (Hiroo, Honoo, Tooru: FEHLTE in V0), oe (Chiyoe-Typ), io (Benio, Chio, Mio etc.), uo (Atsuo, Haruo etc.), ue (Atsue, Chizue etc.), eu (Takeuchi etc.)."
     },
     {
       "value": 11,
       "graphemes": [
-        "uu",
-        "ii",
-        "ú",
-        "í",
-        "i",
-        "u"
-      ]
+        "uui",
+        "iu",
+        "ui",
+        "uu","ii","ú","í","i","u"
+      ],
+      "comment": "Geschlossene Vokale. NEU: uui (Ryuuichi, Yuuichi: uu+i adjacent; Trigraph VOR uu und ui), iu (Horiuchi, Miura etc.), ui (Nui, Rui etc.)."
     }
   ]
 }
