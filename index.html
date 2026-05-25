@@ -723,7 +723,7 @@
           </div>
           <div class="card-body">
             <textarea id="words-input" class="form-control font-monospace mb-3" rows="4"
-              placeholder="Namen eingeben – eines pro Zeile oder leerzeichen-getrennt&#10;Beispiele: Alexandra Christoph München Hassan Kwabena Asantewaa"></textarea>
+              placeholder="Namen eingeben – eines pro Zeile oder komma-getrennt&#10;Mehrwortnamen: Jean Luc, Maria del Carmen, O'Connor"></textarea>
             <div class="d-flex gap-2 flex-wrap">
               <button class="btn btn-primary" onclick="analyze()">
                 <i class="bi bi-play-fill me-1"></i>Analysieren
@@ -735,6 +735,14 @@
               <button class="btn btn-outline-secondary" onclick="clearResults()">
                 <i class="bi bi-x-lg me-1"></i>Löschen
               </button>
+            </div>
+            <!-- FIX-C: Opt-in für altes Leerzeichen-Trennverhalten -->
+            <div class="form-check form-switch mt-2" title="Aktiviert das klassische Verhalten: jedes Leerzeichen trennt Namen (z.B. 'Jean Luc' → zwei Karten statt einer)">
+              <input class="form-check-input" type="checkbox" role="switch" id="space-splits-names">
+              <label class="form-check-label small text-muted" for="space-splits-names">
+                Leerzeichen als Namenstrenne verwenden
+                <span class="text-muted opacity-75">(Standard: Leerzeichen = Bestandteils-Grenze)</span>
+              </label>
             </div>
           </div>
         </div>

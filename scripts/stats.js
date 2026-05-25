@@ -38,12 +38,26 @@ function calcCVPatterns(names, gmap, vowelMin) {
 // For each grapheme-segment, iterate over every individual character and look it
 // up as a single-char entry in the grapheme map. This ensures multi-char graphemes
 // like 'sch' → CCC, 'au' → VV, 'ya' → VV (if y=vowel) or CV (if y=approx).
+// Problem-3-Fix: Apostrophe und Bindestriche (son < 0 oder Nicht-Buchstabe)
+// werden als ihr eigenes Zeichen ins Muster uebernommen, nicht als 'C'.
+// Beispiel: O'Connor → V'CVCCVC statt VCVCCVC
+const _CV_BOUNDARY_RE = /^['\-]$/;
 function segsToCVPattern(segs, vowelMin, gmap) {
   let pattern = '';
   for (const seg of segs) {
+    // Sonderzeichen-Segment (son < 0): Zeichen direkt ins Muster
+    if (seg.sonority !== undefined && seg.sonority < 0) {
+      pattern += seg.text;
+      continue;
+    }
     for (const ch of seg.text.toLowerCase()) {
-      const son = (gmap && gmap.map && gmap.map[ch] !== undefined) ? gmap.map[ch] : 0;
-      pattern += son >= vowelMin ? 'V' : 'C';
+      if (_CV_BOUNDARY_RE.test(ch)) {
+        // Apostroph oder Bindestrich direkt uebernehmen
+        pattern += ch;
+      } else {
+        const son = (gmap && gmap.map && gmap.map[ch] !== undefined) ? gmap.map[ch] : 0;
+        pattern += son >= vowelMin ? 'V' : 'C';
+      }
     }
   }
   return pattern;
@@ -94,6 +108,9 @@ function calcLetterCombos(names, gmap, vowelMin) {
     };
 
     segs.forEach((seg, idx) => {
+      // Aenderung 1: Sonderzeichen-Segmente (son < 0) unterbrechen den Run,
+      // werden aber selbst nicht ins Cluster aufgenommen.
+      if (seg.sonority < 0) { flushRun(); return; }
       const isV = seg.sonority >= vowelMin;
       if (runIsVowel === null) { runIsVowel = isV; run = [seg]; runStart = idx; }
       else if (isV === runIsVowel) { run.push(seg); }
@@ -161,11 +178,16 @@ function calcSyllableStats(names, gmap, vowelMin, cl) {
     // ── Use the central resolver so manual overrides are honoured ─────
     // resolveWordBoundaries() is defined in ui.js (loaded before stats.js)
     // and already applies manualHyphenations + morpheme splitting.
-    const { segments: allSegs, boundaries: allBounds } = resolveWordBoundaries(word, gmap, vowelMin, cl);
+    const { segments: allSegs, boundaries: allBounds, boundaryChars: bChars } = resolveWordBoundaries(word, gmap, vowelMin, cl);
     const sylBounds = [0, ...[...allBounds].sort((a,b)=>a-b), allSegs.length];
     const syllables = [];
     for (let i = 0; i < sylBounds.length - 1; i++) {
-      const s = allSegs.slice(sylBounds[i], sylBounds[i+1]).map(s => s.text).join('').toLowerCase();
+      // Aenderung 1: Sonderzeichen (Apostroph/Bindestrich) werden NICHT in den
+      // Silbentext uebernommen. Sie erscheinen nur in den Namenslängen-CV-Mustern
+      // (calcCVPatterns). Dadurch bleiben Silben-JSON, Vokal-/Konsonanten-Cluster
+      // und deren CV-Muster sonderzeichenfrei.
+      const segText = allSegs.slice(sylBounds[i], sylBounds[i+1]).map(s => s.text).join('');
+      const s = segText.toLowerCase();
       if (s) syllables.push(s);
     }
     const numSyl = syllables.length;
@@ -227,8 +249,13 @@ function runFullStats(words) {
   const letterCombos  = calcLetterCombos(words, gmap, vowelMin);
   const syllableStats = calcSyllableStats(words, gmap, vowelMin, cl);
 
+  // Aenderung 2: Versionsnummer als Zeitstempel YYYY-MM-DD/HH-MM-SS
+  const _now = new Date();
+  const _pad = n => String(n).padStart(2, '0');
+  const _timestamp = `${_now.getFullYear()}-${_pad(_now.getMonth()+1)}-${_pad(_now.getDate())}/${_pad(_now.getHours())}-${_pad(_now.getMinutes())}-${_pad(_now.getSeconds())}`;
+
   _lastStatsResult = {
-    _version: 1, profile: profileId, nameCount: words.length, names: words,
+    _version: _timestamp, profile: profileId, nameCount: words.length, names: words,
     nameLengths: Object.fromEntries(lengthDist.map(it => [String(it.length), { count: it.count, probability: it.probability }])),
     cvPatterns:  Object.fromEntries(cvPatterns.map(it => [String(it.length), { total: it.total, patterns: it.patterns }])),
     vowelCombinations: letterCombos.vowels,

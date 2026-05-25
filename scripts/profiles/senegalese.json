@@ -2,10 +2,122 @@
   "language": "senegalese",
   "version": "V3",
   "notes": "Verbessert gegenüber V0: +14.4% Trefferquote (83.9% → 98.3% gemessen; linguistisch 99.8%). Kernänderungen: y als Approximant (val=10), Digraph-/Trigraph-Ergänzungen für Wolof/Pulaar/Mandinka-Phonologie.",
-  "allowedOnsets": [[2,9],[2,8],[1,9],[1,8],[7,2],[7,1],[5,8],[5,9],[6,9],[6,8]],
-  "forbiddenOnsets": [[8,9],[9,8],[7,10],[8,10],[9,10]],
-  "allowedCodas": [[7,1],[7,2],[8,1],[8,2],[9,1],[9,2],[5,1]],
-  "forbiddenCodas": [[10,1],[10,2],[10,5],[10,8],[10,9]],
+  "allowedOnsets": [
+    [
+      2,
+      9
+    ],
+    [
+      2,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      1
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      5,
+      9
+    ],
+    [
+      6,
+      9
+    ],
+    [
+      6,
+      8
+    ]
+  ],
+  "forbiddenOnsets": [
+    [
+      8,
+      9
+    ],
+    [
+      9,
+      8
+    ],
+    [
+      7,
+      10
+    ],
+    [
+      8,
+      10
+    ],
+    [
+      9,
+      10
+    ]
+  ],
+  "allowedCodas": [
+    [
+      7,
+      1
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      8,
+      2
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      9,
+      2
+    ],
+    [
+      5,
+      1
+    ]
+  ],
+  "forbiddenCodas": [
+    [
+      10,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      10,
+      5
+    ],
+    [
+      10,
+      8
+    ],
+    [
+      10,
+      9
+    ]
+  ],
   "maxOnsetLength": 2,
   "maxCodaLength": 1,
   "morphemePrefixes": [],
@@ -14,52 +126,90 @@
   "classes": [
     {
       "value": 1,
-      "graphemes": ["p","t","k","c"],
+      "graphemes": [
+        "p",
+        "t",
+        "k",
+        "c"
+      ],
       "comment": "Stimmlose Plosive – unverändert"
     },
     {
       "value": 2,
-      "graphemes": ["b","d","g"],
+      "graphemes": [
+        "b",
+        "d",
+        "g"
+      ],
       "comment": "Stimmhafte Plosive – unverändert"
     },
     {
       "value": 3,
-      "graphemes": ["tsch","ts"],
+      "graphemes": [
+        "tsch",
+        "ts"
+      ],
       "comment": "Affrikaten – unverändert"
     },
     {
       "value": 4,
-      "graphemes": ["dj","dz"],
+      "graphemes": [
+        "dj",
+        "dz"
+      ],
       "comment": "Stimmhafte Affrikaten – unverändert"
     },
     {
       "value": 5,
-      "graphemes": ["sh","f","h","s","x"],
+      "graphemes": [
+        "sh",
+        "f",
+        "h",
+        "s",
+        "x"
+      ],
       "comment": "Frikative – unverändert"
     },
     {
       "value": 6,
-      "graphemes": ["zh","v","w","z"],
+      "graphemes": [
+        "zh",
+        "v",
+        "w",
+        "z"
+      ],
       "comment": "Stimmhafte Frikative / Labiovelar w – unverändert"
     },
     {
       "value": 7,
-      "graphemes": ["ng","ny","m","n"],
+      "graphemes": [
+        "ng",
+        "ny",
+        "m",
+        "n"
+      ],
       "comment": "Nasale inkl. Digraphe ng/ny – unverändert"
     },
     {
       "value": 8,
-      "graphemes": ["l"],
+      "graphemes": [
+        "l"
+      ],
       "comment": "Lateral – unverändert"
     },
     {
       "value": 9,
-      "graphemes": ["r"],
+      "graphemes": [
+        "r"
+      ],
       "comment": "Rhotic – unverändert"
     },
     {
       "value": 10,
-      "graphemes": ["j","y"],
+      "graphemes": [
+        "j",
+        "y"
+      ],
       "comment": "FIX-SEN1: y NEU als Approximant/Glide (Sonorität 10, kein Vokal). In Wolof/Pulaar/Mandinka ist <y> konsonantisch [j]. V0 hatte y bei val=11 (Vokal), was endständige y-Sequenzen wie -ay/-ey/-oy/-uy fälschlicherweise als extra Silbengipfel zählte. Betrifft 60+ Namen (Ndey, Rohey, Jogoy, Mary, Soly, Coly, etc.)."
     },
     {
@@ -72,8 +222,21 @@
         "iè",
         "ea",
         "ae",
-        "ai","au","ei","ie","ou","oi","oo","ee","aa","ya",
-        "á","à","â","a"
+        "ai",
+        "au",
+        "ei",
+        "ie",
+        "ou",
+        "oi",
+        "oo",
+        "ee",
+        "aa",
+        "ya",
+        "á",
+        "à",
+        "â",
+        "a",
+        "ñ"
       ],
       "comment": "Offene/mittlere Vokale + Öffnungsdiphthonge. NEU in V3: yaa (Hoyaan-Typ: Ho-yaan), iao (Georgina-Typ: Ge-or-gi-na→3), ao (Wolof/Traoré,Ndao,Paoboy,Maoyatou), ia (Pulaar/Mandinka: Dia-Namen, Jaria, Victoria), iè (frz. Lehnwort: Diène), ea (Correa,Michael: engl./frz. Öffnungs-Digraph), ae (Michael: ae-Sequenz). Reihenfolge: längste Digraphe zuerst (Matching-Priorität)."
     },
@@ -87,8 +250,15 @@
         "iou",
         "io",
         "ue",
-        "ye","yo",
-        "é","è","ê","e","o"
+        "ye",
+        "yo",
+        "é",
+        "è",
+        "ê",
+        "e",
+        "o",
+        "ò",
+        "ô"
       ],
       "comment": "Halboffene/mittelhohe Vokale. NEU in V3: ieu (frz.-senegal. Endung), you (Digraph), eo (Theodore,George,Georgina: th-eo-dore), oé (frz. Akzent-Digraph: Darboé→Dar-boé), iou (Wolof: Diouf,Aliouné,Thiouné), io (Wolof: Diop,Dior,Gadio), ue (frz. stummes u: Gueye,Fuema)."
     },
@@ -97,7 +267,12 @@
       "graphemes": [
         "iu",
         "ui",
-        "uu","ii","ú","í","i","u"
+        "uu",
+        "ii",
+        "ú",
+        "í",
+        "i",
+        "u"
       ],
       "comment": "Geschlossene Vokale. NEU in V3: iu (Ignatius: -tius als 1 Silbe), ui (frz.: Guissé,Guirassy). ENTFERNT: y (jetzt val=10 Approximant)."
     }

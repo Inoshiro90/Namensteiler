@@ -1,5 +1,21 @@
 'use strict';
 
+/**
+ * algorithm.js — Namensteiler Kernalgorithmus
+ *
+ * Implementiert graphembasierte, sonoritätsgesteuerte Silbentrennung (SSP).
+ *
+ * Änderungshistorie:
+ *  v1.1 (2026-05): Unicode-Fixes
+ *    - FIX-A: NFC-Normalisierung in parseWord(), morphemeSegment(), readClasses()
+ *    - FIX-B: İ (U+0130) korrekt vor toLowerCase() behandeln
+ *    - FIX-C: normalizeWordInternals() normalisiert Apostroph-Varianten + Unicode-Bindestriche
+ *    - FIX-D: Boundary-Sentinel (son=-1) für Apostrophe/Bindestriche/Spaces;
+ *             SONORITY_UNKNOWN_CONSONANT=1 für unbekannte Buchstaben (statt son=0)
+ *
+ * @see ui.js für analyze() und resolveWordBoundaries()
+ */
+
 // ─── CLUSTER CONSTRAINT GLOBALS ──────────────────────────────────────
 // Active cluster constraints (set by applyProfile, can be overridden by user)
 let _allowedOnsets   = [];
@@ -10,8 +26,7 @@ let _morphemePrefixes = [];
 let _morphemeInfixes  = [];
 let _morphemeSuffixes = [];
 let _forbiddenOnsetPairs = [];  // Homorgane Onsets (graphembasiert)
-let _maxOnsetLength = 3;
-let _maxCodaLength  = 3;
+// Hinweis: _maxOnsetLength/_maxCodaLength sind Aliases – aktiv sind _maxOnsetLen/_maxCodaLen
 let _maxOnsetLen = 0;  // 0 = unbegrenzt
 let _maxCodaLen  = 0;  // 0 = unbegrenzt
 
@@ -98,7 +113,10 @@ function readClasses() {
     value: parseInt(tr.querySelector('.input-val').value) || 5,
     name: tr.querySelector('.input-name').value.trim(),
     graphemes: tr.querySelector('.input-graphemes').value
-      .split(',').map(g => g.trim().toLowerCase()).filter(g => g),
+      // FIX-A: NFC-Normalisierung verhindert NFD-Mismatch bei macOS-Eingaben.
+      // Grapheme werden NFC-normalisiert gespeichert, damit sie gegen
+      // NFC-normalisierte Inputs in parseWord() matchen können.
+      .split(',').map(g => g.trim().normalize('NFC').toLowerCase()).filter(g => g),
   }));
 }
 
@@ -126,7 +144,11 @@ function readMorphemePrefixes() { return readMorphemeList('morpheme-prefixes'); 
 // Findet alle Morphem-Grenzen im Wort (Präfix → nach, Infix → vor+nach, Suffix → vor)
 // Gibt sortiertes Array von Splitpositionen zurück, oder [] wenn keine Treffer
 function morphemeSegment(word, prefixes, infixes, suffixes) {
-  const lower = word.toLowerCase();
+  // FIX-A+B: NFC-Normalisierung + İ-Fix (U+0130 → i), konsistent mit parseWord().
+  // Ohne NFC: macOS-NFD-Eingaben schlagen beim Präfix-Matching fehl.
+  // Ohne İ-Fix: türkische Namen mit İ am Anfang erzeugen i\u0307 (2 Zeichen) beim
+  // toLowerCase() – kein Morphem-Match möglich.
+  const lower = word.normalize('NFC').replace(/İ/g, 'i').toLowerCase();
   const bounds = new Set();
   const MIN_REST = 2; // Mindestlänge des verbleibenden Restes
 
@@ -184,9 +206,56 @@ function splitByMorphemes(word) {
 const _IE_SONORANTS = new Set('lrnm');
 const _IE_VOWELS    = new Set('aeiouäöüáàâéèêíìîóòôúùûýæœ');
 
+// ─── SONORITY SENTINELS ───────────────────────────────────────────────
+// SONORITY_BOUNDARY: Apostroph, Unicode-Bindestrich, Soft-Hyphen, Leerzeichen.
+// Wert < 0 → syllabify() erzeugt an dieser Stelle eine Pflicht-Silbengrenze,
+// ohne den SSP-Algorithmus zu beeinflussen.
+const SONORITY_BOUNDARY = -1;
+
+// SONORITY_UNKNOWN_CONSONANT: Unbekannte Buchstaben bekommen die niedrigste
+// echte Konsonanten-Sonorität (= stimmlose Plosive). Das ist konservativ und
+// verhindert, dass unbekannte Zeichen den Onset nach links verschieben.
+// Früher war der Wert 0, was UNTER allen definierten Klassen lag und den
+// SSP systematisch korrumpierte.
+const SONORITY_UNKNOWN_CONSONANT = 1;
+
+/**
+ * Normalisiert wortinterne Sonderzeichen VOR dem Parsing:
+ * - NFC-Normalisierung (macOS/NFD-Clipboard-Schutz)
+ * - Alle Apostroph-Varianten → ASCII-Apostroph U+0027
+ * - Unicode-Bindestriche und Soft-Hyphen → ASCII-Bindestrich U+002D
+ *
+ * Muss VOR parseWord() aufgerufen werden, damit die Graphem-Logik stabile,
+ * vorhersehbare Inputs bekommt. Ohne diese Normalisierung würde z.B.
+ * U+2019 (typografischer Apostroph) nicht als Boundary erkannt.
+ *
+ * @param {string} word  Roheingabe
+ * @returns {string}     Normalisierter String
+ */
+function normalizeWordInternals(word) {
+  return word
+    .normalize('NFC')
+    // Apostroph-Normalisierung: alle semantisch gleichen Varianten → U+0027
+    // Betrifft: typografische Apostrophe, Modifier-Apostroph, Armenisch etc.
+    .replace(/[\u2018\u2019\u201A\u201B\u02BC\u02BB\u055A\u07F4\u07F5\uFF07]/g, "'")
+    // Unicode-Bindestriche → ASCII-Bindestrich
+    // Betrifft: Soft-Hyphen, Non-breaking Hyphen, En/Em/Horizontal-Bar, etc.
+    .replace(/[\u00AD\u2010\u2011\u2012\u2013\u2014\u2015\uFE58\uFE63\uFF0D]/g, '-');
+}
+
+// ─── BOUNDARY-ZEICHEN-ERKENNUNG ───────────────────────────────────────
+// Wird nach normalizeWordInternals() aufgerufen, daher nur ASCII-Varianten nötig.
+// Testet das NFC-normalisierte Zeichen, nicht den Rohstring.
+const _BOUNDARY_CHAR_RE = /[\u0027\u002D\u00AD\u2010-\u2015\s]/;
+
 function parseWord(word, gmap) {
   const { map, classMap, sorted } = gmap;
-  const lower = word.replace(/İ/g, 'I').toLowerCase();
+  // FIX-A: NFC-Normalisierung stellt sicher, dass macOS/NFD-Clipboard-Eingaben
+  // (z.B. "Gonza\u0301lez" statt "González") gegen Profil-Grapheme matchen.
+  // FIX-B: İ (U+0130) → 'i' VOR toLowerCase(), da toLowerCase() allein
+  // "İ" zu "i\u0307" (2 Zeichen!) macht und das Parsing bricht.
+  const wordNFC = word.normalize('NFC');
+  const lower = wordNFC.replace(/İ/g, 'i').toLowerCase();
   const segments = [];
   let i = 0;
   while (i < lower.length) {
@@ -217,10 +286,10 @@ function parseWord(word, gmap) {
         // Vowel digraphs like aa/ee/oo/uu/ii keep their long-vowel identity
         if (g.length === 2 && g[0] === g[1] && map[g] < 11) {
           const son = map[g], cls = classMap[g];
-          segments.push({ text: word.slice(i,     i+1), grapheme: g[0], sonority: son, className: cls });
-          segments.push({ text: word.slice(i+1, i+2), grapheme: g[0], sonority: son, className: cls });
+          segments.push({ text: wordNFC.slice(i,     i+1), grapheme: g[0], sonority: son, className: cls });
+          segments.push({ text: wordNFC.slice(i+1, i+2), grapheme: g[0], sonority: son, className: cls });
         } else {
-          segments.push({ text: word.slice(i, i+g.length), grapheme: g, sonority: map[g], className: classMap[g] });
+          segments.push({ text: wordNFC.slice(i, i+g.length), grapheme: g, sonority: map[g], className: classMap[g] });
         }
         i += g.length;
         matched = true;
@@ -228,8 +297,19 @@ function parseWord(word, gmap) {
       }
     }
     if (!matched) {
-      const ch = word[i];
-      segments.push({ text: ch, grapheme: ch.toLowerCase(), sonority: 0, className: '—' });
+      const ch = wordNFC[i];
+      // FIX-D: Boundary-Zeichen (Apostrophe, Bindestriche, Leerzeichen) erhalten
+      // den Sentinel-Wert SONORITY_BOUNDARY = -1. syllabify() erzeugt dort
+      // eine Pflicht-Silbengrenze ohne den SSP-Algorithmus zu beeinflussen.
+      //
+      // Unbekannte Buchstaben erhalten SONORITY_UNKNOWN_CONSONANT = 1 (niedrigste
+      // echte Konsonanten-Klasse). Früher war der Wert 0 – das lag UNTER allen
+      // definierten Klassen und zog Onsets systematisch nach links (BUG-3).
+      const isBoundaryChar = _BOUNDARY_CHAR_RE.test(ch);
+      const sonority = isBoundaryChar ? SONORITY_BOUNDARY : SONORITY_UNKNOWN_CONSONANT;
+      // Aenderung 4: Boundary-Fallback heisst 'Sonderzeichen' (nicht Sonderzeichen-Icon)
+      const className = isBoundaryChar ? 'Sonderzeichen' : '?';
+      segments.push({ text: ch, grapheme: ch.toLowerCase(), sonority, className });
       i++;
     }
   }
@@ -273,14 +353,34 @@ function syllabify(segments, vowelMin, allowedOnsets, forbiddenOnsets, allowedCo
   const boundaries = new Set();
   for (let p = 0; p < peaks.length - 1; p++) {
     const left = peaks[p], right = peaks[p + 1], cluster = [];
-    for (let k = left+1; k < right; k++) cluster.push(k);
+
+    // ── FIX-D: BOUNDARY-SENTINEL (son < 0) → PFLICHT-SILBENGRENZE ────────────
+    // Zeichen mit son < 0 sind Apostrophe, Bindestriche oder Leerzeichen, die
+    // nach normalizeWordInternals() noch im Segment-Array stehen.
+    // Wir setzen die Silbengrenze auf das erste Segment NACH dem Boundary-Zeichen.
+    // Das entspricht dem natürlichen Verhalten: O'Con-nor → Grenze nach dem '.
+    // Die bestehende Space-Behandlung (Zeile 281) wird damit durch diese
+    // allgemeinere Logik ersetzt und ist kein Dead Code mehr.
+    let forcedBoundary = -1;
+    for (let k = left + 1; k < right; k++) {
+      if (vals[k] < 0) {
+        forcedBoundary = Math.min(k + 1, right);
+        break;
+      }
+      cluster.push(k);
+    }
+    if (forcedBoundary >= 0) {
+      boundaries.add(forcedBoundary);
+      continue;
+    }
+
     if (cluster.length === 0) { boundaries.add(right); continue; }
 
-    // ── LEERZEICHEN = OBLIGATORISCHE SILBENGRENZE ─────────────────────────────
-    // Wenn das Cluster ein Leerzeichen enthält: Grenze nach dem Leerzeichen setzen
+    // ── LEERZEICHEN = OBLIGATORISCHE SILBENGRENZE (jetzt über forcedBoundary) ─
+    // Dieser Block ist ab sofort redundant (Leerzeichen haben son=-1 und werden
+    // oben abgefangen), bleibt aber als Sicherheitsnetz für direkte Aufrufer.
     const spaceInCluster = cluster.findIndex(k => segments[k].grapheme === ' ');
     if (spaceInCluster !== -1) {
-      // Nächstes Segment nach dem Leerzeichen = Beginn der neuen Silbe
       const nextAfterSpace = cluster[spaceInCluster + 1] ?? right;
       boundaries.add(nextAfterSpace);
       continue;

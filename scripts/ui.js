@@ -248,7 +248,7 @@ function parseManualHyphenation(input, segments) {
 }
 
 // ─── RENDER CARD ─────────────────────────────────────────────────────
-function renderWordCard(word, segments, boundaries) {
+function renderWordCard(word, segments, boundaries, boundaryChars) {
 	const BAR_SCALE = parseInt(document.getElementById('bar-scale').value);
 	const BAR_W = parseInt(document.getElementById('bar-width').value);
 	const CHART_H = 13 * BAR_SCALE;
@@ -258,9 +258,22 @@ function renderWordCard(word, segments, boundaries) {
 	const SVG_W = segments.length * BAR_W + 2;
 	const vowelMin = parseInt(document.getElementById('vowel-min').value);
 
+	// FIX-F: Sonderzeichen (Apostroph / Bindestrich) rechts an die vorherige Silbe anhaengen.
+	// boundaryChars ist eine Map<segIndex, char> aus resolveWordBoundaries().
+	// Beispiel: O'Connor → boundaries={1,2}, boundaryChars={1:"'"}
+	//   i=0: "O"  → sylWord = "O"
+	//   i=1: boundary → Trennzeichen "'" rechts → sylWord = "O'" dann "·"
+	//   => Ergebnis: "O' · Con · nor"
+	const _bChars = boundaryChars instanceof Map ? boundaryChars : new Map();
 	let sylWord = '';
 	segments.forEach((seg, i) => {
-		if (i > 0 && boundaries.has(i)) sylWord += '·';
+		// Nur an echten Silbengrenzen (boundaries) einen Bullet einfuegen.
+		// Trennzeichen (Apostroph / Bindestrich) aus boundaryChars rechts
+		// an die vorangehende Silbe haengen: O' • Con • nor
+		if (i > 0 && boundaries.has(i)) {
+			const sep = _bChars.get(i) || '';
+			sylWord += sep + ' • ';
+		}
 		sylWord += seg.text;
 	});
 	const syllableCount = 1 + boundaries.size;
@@ -462,9 +475,47 @@ function renderWordCard(word, segments, boundaries) {
  * @returns {{ segments: Array, boundaries: Set<number> }}
  */
 function resolveWordBoundaries(word, gmap, vowelMin, cl) {
-	const parts = word.split('-');
+	// Normalisierung VOR dem Split.
+	const normalizedWord = normalizeWordInternals(word);
+
+	// FIX-F (Sonderzeichen-Erhalt): Manueller Scan statt .split(),
+	// damit das trennende Zeichen (Apostroph oder Bindestrich) als
+	// boundaryChars-Map zurueckgegeben werden kann.
+	// renderWordCard() haengt es rechts an die vorherige Silbe an:
+	//   O'Connor  →  O' · Con · nor
+	//   Mueller-Schmidt  →  Muel · ler- · Schmidt
+	// Leerzeichen erzeugen eine Boundary, werden aber nicht als
+	// sichtbares Zeichen uebernommen (Al Saud → Al · Saud).
+	const SPLIT_RE = /[-'\s]+/g;
+	const parts = [];
+	const splitChars = []; // splitChars[i] = Trennzeichen VOR parts[i]
+	let lastEnd = 0, pendingSep = '', mat;
+	while ((mat = SPLIT_RE.exec(normalizedWord)) !== null) {
+		const before = normalizedWord.slice(lastEnd, mat.index);
+		if (before.length > 0) {
+			// Trennzeichen das VOR diesem Teil stand (pendingSep), speichern
+			splitChars.push(pendingSep);
+			parts.push(before);
+			// Trennzeichen NACH diesem Teil merken (fuer naechsten Teil)
+			pendingSep = mat[0].replace(/\s/g, '');
+		} else {
+			// Aufeinanderfolgende Separatoren: sichtbare Zeichen akkumulieren
+			pendingSep += mat[0].replace(/\s/g, '');
+		}
+		lastEnd = mat.index + mat[0].length;
+	}
+	const tail = normalizedWord.slice(lastEnd);
+	if (tail.length > 0) {
+		splitChars.push(pendingSep);
+		parts.push(tail);
+	}
+	if (parts.length === 0) parts.push(normalizedWord);
+
 	const allSegs = [];
 	const allBounds = new Set();
+	// boundaryChars: Map<segmentIndex, char>
+	// z.B. boundaryChars.get(1) === "'" fuer O'Connor (Grenze nach Seg 0)
+	const boundaryChars = new Map();
 	let offset = 0;
 
 	parts.forEach((part, pi) => {
@@ -483,17 +534,19 @@ function resolveWordBoundaries(word, gmap, vowelMin, cl) {
 				cl.mol,
 				cl.mcl,
 			);
-			if (pi > 0 && si === 0) allBounds.add(offset); // compound boundary
-			if (si > 0) allBounds.add(offset); // morpheme boundary
+			if (pi > 0 && si === 0) {
+				allBounds.add(offset);
+				const sep = splitChars[pi] || '';
+				if (sep) boundaryChars.set(offset, sep);
+			}
+			if (si > 0) allBounds.add(offset);
 			bounds.forEach((b) => allBounds.add(b + offset));
 			segs.forEach((s) => allSegs.push(s));
 			offset += segs.length;
 		});
 	});
 
-	// ── Prefer manual override over automatic boundaries ─────────────
-	// Validate every stored index against the current segment count so
-	// a profile change never leaves stale out-of-range indices in the map.
+	// Prefer manual override over automatic boundaries
 	let finalBounds = allBounds;
 	if (manualHyphenations.has(word)) {
 		const stored = manualHyphenations.get(word);
@@ -501,13 +554,13 @@ function resolveWordBoundaries(word, gmap, vowelMin, cl) {
 		if (valid.size === stored.size) {
 			finalBounds = valid;
 		} else {
-			// Stale override (profile changed) — discard and use automatic result
 			manualHyphenations.delete(word);
 		}
 	}
 
-	return {segments: allSegs, boundaries: finalBounds};
+	return {segments: allSegs, boundaries: finalBounds, boundaryChars};
 }
+
 
 // ─── ANALYZE ────────────────────────────────────────────────────────
 function analyze() {
@@ -516,11 +569,34 @@ function analyze() {
 	const gmap = buildGraphemeMap(readClasses());
 	const cl = readClusters();
 	updateClusterCount();
-	const words = raw
-		.split(/[\n,]+/)
-		.flatMap((l) => l.trim().split(/\s+/))
-		.map((w) => w.trim())
-		.filter((w) => w);
+
+	// FIX-C: Leerzeichen sind KEIN Namenstrenne mehr.
+	// Trennzeichen zwischen Namen: nur Komma und Zeilenumbruch.
+	// Leerzeichen innerhalb einer Zeile werden als Wortbestandteils-Grenze
+	// an resolveWordBoundaries() weitergegeben (wie ein Bindestrich).
+	//
+	// Opt-out (Rückwärtskompatibilität): Checkbox #space-splits-names
+	// Wenn aktiviert, verhält sich analyze() wie vorher (Space = Namentrenner).
+	const spaceSplitsNames = (() => {
+		const el = document.getElementById('space-splits-names');
+		return el ? el.checked : false;
+	})();
+
+	let words;
+	if (spaceSplitsNames) {
+		// Altes Verhalten: jedes Leerzeichen trennt Namen
+		words = raw
+			.split(/[\n,]+/)
+			.flatMap((l) => l.trim().split(/\s+/))
+			.map((w) => w.trim())
+			.filter((w) => w);
+	} else {
+		// Neues Verhalten: nur Komma/Zeilenumbruch trennt Namen
+		words = raw
+			.split(/[\n,]+/)
+			.map((l) => l.trim())
+			.filter((w) => w.length > 0);
+	}
 	if (!words.length) return;
 
 	const resultsDiv = document.getElementById('results');
@@ -528,8 +604,8 @@ function analyze() {
 	const grid = document.createElement('div');
 
 	words.forEach((word) => {
-		const {segments, boundaries} = resolveWordBoundaries(word, gmap, vowelMin, cl);
-		grid.appendChild(renderWordCard(word, segments, boundaries));
+		const {segments, boundaries, boundaryChars} = resolveWordBoundaries(word, gmap, vowelMin, cl);
+		grid.appendChild(renderWordCard(word, segments, boundaries, boundaryChars));
 	});
 
 	resultsDiv.appendChild(grid);
