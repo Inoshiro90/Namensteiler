@@ -50,13 +50,25 @@ function segsToCVPattern(segs, vowelMin, gmap) {
       pattern += seg.text;
       continue;
     }
-    for (const ch of seg.text.toLowerCase()) {
+    // Gross-/Kleinschreibung: erstes Zeichen des Segments bestimmt den Case
+    // fuer alle CV-Buchstaben dieses Segments.
+    // Beispiel: "S"   → erstes Zeichen gross → "C"
+    //           "ch"  → erstes Zeichen klein → "cc"
+    //           "Sch" → erstes Zeichen gross → "CCC"
+    //           "au"  → erstes Zeichen klein → "vv"
+    // Jeder Buchstabe entscheidet fuer sich selbst: Gross im Original → Gross im Muster.
+    // Sch → C+c+c = Ccc  |  SCH → C+C+C = CCC  |  sch → c+c+c = ccc
+    // SCH'amur → CCC'vcvc
+    for (const ch of seg.text) {
       if (_CV_BOUNDARY_RE.test(ch)) {
         // Apostroph oder Bindestrich direkt uebernehmen
         pattern += ch;
       } else {
-        const son = (gmap && gmap.map && gmap.map[ch] !== undefined) ? gmap.map[ch] : 0;
-        pattern += son >= vowelMin ? 'V' : 'C';
+        const chIsUpper = ch === ch.toUpperCase() && ch !== ch.toLowerCase();
+        const son = (gmap && gmap.map && gmap.map[ch.toLowerCase()] !== undefined)
+          ? gmap.map[ch.toLowerCase()] : 0;
+        const letter = son >= vowelMin ? 'v' : 'c';
+        pattern += chIsUpper ? letter.toUpperCase() : letter;
       }
     }
   }
