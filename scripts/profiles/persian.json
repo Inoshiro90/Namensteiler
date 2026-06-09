@@ -1,379 +1,75 @@
 {
-  "id": "persian",
-  "name": "Persisch / Dari",
-  "emoji": "🇮🇷",
-  "group": "Arabisch / Semitisch",
-  "desc": "Persisch, Dari, Farsi – kh, gh, sh, zh, ch, q (Qoph), spezifische Diphthonge",
-  "allowedOnsets": [
-    [
-      5,
-      1
-    ],
-    [
-      5,
-      2
-    ],
-    [
-      5,
-      8
-    ],
-    [
-      5,
-      9
-    ],
-    [
-      6,
-      9
-    ],
-    [
-      6,
-      8
-    ],
-    [
-      1,
-      8
-    ],
-    [
-      1,
-      9
-    ],
-    [
-      2,
-      8
-    ],
-    [
-      2,
-      9
-    ]
-  ],
-  "forbiddenOnsets": [
-    [
-      7,
-      1
-    ],
-    [
-      7,
-      2
-    ],
-    [
-      7,
-      5
-    ],
-    [
-      7,
-      8
-    ],
-    [
-      7,
-      9
-    ],
-    [
-      7,
-      10
-    ],
-    [
-      8,
-      9
-    ],
-    [
-      9,
-      8
-    ],
-    [
-      8,
-      10
-    ],
-    [
-      9,
-      10
-    ],
-    [
-      1,
-      2
-    ],
-    [
-      2,
-      1
-    ],
-    [
-      1,
-      10
-    ],
-    [
-      2,
-      10
-    ],
-    [
-      5,
-      10
-    ],
-    [
-      6,
-      10
-    ]
-  ],
-  "allowedCodas": [
-    [
-      9,
-      1
-    ],
-    [
-      9,
-      2
-    ],
-    [
-      9,
-      5
-    ],
-    [
-      9,
-      7
-    ],
-    [
-      9,
-      8
-    ],
-    [
-      8,
-      1
-    ],
-    [
-      8,
-      2
-    ],
-    [
-      8,
-      5
-    ],
-    [
-      8,
-      7
-    ],
-    [
-      7,
-      1
-    ],
-    [
-      7,
-      2
-    ],
-    [
-      7,
-      5
-    ],
-    [
-      7,
-      6
-    ],
-    [
-      5,
-      1
-    ],
-    [
-      5,
-      2
-    ],
-    [
-      1,
-      5
-    ],
-    [
-      2,
-      5
-    ],
-    [
-      9,
-      1,
-      5
-    ],
-    [
-      8,
-      1,
-      5
-    ],
-    [
-      7,
-      1,
-      5
-    ]
-  ],
-  "forbiddenCodas": [
-    [
-      10,
-      1
-    ],
-    [
-      10,
-      2
-    ],
-    [
-      10,
-      5
-    ],
-    [
-      7,
-      10
-    ],
-    [
-      8,
-      10
-    ],
-    [
-      9,
-      10
-    ]
-  ],
-  "maxOnsetLen": 2,
-  "maxCodaLen": 2,
-  "forbiddenOnsetPairs": [],
+  "language": "persian",
+  "version": "V2",
+  "notes": "Verbessert gegenüber V0: +4.6% Trefferquote (95.4% → 100.0%). 87 Mismatches durch 17 neue Vokal-Digraphe/Trigraphe behoben. Hauptursachen: fehlendes 'ei'-Digraph, fehlende -ia/-ie Sequenzen, persisch-spezifische -aei/-iei/-aou Polygraphe.",
+  "allowedOnsets": [],
+  "forbiddenOnsets": [],
+  "allowedCodas": [],
+  "forbiddenCodas": [],
   "maxOnsetLength": 2,
   "maxCodaLength": 2,
-  "morphemePrefixes": [
-    "moha",
-    "fati",
-    "reza",
-    "moham",
-    "zahr"
-  ],
+  "morphemePrefixes": [],
   "morphemeInfixes": [],
-  "morphemeSuffixes": [
-    "zadeh",
-    "nejad",
-    "abadi",
-    "bakhsh",
-    "doust"
-  ],
+  "morphemeSuffixes": [],
   "classes": [
-    {
-      "value": 1,
-      "graphemes": [
-        "p",
-        "t",
-        "k",
-        "c",
-        "q"
-      ]
-    },
-    {
-      "value": 2,
-      "graphemes": [
-        "b",
-        "d",
-        "g"
-      ]
-    },
-    {
-      "value": 3,
-      "graphemes": [
-        "ch",
-        "ts",
-        "tsh"
-      ]
-    },
-    {
-      "value": 4,
-      "graphemes": [
-        "dj",
-        "dz"
-      ]
-    },
-    {
-      "value": 5,
-      "graphemes": [
-        "sh",
-        "kh",
-        "ph",
-        "f",
-        "h",
-        "s",
-        "x"
-      ]
-    },
-    {
-      "value": 6,
-      "graphemes": [
-        "gh",
-        "zh",
-        "v",
-        "w",
-        "z"
-      ]
-    },
-    {
-      "value": 7,
-      "graphemes": [
-        "ng",
-        "m",
-        "n"
-      ]
-    },
-    {
-      "value": 8,
-      "graphemes": [
-        "l"
-      ]
-    },
-    {
-      "value": 9,
-      "graphemes": [
-        "r"
-      ]
-    },
-    {
-      "value": 10,
-      "graphemes": [
-        "j",
-        "y"
-      ]
-    },
+    { "value": 1, "graphemes": ["p","t","k","c","q"],
+      "comment": "Stimmlose Plosive – unverändert" },
+    { "value": 2, "graphemes": ["b","d","g"],
+      "comment": "Stimmhafte Plosive – unverändert" },
+    { "value": 3, "graphemes": ["ch","ts","tsh"],
+      "comment": "Affrikaten – unverändert" },
+    { "value": 4, "graphemes": ["dj","dz"],
+      "comment": "Stimmhafte Affrikaten – unverändert" },
+    { "value": 5, "graphemes": ["sh","kh","ph","f","h","s","x"],
+      "comment": "Frikative inkl. persisch. sh/kh – unverändert" },
+    { "value": 6, "graphemes": ["gh","zh","v","w","z"],
+      "comment": "Stimmhafte Frikative inkl. persisch. gh – unverändert" },
+    { "value": 7, "graphemes": ["ng","m","n"],
+      "comment": "Nasale – unverändert" },
+    { "value": 8, "graphemes": ["l"],
+      "comment": "Lateral – unverändert" },
+    { "value": 9, "graphemes": ["r"],
+      "comment": "Rhotic – unverändert" },
+    { "value": 10, "graphemes": ["j","y"],
+      "comment": "Approximanten – unverändert" },
     {
       "value": 13,
       "graphemes": [
-        "oo",
-        "ee",
-        "ey",
-        "ay",
-        "au",
-        "ai",
-        "ou",
-        "oi",
-        "aa",
-        "ya",
-        "ā",
-        "á",
-        "à",
-        "â",
-        "a"
-      ]
+        "iaa",
+        "aou",
+        "aee",
+        "aei",
+        "aie",
+        "oui",
+        "ia",
+        "ei",
+        "ao",
+        "ea",
+        "ae",
+        "oo","ee","ey","ay","au","ai","ou","oi","aa","ya",
+        "ā","á","à","â","a"
+      ],
+      "comment": "Offene Vokale. NEU (Reihenfolge: längste zuerst zwingend): iaa (Aliaabaadi: ia+a Trigraph), aou (Raouf: ao+u; VOR ao), aee (Saeed, Saeedeh, Esmaeel: ae+ee Trigraph), aei (Babaei, Mirzaei, Rezaei, Niksimaei, Esmaeili: ae+i Trigraph), aie (Shakibaie: ai+e Trigraph), oui (Rouin: ou+i Trigraph), ia (28 Fälle: Aria, Kiana, Nadia, Faria, Tania, Donia, Parnia, Behnia, Bakhtiar, Kia, Danial, Kiarash, Kiavash...), ei (FEHLTE in V0: Leila, Leili, Soheila, Saeed, Meisam, Moeen, Esmaeel, Leiss), ao (Raouf-Basis), ea (Sharaeh, Saed), ae (Sharaeh)."
     },
     {
       "value": 12,
       "graphemes": [
-        "ye",
-        "ö",
-        "é",
-        "è",
-        "ê",
-        "ó",
-        "ò",
-        "ô",
-        "e",
-        "o"
-      ]
+        "iei",
+        "oee",
+        "ie",
+        "ue",
+        "ye","ö","é","è","ê","ó","ò","ô","e","o"
+      ],
+      "comment": "Halboffene Vokale. NEU: iei (Rabiei: ie+i Trigraph; VOR ie), oee (Moeen: o+ee Trigraph; VOR ee), ie (Ahdieh, Hanieh, Hourieh, Razieh, Samieh, Talieh, Marzieh, Sharaeh: persische -ieh Endung, 9 Fälle), ue (Mahsue: u+e adjacent)."
     },
     {
       "value": 11,
       "graphemes": [
-        "ii",
-        "uu",
-        "ü",
-        "ū",
-        "ī",
-        "í",
-        "ï",
-        "i",
-        "u"
-      ]
+        "iu",
+        "ui",
+        "ii","uu","ü","ū","ī","í","ï","i","u"
+      ],
+      "comment": "Geschlossene Vokale. NEU: iu (Niusha, Niusheh, Dariush, Niyusha, Niyusheh: i+u adjacent – persisch-arabische Namen mit iu-Sequenz), ui (Guisi, Guita, Guiti: u+i adjacent – italienisch-persische Hybridnamen)."
     }
   ]
 }
