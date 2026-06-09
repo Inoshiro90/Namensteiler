@@ -189,7 +189,6 @@
       "value": 1,
       "graphemes": [
         "ck",
-        "qu",
         "p",
         "t",
         "k",
@@ -219,8 +218,6 @@
     {
       "value": 4,
       "graphemes": [
-        "gj",
-        "dh",
         "dz",
         "dj"
       ]
@@ -228,7 +225,6 @@
     {
       "value": 5,
       "graphemes": [
-        "xh",
         "sh",
         "th",
         "f",
@@ -278,15 +274,7 @@
     {
       "value": 13,
       "graphemes": [
-        "au",
-        "ai",
-        "ei",
-        "ie",
         "ou",
-        "oi",
-        "oo",
-        "ee",
-        "aa",
         "ya",
         "á",
         "à",
@@ -313,7 +301,6 @@
       "value": 11,
       "graphemes": [
         "uu",
-        "ii",
         "ü",
         "ú",
         "í",
