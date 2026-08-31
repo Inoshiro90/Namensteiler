@@ -218,7 +218,6 @@
   "maxCodaLength": 2,
   "morphemePrefixes": [
     "sieg",
-    "bert",
     "diet",
     "gott",
     "wolf",
@@ -227,7 +226,6 @@
     "rein",
     "brun",
     "gerd",
-    "bern",
     "fried"
   ],
   "morphemeInfixes": [],
