@@ -282,6 +282,37 @@ function parseWord(word, gmap) {
             continue;  // 'ie' ueberspringen -> i + e werden einzeln gematcht
           }
         }
+        // Kontextabhaengige Y-Vokalisierung:
+        // In Profilen, die blankes 'y' als Konsonant/Glide fuehren (z.B. Bantu:
+        // Klasse 10 wie 'j'), kann ein Wort ohne weiteren Vokal keine Silbe
+        // bilden, obwohl 'y' dort phonetisch als Vokalnukleus fungiert
+        // (Lehnnamen wie "Mary", "Lydia", "Gladys", "Mercy", "Chitty", "Thuty").
+        // Das betrifft nur 'y' NACH einem Konsonanten (oder am Wortanfang) UND
+        // OHNE folgenden Vokal (Wortende oder Konsonant danach). Steht vor 'y'
+        // dagegen ein Vokal, bildet "Vokal+y" einen fallenden Diphthong/Offglide
+        // (z.B. "Joy-ce", "Tha-ney") - dort bleibt 'y' unveraendert Konsonant/
+        // Koda. Vor einem Vokal (z.B. "ya"/"yu"/"yo"-Kontexte) bleibt 'y'
+        // ebenfalls Konsonant/Onset. Profile, die 'y' bereits direkt der
+        // Vokalklasse zuordnen (Englisch, Schottisch, Irisch, ...), durchlaufen
+        // diesen Zweig nie, da dort map['y'] >= 11 ist.
+        if (g === 'y' && map[g] < 11) {
+          const afterY = i + 1;
+          let nextIsVowel = false;
+          for (const g2 of sorted) {
+            if (map[g2] >= 11 && lower.slice(afterY, afterY + g2.length) === g2) { nextIsVowel = true; break; }
+          }
+          const prevSeg = segments[segments.length - 1];
+          const prevIsVowel = prevSeg && prevSeg.sonority >= 11;
+          if (!nextIsVowel && !prevIsVowel) {
+            const iKey = sorted.find(k => k === 'i');
+            const vSon = iKey ? map[iKey] : 11;
+            const vCls = iKey ? classMap[iKey] : 'Vokal';
+            segments.push({ text: wordNFC.slice(i, i + 1), grapheme: 'y', sonority: vSon, className: vCls });
+            i += 1;
+            matched = true;
+            break;
+          }
+        }
         // Geminate auto-split: CONSONANT geminates only (sonority < 11)
         // Vowel digraphs like aa/ee/oo/uu/ii keep their long-vowel identity
         if (g.length === 2 && g[0] === g[1] && map[g] < 11) {

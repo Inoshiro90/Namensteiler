@@ -224,22 +224,9 @@
   "forbiddenOnsetPairs": [],
   "maxOnsetLength": 2,
   "maxCodaLength": 2,
-  "morphemePrefixes": [
-    "hayr",
-    "hovh",
-    "step",
-    "vard",
-    "anah",
-    "armen"
-  ],
+  "morphemePrefixes": [],
   "morphemeInfixes": [],
-  "morphemeSuffixes": [
-    "ikian",
-    "oyan",
-    "unian",
-    "sian",
-    "ssian"
-  ],
+  "morphemeSuffixes": [],
   "classes": [
     {
       "value": 1,
