@@ -18,7 +18,7 @@ function calcLengthDist(names) {
 function calcCVPatterns(names, gmap, vowelMin) {
   const groups = {};
   names.forEach(name => {
-    const segs = parseWord(name, gmap);
+    const segs = parseWord(name, gmap, vowelMin);
     const pattern = segsToCVPattern(segs, vowelMin, gmap);
     const len = name.length;
     if (!groups[len]) groups[len] = { total: 0, counts: {} };
@@ -79,7 +79,7 @@ function calcLetterCombos(names, gmap, vowelMin) {
   const vGroups = {}, cGroups = {};
 
   names.forEach(rawName => {
-    const segs = parseWord(rawName, gmap);
+    const segs = parseWord(rawName, gmap, vowelMin);
     const n = segs.length;
     let run = [], runIsVowel = null, runStart = -1;
     const seenV = new Set(), seenC = new Set();
@@ -182,7 +182,7 @@ function calcSyllableStats(names, gmap, vowelMin, cl) {
 
   // Helper: compute CV pattern for a syllable string via gmap
   const sylToCVPattern = (sylText) => {
-    const segs = parseWord(sylText, gmap);
+    const segs = parseWord(sylText, gmap, vowelMin);
     return segsToCVPattern(segs, vowelMin, gmap);
   };
 

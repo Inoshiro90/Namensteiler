@@ -248,7 +248,8 @@ function normalizeWordInternals(word) {
 // Testet das NFC-normalisierte Zeichen, nicht den Rohstring.
 const _BOUNDARY_CHAR_RE = /[\u0027\u002D\u00AD\u2010-\u2015\s]/;
 
-function parseWord(word, gmap) {
+function parseWord(word, gmap, vowelMin) {
+  if (vowelMin == null) vowelMin = 11;
   const { map, classMap, sorted } = gmap;
   // FIX-A: NFC-Normalisierung stellt sicher, dass macOS/NFD-Clipboard-Eingaben
   // (z.B. "Gonza\u0301lez" statt "González") gegen Profil-Grapheme matchen.
@@ -274,6 +275,26 @@ function parseWord(word, gmap) {
           }
           if (blocked) continue;
         }
+        // Vokal-Glide-Digraph-Lookahead (z. B. ay/ey/oy): ein zweistelliges
+        // Graphem, das als Vokal/Peak klassifiziert ist (map[g] >= vowelMin),
+        // dessen zweiter Buchstabe aber ALLEIN ein eigenstaendiger Konsonant
+        // waere (map[letzterBuchstabe] < vowelMin), ist ein Vokal+Glide-Diphthong
+        // (Gleitlaut als Koda). Folgt darauf ein weiterer Vokal, gehoert der
+        // Glide phonologisch als Onset zur naechsten Silbe und darf NICHT mit
+        // dem vorausgehenden Vokal verschmolzen werden (sonst z. B. Azeri
+        // "Mirzayeva" -> "Mir-zay-e-va" statt korrekt "Mir-za-ye-va").
+        // Rein datengetrieben ueber die Sonoritaetsklassen, keine Sprachlogik.
+        if (g.length === 2 && map[g] >= vowelMin) {
+          const lastCh = g[1];
+          const lastChSon = map[lastCh];
+          if (lastChSon !== undefined && lastChSon < vowelMin) {
+            const nextCh = lower[i + g.length] || '';
+            const nextSon = map[nextCh];
+            if (nextSon !== undefined && nextSon >= vowelMin) {
+              continue;
+            }
+          }
+        }
         // Steigender-Diphthong-Hiatus-Check fuer 'ie'
         if (g === 'ie') {
           const nc  = i + 2 < lower.length ? lower[i + 2] : '';
@@ -294,18 +315,18 @@ function parseWord(word, gmap) {
         // Koda. Vor einem Vokal (z.B. "ya"/"yu"/"yo"-Kontexte) bleibt 'y'
         // ebenfalls Konsonant/Onset. Profile, die 'y' bereits direkt der
         // Vokalklasse zuordnen (Englisch, Schottisch, Irisch, ...), durchlaufen
-        // diesen Zweig nie, da dort map['y'] >= 11 ist.
-        if (g === 'y' && map[g] < 11) {
+        // diesen Zweig nie, da dort map['y'] >= vowelMin ist.
+        if (g === 'y' && map[g] < vowelMin) {
           const afterY = i + 1;
           let nextIsVowel = false;
           for (const g2 of sorted) {
-            if (map[g2] >= 11 && lower.slice(afterY, afterY + g2.length) === g2) { nextIsVowel = true; break; }
+            if (map[g2] >= vowelMin && lower.slice(afterY, afterY + g2.length) === g2) { nextIsVowel = true; break; }
           }
           const prevSeg = segments[segments.length - 1];
-          const prevIsVowel = prevSeg && prevSeg.sonority >= 11;
+          const prevIsVowel = prevSeg && prevSeg.sonority >= vowelMin;
           if (!nextIsVowel && !prevIsVowel) {
             const iKey = sorted.find(k => k === 'i');
-            const vSon = iKey ? map[iKey] : 11;
+            const vSon = iKey ? map[iKey] : vowelMin;
             const vCls = iKey ? classMap[iKey] : 'Vokal';
             segments.push({ text: wordNFC.slice(i, i + 1), grapheme: 'y', sonority: vSon, className: vCls });
             i += 1;
