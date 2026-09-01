@@ -283,16 +283,33 @@ function parseWord(word, gmap, vowelMin) {
         // Glide phonologisch als Onset zur naechsten Silbe und darf NICHT mit
         // dem vorausgehenden Vokal verschmolzen werden (sonst z. B. Azeri
         // "Mirzayeva" -> "Mir-zay-e-va" statt korrekt "Mir-za-ye-va").
-        // Rein datengetrieben ueber die Sonoritaetsklassen, keine Sprachlogik.
+        // Zweiter Fall: In manchen Profilen (z.B. Bulgarisch) ist der Gleitlaut
+        // (z.B. 'y') selbst als Vokal klassifiziert, weil er auch eigenstaendig
+        // als Vokal vorkommt (Kyril, Krystina). Dort greift obige Bedingung
+        // nicht (lastChSon ist kein Konsonant). Stattdessen wird geprueft, ob
+        // der Gleitlaut zusammen mit dem folgenden Buchstaben selbst ein
+        // bekanntes Onset-Glide+Vokal-Graphem bildet (z.B. 'y'+'a' = 'ya').
+        // Ist das der Fall, gehoert der Gleitlaut ebenfalls zur naechsten
+        // Silbe (sonst z.B. Bulgarisch "Boyan" -> "Boy-an" statt korrekt
+        // "Bo-yan", "Sofiya" -> "So-fiy-a" statt korrekt "So-fi-ya").
+        // WICHTIG: Nur fuer echte Halbvokal-/Gleitlaut-Buchstaben (y, w) -
+        // sonst feuert die Regel faelschlich bei zufaelliger Vokal+Vokal-
+        // Nachbarschaft (z.B. Belgisch "ou"+"ui" oder Bengali "ya"+"aa"),
+        // wo der zweite Buchstabe ein voller Vokal und kein Gleitlaut ist.
         if (g.length === 2 && map[g] >= vowelMin) {
           const lastCh = g[1];
           const lastChSon = map[lastCh];
-          if (lastChSon !== undefined && lastChSon < vowelMin) {
-            const nextCh = lower[i + g.length] || '';
-            const nextSon = map[nextCh];
-            if (nextSon !== undefined && nextSon >= vowelMin) {
-              continue;
-            }
+          const nextCh = lower[i + g.length] || '';
+          const nextSon = map[nextCh];
+          const soloConsonantCase = lastChSon !== undefined && lastChSon < vowelMin
+            && nextSon !== undefined && nextSon >= vowelMin;
+          const isGlideLetter = lastCh === 'y' || lastCh === 'w';
+          const glideOnsetCombo = lastCh + nextCh;
+          const glideOnsetSon = map[glideOnsetCombo];
+          const glideOnsetCase = isGlideLetter && glideOnsetCombo.length === 2
+            && glideOnsetSon !== undefined && glideOnsetSon >= vowelMin;
+          if (soloConsonantCase || glideOnsetCase) {
+            continue;
           }
         }
         // Steigender-Diphthong-Hiatus-Check fuer 'ie'
