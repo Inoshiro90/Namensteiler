@@ -25,19 +25,16 @@
     {
       "value": 13,
       "graphemes": [
-        "ae", "ea", "ia", "ua",
-        "au","ai","ei","ie","ou","oi","oo","ee","aa","ya",
         "á","à","â","a"
       ],
-      "comment": "Offene Vokale. NEU: ae (Mihael: a+e adj), ea (Andrea, Matea, Seada: e+a adj), ia (Daria, Mia: i+a adj), ua (Fuada, Fuad, Suad, Buač: u+a adj). Alle betreffen international-lateinische Namen."
+      "comment": "Offene Vokale. Vokal-Adjazenz-Digraphe (ae, ea, ia, ua, au, ai, ei, ie, ou, oi, oo, ee, aa, ya) entfernt: Serbokroatisch/Bosnisch kennt keine Diphthonge, Vokalfolgen bilden im Standard immer Hiatus (getrennte Silbenkerne). Betraf u.a. Andrea, Mihael, Aida, Husein, Ismail, Leon, Teodor."
     },
     {
       "value": 12,
       "graphemes": [
-        "eo", "eu", "io",
-        "ye","yo","ö","é","è","ê","ó","ò","ô","e","o"
+        "ö","é","è","ê","ó","ò","ô","e","o"
       ],
-      "comment": "Halboffene Vokale. NEU: eo (Leon, Mateo, Teodor, Teodora, Teodosić: e+o adj – griechisch-lat. Theo-/Leo-Namen), eu (Reuf, Teufik, Karleuša: e+u adj), io (Miomir: i+o adj)."
+      "comment": "Halboffene Vokale. Vokal-Adjazenz-Digraphe (eo, eu, io, ye, yo) aus demselben Grund entfernt (siehe Klasse 13)."
     },
     { "value": 11, "graphemes": ["uu","ii","ü","ú","í","ï","y","i","u"], "comment": "Geschlossene Vokale – unverändert" }
   ]
