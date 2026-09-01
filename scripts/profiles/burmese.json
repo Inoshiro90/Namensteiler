@@ -140,9 +140,11 @@
     {
       "value": 1,
       "graphemes": [
+        "phy",
         "ky",
         "hm",
         "hn",
+        "ph",
         "p",
         "t",
         "k",
@@ -197,6 +199,7 @@
       "graphemes": [
         "ng",
         "ny",
+        "my",
         "m",
         "n"
       ]
