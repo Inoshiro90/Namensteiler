@@ -35,6 +35,15 @@ let _maxCodaLen  = 0;  // 0 = unbegrenzt
 // bleiben.
 let _silentFinalE = false;         // "magic e": Kate, Blake, James (stumm)
 let _glideVowelPositional = false; // y/w als Vokal: Ryan/Bryan vs Yasmin/Kenya
+// _ieHiatusCheck: die "ie"-Hiatus-Regel (i+e als getrennte Silbenkerne vor
+// Sonorant+Vokal, z.B. fuer Sprachen mit "cliente"-artigen Mustern) ist KEIN
+// Universalprinzip - in Sprachen, wo "ie" unbedingt ein echter Diphthong ist
+// (z.B. Finnisch: "Nieminen", "Kirvesniemi", "Pielinen"), zerstoert sie die
+// korrekte Silbe. Default false, da bislang KEIN getestetes Profil einen
+// Nutzen davon zeigte, waehrend Chinesisch (1 Name) und Finnisch (14 Namen)
+// dadurch nachweislich falsch getrennt wurden. Kuenftige Profile, die eine
+// echte Hiatus-Sprache abbilden, koennen das Flag gezielt aktivieren.
+let _ieHiatusCheck = false;
 
 function readFopField() {
   const el = document.getElementById('cluster-fop');
@@ -96,6 +105,7 @@ async function applyProfile(profileId) {
   _maxCodaLen  = profile.maxCodaLength  || profile.maxCodaLen  || 0;
   _silentFinalE = !!profile.silentFinalE;
   _glideVowelPositional = !!profile.glideVowelPositional;
+  _ieHiatusCheck = !!profile.ieHiatusCheck;
   const _fopEl = document.getElementById('cluster-fop'); if (_fopEl) _fopEl.value = _forbiddenOnsetPairs.join(', ');
   const _moEl = document.getElementById('max-onset'); if (_moEl) _moEl.value = _maxOnsetLen;
   const _mcEl = document.getElementById('max-coda');  if (_mcEl) _mcEl.value = _maxCodaLen;
@@ -267,6 +277,7 @@ function parseWord(word, gmap, vowelMin, profileFlags) {
   if (profileFlags == null) profileFlags = {};
   const silentFinalE = !!profileFlags.silentFinalE;
   const glideVowelPositional = !!profileFlags.glideVowelPositional;
+  const ieHiatusCheck = !!profileFlags.ieHiatusCheck;
   const { map, classMap, sorted } = gmap;
   // FIX-A: NFC-Normalisierung stellt sicher, dass macOS/NFD-Clipboard-Eingaben
   // (z.B. "Gonza\u0301lez" statt "González") gegen Profil-Grapheme matchen.
@@ -401,8 +412,11 @@ function parseWord(word, gmap, vowelMin, profileFlags) {
             break;
           }
         }
-        // Steigender-Diphthong-Hiatus-Check fuer 'ie'
-        if (g === 'ie') {
+        // Steigender-Diphthong-Hiatus-Check fuer 'ie' - NUR wenn das Profil
+        // dies explizit per ieHiatusCheck aktiviert (siehe Definition von
+        // _ieHiatusCheck oben). Ohne aktives Flag bleibt 'ie' immer als
+        // Diphthong verschmolzen.
+        if (ieHiatusCheck && g === 'ie') {
           const nc  = i + 2 < lower.length ? lower[i + 2] : '';
           const nnc = i + 3 < lower.length ? lower[i + 3] : '';
           if (_IE_SONORANTS.has(nc) && (nnc === '' || _IE_VOWELS.has(nnc))) {

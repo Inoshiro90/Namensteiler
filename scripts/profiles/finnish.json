@@ -220,12 +220,9 @@
   "maxOnsetLen": 1,
   "maxCodaLen": 2,
   "forbiddenOnsetPairs": [],
-  "maxOnsetLength": 2,
+  "maxOnsetLength": 1,
   "maxCodaLength": 2,
   "morphemePrefixes": [
-    "salm",
-    "korh",
-    "virt",
     "aino",
     "eino",
     "altti"
