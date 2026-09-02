@@ -29,6 +29,12 @@ let _forbiddenOnsetPairs = [];  // Homorgane Onsets (graphembasiert)
 // Hinweis: _maxOnsetLength/_maxCodaLength sind Aliases – aktiv sind _maxOnsetLen/_maxCodaLen
 let _maxOnsetLen = 0;  // 0 = unbegrenzt
 let _maxCodaLen  = 0;  // 0 = unbegrenzt
+// Sprachspezifische Orthographie-Zusatzregeln (nur fuer passende Profile
+// aktiv, z.B. Englisch/Amerikanisch). Default false = Regel deaktiviert,
+// damit Profile ohne diese Konventionen (fast alle anderen) unveraendert
+// bleiben.
+let _silentFinalE = false;         // "magic e": Kate, Blake, James (stumm)
+let _glideVowelPositional = false; // y/w als Vokal: Ryan/Bryan vs Yasmin/Kenya
 
 function readFopField() {
   const el = document.getElementById('cluster-fop');
@@ -88,6 +94,8 @@ async function applyProfile(profileId) {
   _forbiddenOnsetPairs = profile.forbiddenOnsetPairs || [];
   _maxOnsetLen = profile.maxOnsetLength || profile.maxOnsetLen || 0;
   _maxCodaLen  = profile.maxCodaLength  || profile.maxCodaLen  || 0;
+  _silentFinalE = !!profile.silentFinalE;
+  _glideVowelPositional = !!profile.glideVowelPositional;
   const _fopEl = document.getElementById('cluster-fop'); if (_fopEl) _fopEl.value = _forbiddenOnsetPairs.join(', ');
   const _moEl = document.getElementById('max-onset'); if (_moEl) _moEl.value = _maxOnsetLen;
   const _mcEl = document.getElementById('max-coda');  if (_mcEl) _mcEl.value = _maxCodaLen;
@@ -248,8 +256,17 @@ function normalizeWordInternals(word) {
 // Testet das NFC-normalisierte Zeichen, nicht den Rohstring.
 const _BOUNDARY_CHAR_RE = /[\u0027\u002D\u00AD\u2010-\u2015\s]/;
 
-function parseWord(word, gmap, vowelMin) {
+function parseWord(word, gmap, vowelMin, profileFlags) {
   if (vowelMin == null) vowelMin = 11;
+  // profileFlags: optionale sprachspezifische Zusatzregeln, die NUR fuer
+  // Profile mit passender Orthographie aktiviert werden duerfen. Ohne
+  // uebergebenes Flag-Objekt bleiben alle Zusatzregeln deaktiviert - das
+  // ist wichtig, da sonst z.B. die "magic e"-Regel (silentFinalE) faelschlich
+  // auf Profile ohne stummes End-e (fast alle Nicht-Englisch-Profile)
+  // angewendet wuerde und dort echte Vokale verschluckt (Regression!).
+  if (profileFlags == null) profileFlags = {};
+  const silentFinalE = !!profileFlags.silentFinalE;
+  const glideVowelPositional = !!profileFlags.glideVowelPositional;
   const { map, classMap, sorted } = gmap;
   // FIX-A: NFC-Normalisierung stellt sicher, dass macOS/NFD-Clipboard-Eingaben
   // (z.B. "Gonza\u0301lez" statt "González") gegen Profil-Grapheme matchen.
@@ -310,6 +327,78 @@ function parseWord(word, gmap, vowelMin) {
             && glideOnsetSon !== undefined && glideOnsetSon >= vowelMin;
           if (soloConsonantCase || glideOnsetCase) {
             continue;
+          }
+          // Onset-Glide-als-Vokal-Positionscheck (z. B. Englisch: 'y' ist
+          // selbst als Vokal klassifiziert, map['y'] >= vowelMin). Ein
+          // Graphem wie "ya"/"ye"/"yo" (Gleitlaut+Vokal) darf nur dann als
+          // EIN Silbenkern verschmolzen werden, wenn der Gleitlaut dort
+          // tatsaechlich als Onset-Konsonant fungiert - das ist der Fall
+          // (a) am absoluten Wortanfang (z. B. "Yasmin", "Yolanda") oder
+          // (b) wenn im Wort bereits ein frueherer Vokal-Peak existiert,
+          // sodass der Gleitlaut die naechste Silbe eroeffnet (z. B.
+          // "Kenya", "Tanya", "Anya", "Freya"). Fehlt beides - der
+          // Gleitlaut folgt direkt auf einen Konsonanten-Cluster ohne
+          // vorherigen Vokal im Wort (z. B. "Bryan", "Ryan", "Dyer",
+          // "Hyacinth", "Lyon") - fungiert der Gleitlaut phonetisch selbst
+          // als Vokalkern der ERSTEN Silbe und darf NICHT mit dem
+          // folgenden Vokal verschmolzen werden (sonst "Ryan" -> 1 Silbe
+          // statt korrekt "Ry-an").
+          const firstCh = g[0];
+          const firstChSon = map[firstCh];
+          const isGlideFirstVowelCase = glideVowelPositional
+            && (firstCh === 'y' || firstCh === 'w')
+            && firstChSon !== undefined && firstChSon >= vowelMin;
+          if (isGlideFirstVowelCase) {
+            const hasEarlierVowelPeak = segments.some(s => s.sonority >= vowelMin);
+            if (i !== 0 && !hasEarlierVowelPeak) {
+              continue;
+            }
+          }
+        }
+        // Wortende-Check fuer "dge" (Englisch): das Graphem "dge" (fuer den
+        // Konsonanten /dʒ/, z. B. "bridge", "edge", "judge") ist nur dann
+        // eine EINZELNE Konsonanteneinheit mit stummem e, wenn es tatsaechlich
+        // am Wortende steht. Folgt danach noch ein Buchstabe (z. B. "Bridget",
+        // "Badger", "Bridges", "Dodgen"), ist das 'e' ein echter, ausgesprochener
+        // Vokal einer eigenen Silbe - "dge" darf dann NICHT als Einheit
+        // gematcht werden, sondern muss in d+g+e zerfallen (sonst "Bridget"
+        // -> 1 Silbe statt korrekt "Brid-get").
+        if (g === 'dge') {
+          const isWordFinal = (i + g.length === lower.length);
+          if (!isWordFinal) {
+            continue;
+          }
+        }
+        // "Magic e" / stummes End-e (Englisch): ein finales 'e' nach dem
+        // Muster [Vokal][einzelner Konsonant]e$ (z. B. "Kate", "Blake",
+        // "James", "Rose", "Luke") ist in der englischen Orthographie
+        // grundsaetzlich stumm und bildet KEINE eigene Silbe - unabhaengig
+        // davon, ob es den vorausgehenden Vokal "verlaengert" oder nicht
+        // (auch "have", "give", "office" folgen dieser Schreibkonvention).
+        // Erkennung: 'e' ist das letzte Zeichen des Wortes, das direkt
+        // vorausgehende Segment ist ein EINZELNES Konsonanten-Zeichen
+        // (kein Digraph wie "th"/"dge"/"ck" - deren eigene Wortende-Logik
+        // greift bereits separat), und davor steht ein einzelnes Vokal-
+        // Zeichen (kein Digraph wie "ai"/"ee", die bereits eigene
+        // Silbenkerne bilden). Das stumme 'e' wird als eigenes Segment mit
+        // niedriger, nicht-Peak-Sonoritaet (0) angehaengt, damit es Teil
+        // der letzten Silbe bleibt, aber keine neue Silbe eroeffnet.
+        // Bekannte Grenzfaelle: griechischstaemmige Namen mit ausgesprochenem
+        // End-e nach genau diesem Muster (z. B. "Penelope", "Hermione")
+        // werden dadurch faelschlich verkuerzt - ohne Ausspracheliste nicht
+        // sicher unterscheidbar vom regulaeren Muster.
+        if (silentFinalE && g === 'e' && i === lower.length - 1 && i >= 2) {
+          const prevSeg = segments[segments.length - 1];
+          const prevPrevSeg = segments[segments.length - 2];
+          const prevIsSingleConsonant = prevSeg && prevSeg.text.length === 1
+            && prevSeg.sonority !== undefined && prevSeg.sonority < vowelMin && prevSeg.sonority >= 0;
+          const prevPrevIsSingleVowel = prevPrevSeg && prevPrevSeg.text.length === 1
+            && prevPrevSeg.sonority !== undefined && prevPrevSeg.sonority >= vowelMin;
+          if (prevIsSingleConsonant && prevPrevIsSingleVowel) {
+            segments.push({ text: wordNFC.slice(i, i + 1), grapheme: 'e', sonority: 0, className: 'Stummes e' });
+            i += 1;
+            matched = true;
+            break;
           }
         }
         // Steigender-Diphthong-Hiatus-Check fuer 'ie'

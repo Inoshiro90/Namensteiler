@@ -4,6 +4,8 @@
   "emoji": "🇬🇧",
   "group": "Germanisch",
   "desc": "Englisch & Amerikanisch – sh, ch, th, wh, gh, ng, tch, ck, oo, ee, ay, ow",
+  "silentFinalE": true,
+  "glideVowelPositional": true,
   "allowedOnsets": [
     [
       1,

@@ -522,7 +522,7 @@ function resolveWordBoundaries(word, gmap, vowelMin, cl) {
 		if (!part) return;
 		const subparts = splitByMorphemes(part);
 		subparts.forEach((subpart, si) => {
-			const segs = parseWord(subpart, gmap, vowelMin);
+			const segs = parseWord(subpart, gmap, vowelMin, { silentFinalE: _silentFinalE, glideVowelPositional: _glideVowelPositional });
 			const bounds = syllabify(
 				segs,
 				vowelMin,
