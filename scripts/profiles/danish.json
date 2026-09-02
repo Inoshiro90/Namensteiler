@@ -4,6 +4,7 @@
   "emoji": "🇩🇰",
   "group": "Skandinavisch",
   "desc": "Dänisch – aa (=å), ae (=æ), oe (=ø), ng, spezielle Diphthonge",
+  "ieHiatusCheck": true,
   "allowedOnsets": [
     [
       1,

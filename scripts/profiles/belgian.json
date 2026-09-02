@@ -4,6 +4,7 @@
   "emoji": "🇧🇪",
   "group": "Germanisch",
   "desc": "Belgisch – Mischung flämisch-niederländischer und französischer Phoneme",
+  "ieHiatusCheck": true,
   "allowedOnsets": [
     [
       1,

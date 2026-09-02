@@ -4,6 +4,7 @@
   "emoji": "🇨🇲",
   "group": "Westafrika",
   "desc": "Kamerunisch – Bantu + Französisch + Arabisch, ng, ny, mb, ë, ç",
+  "ieHiatusCheck": true,
   "allowedOnsets": [
     [
       2,
