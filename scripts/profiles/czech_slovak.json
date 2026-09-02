@@ -38,28 +38,18 @@
     {
       "value": 13,
       "graphemes": [
-        "iá",
-        "eá",
         "ia",
-        "ea",
-        "ae",
-        "ua",
-        "óo",
-        "äu","au","eu","ai","ei","ie","ou","oi","oo","ee","aa","ya",
+        "äu","au","eu","ie","ou",
         "ä","á","à","â","ã","å","æ","ā","ă","ą","a"
       ],
-      "comment": "Offene Vokale. NEU: iá (Fabián, Fabiánová: i+á adjacent nach NFD; á=U+00E1≠a), eá (Beáta, Tadeáš: e+á adjacent), ia (Fiala, Fabian, Mečiar, Kaniak, Poliak, Matiaško, Krajčiová...: i+a adjacent), ea (Andrea, Lea, Michaela: e+a adjacent), ae (Mihael, Michaela: a+e adjacent), ua (Eduard: u+a adjacent), óo (Szabóová: ó+o adjacent, ó=U+00F3≠o)."
+      "comment": "Offene Vokale. V4-KORREKTUR: ia/ie bleiben (belegte slowak. Diphthonge, sk. slovake.eu/Wikipedia: ia,ie,iu,ô,ou), au/eu/ou bleiben (belegte tschech. Diphthonge, Cambridge/Wikipedia Czech phonology: au,eu nur in Lehnwörtern, ou nativ). ENTFERNT (V3-Zusatz ohne linguistischen Beleg, betraf ausschließlich internationale/griech.-lat. Namen, für die laut Quellen KEINE Diphthongierung gilt): iá, eá, ea, ae, ua, óo, ai, ei, oi, oo, ee, aa, ya. Grund: Andrea, Michaela, Beáta, Eduard etc. sind fremdsprachige Namen; Vokalfolgen darin bilden im Tschech./Slowak. Hiatus (getrennte Silbenkerne), keine Diphthonge – bestätigt durch Wikiversity Czech Pronunciation: 'Vowel groups ia, ie, ii, io, and iu in foreign words are likewise not regarded as diphthongs'."
     },
     {
       "value": 12,
       "graphemes": [
-        "ío",
-        "eo",
-        "io",
-        "ue",
-        "ye","yo","ö","ő","é","è","ê","ë","ó","ò","ô","ø","œ","ē","ō","ė","õ","ě","ę","e","o"
+        "ö","ő","é","è","ê","ë","ó","ò","ô","ø","œ","ē","ō","ė","õ","ě","ę","e","o"
       ],
-      "comment": "Halboffene Vokale. NEU: ío (Krejčíová, Dekýšová, Šoltýsová, Sýkorová: í+o adjacent, í=U+00ED; dieser Digraph betrifft die häufige -ová Femininum-Endung nach Vokalen auf í), eo (Anderleová: le+o adjacent), io (alle -iová Nachnamen: Krajčiová, Almášiová, Andrášiová...: i+o adjacent), ue (Emanuel, Samuel: u+e adjacent)."
+      "comment": "Halboffene Vokale. V4-KORREKTUR: ío, eo, io, ue, ye, yo entfernt (kein belegter Diphthong in Tschechisch oder Slowakisch; betraf ausschließlich -ová/-iová-Endungen und y+Vokal-Faelle, die durch die allgemeine Silbentrennung samt y-Vokalisierungs-Mechanismus im Algorithmus bereits korrekt behandelt werden)."
     },
     {
       "value": 11,
