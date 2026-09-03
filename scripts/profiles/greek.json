@@ -177,23 +177,14 @@
   "maxOnsetLength": 2,
   "maxCodaLength": 2,
   "morphemePrefixes": [
-    "theod",
-    "stav",
     "papa",
     "para",
     "deme",
-    "nikol",
     "vasos",
     "yannis"
   ],
   "morphemeInfixes": [],
-  "morphemeSuffixes": [
-    "andros",
-    "poulos",
-    "poulou",
-    "opoulos",
-    "opoulou"
-  ],
+  "morphemeSuffixes": [],
   "classes": [
     {
       "value": 1,
@@ -288,6 +279,7 @@
         "ei",
         "ou",
         "oi",
+        "ya",
         "á",
         "à",
         "â",
