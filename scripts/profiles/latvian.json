@@ -14,9 +14,9 @@
   "maxOnsetLength": 3,
   "maxCodaLength": 2,
   "forbiddenOnsetPairs": ["tn","dn","pm","bm"],
-  "morphemePrefixes": ["jan","karl","maris","inga","laur","reim"],
+  "morphemePrefixes": ["jan","maris","inga","laur","reim"],
   "morphemeInfixes": [],
-  "morphemeSuffixes": ["ons","ans","ins","inis","uks","itis","ītis","iņš","insh","kalns","kalne","berzins","kalninsh","abols"],
+  "morphemeSuffixes": [],
   "classes": [
     {
       "value": 1,
