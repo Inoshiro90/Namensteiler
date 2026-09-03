@@ -183,9 +183,6 @@
   "maxOnsetLength": 2,
   "maxCodaLength": 2,
   "morphemePrefixes": [
-    "szab",
-    "horv",
-    "kov",
     "erzseb",
     "laszl",
     "kata",
@@ -199,7 +196,6 @@
     "ács",
     "vits",
     "ich",
-    "ffy",
     "hazy",
     "hegyi",
     "vari",
@@ -300,6 +296,7 @@
       "value": 13,
       "graphemes": [
         "au",
+        "ou",
         "ä",
         "á",
         "à",
@@ -311,6 +308,7 @@
     {
       "value": 12,
       "graphemes": [
+        "eö",
         "ö",
         "ő",
         "é",
@@ -327,6 +325,7 @@
     {
       "value": 11,
       "graphemes": [
+        "eü",
         "ü",
         "ű",
         "ú",
