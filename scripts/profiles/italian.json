@@ -238,13 +238,9 @@
   "morphemePrefixes": [
     "ales",
     "fran",
-    "bene",
-    "marg",
-    "ambr",
     "loren",
     "enri",
     "giaco",
-    "stef",
     "nico"
   ],
   "morphemeInfixes": [],
@@ -256,7 +252,6 @@
     "enzio",
     "cenzo",
     "gheri",
-    "olamo",
     "tista"
   ],
   "classes": [
