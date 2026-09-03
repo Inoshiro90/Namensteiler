@@ -173,29 +173,20 @@
     "caoimh",
     "cathal",
     "ciar",
-    "cill",
-    "conn",
     "feargh",
     "fionn",
-    "gorml",
     "muir",
     "niamh",
     "padr",
     "siobh",
-    "tadhg"
-  ],
-  "morphemeInfixes": [
+    "tadhg",
     "o'",
     "mac",
-    "mc",
-    "ni",
-    "ui"
+    "mc"
   ],
+  "morphemeInfixes": [],
   "morphemeSuffixes": [
-    "aghan",
-    "aughey",
-    "oughey",
-    "oughlin"
+    "oughey"
   ],
   "classes": [
     {
