@@ -35,22 +35,23 @@
     {
       "value": 13,
       "graphemes": [
-        "ae",
-        "ea",
-        "ia",
-        "au","ai","ei","ie","ou","oi","oo","ee","aa","ya",
-        "á","à","â","a"
+        "á",
+        "à",
+        "â",
+        "a"
       ],
-      "comment": "Offene Vokale. NEU: ae (Mihael, Mihaela: a+e adjacent), ea (Lea, Tea, Mihaela: e+a adjacent), ia (Mia, Pia, Tia, Tian: i+a adjacent). Alle drei sind internationale/lateinische Namen im slow. Namensbestand. Das Fehlen dieser drei Digraphe verursachte alle Über-Trennungen in Kategorie Vokal+a/e."
+      "comment": "Offene Vokale. Vokal-Adjazenz-Digraphe entfernt: Slowenisch (Südslawisch) kennt keine Diphthonge, Vokalfolgen bilden im Standard immer Hiatus (getrennte Silbenkerne), analog zu Bosnisch/Kroatisch/Serbisch. Betraf u.a. Mihael, Daniel, Laura, Mia, Leon."
     },
     {
       "value": 12,
       "graphemes": [
-        "eo",
-        "io",
-        "ye","yo","é","è","ê","e","o"
+        "é",
+        "è",
+        "ê",
+        "e",
+        "o"
       ],
-      "comment": "Halboffene Vokale. NEU: eo (Leon, Leopold: e+o adjacent; typisch lateinisch-europäische Namen), io (Mario: i+o adjacent; italianisierter Name im slow. Bestand)."
+      "comment": "Halboffene Vokale. Vokal-Adjazenz-Digraphe aus demselben Grund entfernt (siehe Klasse 13)."
     },
     { "value": 11, "graphemes": ["uu","ii","ü","ú","í","y","i","u"],
       "comment": "Geschlossene Vokale – unverändert" }
