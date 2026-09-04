@@ -424,24 +424,14 @@
   "maxOnsetLength": 5,
   "maxCodaLength": 3,
   "morphemePrefixes": [
-    "zbig",
-    "stanis",
-    "krzy",
     "szcep",
-    "boles",
-    "jadw",
     "kazi"
   ],
   "morphemeInfixes": [],
   "morphemeSuffixes": [
     "ciech",
     "gnieszka",
-    "gniew",
-    "owski",
-    "owska",
-    "ewski",
-    "ewska",
-    "inski"
+    "gniew"
   ],
   "classes": [
     {
