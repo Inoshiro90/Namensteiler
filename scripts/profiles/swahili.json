@@ -171,7 +171,8 @@
       "value": 3,
       "graphemes": [
         "tsch",
-        "ts"
+        "ts",
+        "ch"
       ]
     },
     {
@@ -186,6 +187,7 @@
       "graphemes": [
         "sh",
         "kh",
+        "th",
         "f",
         "h",
         "s",
@@ -228,7 +230,8 @@
     {
       "value": 10,
       "graphemes": [
-        "j"
+        "j",
+        "y"
       ]
     },
     {
