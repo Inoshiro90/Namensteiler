@@ -8,7 +8,7 @@
   "forbiddenCodas": [[10,1],[10,2],[10,5],[10,8],[10,9]],
   "maxOnsetLength": 2,
   "maxCodaLength": 2,
-  "morphemePrefixes": ["sieg","bert","diet","gott","wolf","hild","wald","rein","brun","gerd","bern","fried","bjorn","torb","hall","grim","ragn","svein","leif","knut"],
+  "morphemePrefixes": ["sieg","diet","gott","wolf","wald","rein","brun","gerd","bern","fried","bjorn","torb","hall","grim","ragn","svein","leif","knut"],
   "morphemeSuffixes": ["ström","strom","strand","stein"],
   "morphemeInfixes": [],
   "classes": [
