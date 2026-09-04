@@ -404,7 +404,6 @@
   "maxCodaLength": 3,
   "morphemePrefixes": [
     "nikol",
-    "ivan",
     "boris",
     "yuri",
     "igor",
@@ -420,12 +419,9 @@
     "ovich",
     "ovna",
     "evna",
-    "hail",
     "nova",
-    "yeva",
     "kova",
-    "enko",
-    "yev"
+    "enko"
   ],
   "classes": [
     {
