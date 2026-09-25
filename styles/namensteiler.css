@@ -516,7 +516,8 @@ input[type="number"] { font-family: var(--font-mono) !important; }
    JSON OUTPUT
    ===================================================== */
 
-#json-output {
+#json-output,
+#json-editor {
   font-family: var(--font-mono) !important;
   font-size: 0.75rem;
   background: var(--bg-warm) !important;
@@ -524,6 +525,18 @@ input[type="number"] { font-family: var(--font-mono) !important; }
   max-height: 400px;
   overflow: auto;
   line-height: 1.65;
+}
+
+#json-editor {
+  border: 0;
+  border-radius: 0;
+  width: 100%;
+  min-height: 300px;
+  resize: vertical;
+}
+
+#json-edit-error {
+  font-family: var(--font-mono);
 }
 
 /* =====================================================
@@ -793,11 +806,34 @@ html.theme-transitioning *::after {
 
 #tbl-lengths,
 #tbl-cv,
+#tbl-cv-pos,
 #tbl-vowels,
+#tbl-vowels-pre,
+#tbl-vowels-in,
+#tbl-vowels-suf,
 #tbl-cons,
+#tbl-cons-pre,
+#tbl-cons-in,
+#tbl-cons-suf,
 #tbl-syl-pre,
 #tbl-syl-in,
-#tbl-syl-suf {
+#tbl-syl-suf,
+#tbl-name-syllables,
+#tbl-lengths-dice,
+#tbl-cv-dice,
+#tbl-cv-pos-dice,
+#tbl-vowels-dice,
+#tbl-vowels-pre-dice,
+#tbl-vowels-in-dice,
+#tbl-vowels-suf-dice,
+#tbl-cons-dice,
+#tbl-cons-pre-dice,
+#tbl-cons-in-dice,
+#tbl-cons-suf-dice,
+#tbl-syl-pre-dice,
+#tbl-syl-in-dice,
+#tbl-syl-suf-dice,
+#tbl-name-syllables-dice {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -805,11 +841,34 @@ html.theme-transitioning *::after {
 /* Mindestbreite damit Spalten nicht kollabieren */
 #tbl-lengths table,
 #tbl-cv table,
+#tbl-cv-pos table,
 #tbl-vowels table,
+#tbl-vowels-pre table,
+#tbl-vowels-in table,
+#tbl-vowels-suf table,
 #tbl-cons table,
+#tbl-cons-pre table,
+#tbl-cons-in table,
+#tbl-cons-suf table,
 #tbl-syl-pre table,
 #tbl-syl-in table,
-#tbl-syl-suf table {
+#tbl-syl-suf table,
+#tbl-name-syllables table,
+#tbl-lengths-dice table,
+#tbl-cv-dice table,
+#tbl-cv-pos-dice table,
+#tbl-vowels-dice table,
+#tbl-vowels-pre-dice table,
+#tbl-vowels-in-dice table,
+#tbl-vowels-suf-dice table,
+#tbl-cons-dice table,
+#tbl-cons-pre-dice table,
+#tbl-cons-in-dice table,
+#tbl-cons-suf-dice table,
+#tbl-syl-pre-dice table,
+#tbl-syl-in-dice table,
+#tbl-syl-suf-dice table,
+#tbl-name-syllables-dice table {
   min-width: 360px;
 }
 
@@ -943,7 +1002,8 @@ html.theme-transitioning *::after {
 }
 
 /* Code-Elemente im Light Mode */
-[data-bs-theme="light"] pre#json-output {
+[data-bs-theme="light"] pre#json-output,
+[data-bs-theme="light"] #json-editor {
   background: var(--bg-warm) !important;
   color: var(--text-secondary);
 }

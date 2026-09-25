@@ -786,8 +786,11 @@
           <i class="bi bi-chevron-down" id="chev-json" style="font-size:.75rem;transition:transform .2s"></i>
         </div>
         <div class="card-body p-0" id="sec-json">
-          <!-- Punkt 10: Export-Button neben Kopieren in gleicher Gruppe -->
-          <div class="p-2 d-flex gap-2 flex-wrap">
+          <!-- Anzeigemodus: Bearbeiten / Kopieren / Exportieren -->
+          <div class="p-2 d-flex gap-2 flex-wrap" id="json-view-actions">
+            <button class="btn btn-sm btn-outline-primary" onclick="enterJSONEditMode()">
+              <i class="bi bi-pencil me-1"></i>Bearbeiten
+            </button>
             <button class="btn btn-sm btn-outline-secondary" onclick="copyJSON()">
               <i class="bi bi-clipboard me-1"></i>Kopieren
             </button>
@@ -795,7 +798,23 @@
               <i class="bi bi-download me-1"></i>JSON exportieren
             </button>
           </div>
+          <!-- Editiermodus: Übernehmen / Abbrechen / Importieren -->
+          <div class="p-2 d-flex gap-2 flex-wrap" id="json-edit-actions" style="display:none">
+            <button class="btn btn-sm btn-primary" onclick="applyJSONEdit()">
+              <i class="bi bi-check-lg me-1"></i>Übernehmen
+            </button>
+            <button class="btn btn-sm btn-outline-secondary" onclick="cancelJSONEdit()">
+              <i class="bi bi-x-lg me-1"></i>Abbrechen
+            </button>
+            <button class="btn btn-sm btn-outline-secondary" onclick="triggerJSONImport()">
+              <i class="bi bi-upload me-1"></i>JSON importieren
+            </button>
+            <input type="file" id="json-import-file" accept=".json,application/json" style="display:none">
+          </div>
+          <div id="json-edit-error" class="px-3 pt-2 pb-0 small text-danger" style="display:none" role="alert"></div>
           <pre id="json-output" class="m-0 p-3"></pre>
+          <textarea id="json-editor" class="m-0 p-3" style="display:none" spellcheck="false"
+            aria-label="Vereinigtes JSON bearbeiten"></textarea>
         </div>
       </div>
 
@@ -810,6 +829,11 @@
         </div>
         <div class="card-body p-2" id="sec-lengths" style="display:none">
           <div id="tbl-lengths"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — Namenslängen
+          </div>
+          <div id="tbl-lengths-dice"></div>
         </div>
       </div>
 
@@ -824,6 +848,30 @@
         </div>
         <div class="card-body p-2" id="sec-cv" style="display:none">
           <div id="tbl-cv"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — CV-Muster
+          </div>
+          <div id="tbl-cv-dice"></div>
+        </div>
+      </div>
+
+      <!-- CV-Muster nach Position (zusätzliche Auswertung, ersetzt nicht die obige Tabelle) -->
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-cv-pos')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-alphabet me-1"></i>CV-Muster nach Position
+          </span>
+          <i class="bi bi-chevron-down" id="chev-cv-pos" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-cv-pos" style="display:none">
+          <div id="tbl-cv-pos"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — CV-Muster nach Position
+          </div>
+          <div id="tbl-cv-pos-dice"></div>
         </div>
       </div>
 
@@ -838,6 +886,66 @@
         </div>
         <div class="card-body p-2" id="sec-vowels" style="display:none">
           <div id="tbl-vowels"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — Vokalkombinationen
+          </div>
+          <div id="tbl-vowels-dice"></div>
+        </div>
+      </div>
+
+      <!-- Vokalkombinationen — Präfix/Infix/Suffix (zusätzliche Positions-Einzelansichten) -->
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-vowels-pre')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-arrow-bar-right me-1" style="color:#4db870"></i>Vokalkombinationen — Präfix
+          </span>
+          <i class="bi bi-chevron-down" id="chev-vowels-pre" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-vowels-pre" style="display:none">
+          <div id="tbl-vowels-pre"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — Vokalkombinationen — Präfix
+          </div>
+          <div id="tbl-vowels-pre-dice"></div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-vowels-in')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-arrows-expand-vertical me-1" style="color:#f8b030"></i>Vokalkombinationen — Infix
+          </span>
+          <i class="bi bi-chevron-down" id="chev-vowels-in" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-vowels-in" style="display:none">
+          <div id="tbl-vowels-in"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — Vokalkombinationen — Infix
+          </div>
+          <div id="tbl-vowels-in-dice"></div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-vowels-suf')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-arrow-bar-left me-1" style="color:#e0553d"></i>Vokalkombinationen — Suffix
+          </span>
+          <i class="bi bi-chevron-down" id="chev-vowels-suf" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-vowels-suf" style="display:none">
+          <div id="tbl-vowels-suf"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — Vokalkombinationen — Suffix
+          </div>
+          <div id="tbl-vowels-suf-dice"></div>
         </div>
       </div>
 
@@ -852,8 +960,69 @@
         </div>
         <div class="card-body p-2" id="sec-cons" style="display:none">
           <div id="tbl-cons"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — Konsonantkombinationen
+          </div>
+          <div id="tbl-cons-dice"></div>
         </div>
       </div>
+
+      <!-- Konsonantkombinationen — Präfix/Infix/Suffix (zusätzliche Positions-Einzelansichten) -->
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-cons-pre')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-arrow-bar-right me-1" style="color:#4db870"></i>Konsonantkombinationen — Präfix
+          </span>
+          <i class="bi bi-chevron-down" id="chev-cons-pre" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-cons-pre" style="display:none">
+          <div id="tbl-cons-pre"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — Konsonantkombinationen — Präfix
+          </div>
+          <div id="tbl-cons-pre-dice"></div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-cons-in')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-arrows-expand-vertical me-1" style="color:#f8b030"></i>Konsonantkombinationen — Infix
+          </span>
+          <i class="bi bi-chevron-down" id="chev-cons-in" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-cons-in" style="display:none">
+          <div id="tbl-cons-in"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — Konsonantkombinationen — Infix
+          </div>
+          <div id="tbl-cons-in-dice"></div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-cons-suf')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-arrow-bar-left me-1" style="color:#e0553d"></i>Konsonantkombinationen — Suffix
+          </span>
+          <i class="bi bi-chevron-down" id="chev-cons-suf" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-cons-suf" style="display:none">
+          <div id="tbl-cons-suf"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — Konsonantkombinationen — Suffix
+          </div>
+          <div id="tbl-cons-suf-dice"></div>
+        </div>
+      </div>
+
 
       <!-- Silben Präfix -->
       <div class="card mb-3">
@@ -866,6 +1035,11 @@
         </div>
         <div class="card-body p-2" id="sec-syl-pre" style="display:none">
           <div id="tbl-syl-pre"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — Silben — Präfix
+          </div>
+          <div id="tbl-syl-pre-dice"></div>
         </div>
       </div>
 
@@ -880,6 +1054,11 @@
         </div>
         <div class="card-body p-2" id="sec-syl-in" style="display:none">
           <div id="tbl-syl-in"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — Silben — Infix
+          </div>
+          <div id="tbl-syl-in-dice"></div>
         </div>
       </div>
 
@@ -894,6 +1073,30 @@
         </div>
         <div class="card-body p-2" id="sec-syl-suf" style="display:none">
           <div id="tbl-syl-suf"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — Silben — Suffix
+          </div>
+          <div id="tbl-syl-suf-dice"></div>
+        </div>
+      </div>
+
+      <!-- Namen mit Silben -->
+      <div class="card mb-3">
+        <div class="card-header py-2 d-flex align-items-center justify-content-between" style="cursor:pointer"
+          onclick="toggleSection('sec-name-syllables')">
+          <span class="small text-uppercase fw-semibold text-muted" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-list-columns me-1"></i>Namen mit Silben
+          </span>
+          <i class="bi bi-chevron-down" id="chev-name-syllables" style="font-size:.75rem;transition:transform .2s"></i>
+        </div>
+        <div class="card-body p-2" id="sec-name-syllables" style="display:none">
+          <div id="tbl-name-syllables"></div>
+          <hr class="my-3">
+          <div class="small text-uppercase fw-semibold text-muted mb-2" style="letter-spacing:.08em;font-size:.65rem">
+            <i class="bi bi-dice-5 me-1"></i>Würfeltabelle — Namen mit Silben
+          </div>
+          <div id="tbl-name-syllables-dice"></div>
         </div>
       </div>
 
